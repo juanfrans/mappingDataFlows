@@ -1,0 +1,25 @@
+name,category,order
+devices,dataSources,1
+applications,dataSources,2
+account profile,dataSources,3
+other users,dataSources,4
+cookies,dataSources,5
+product use,dataSources,6
+cell towers,dataSources,7
+third parties,dataSources,8
+wifi access points,dataSources,9
+non-personal information,dataTypes,1
+personal information,dataTypes,2
+device data,dataTypes,3
+location data,dataTypes,4
+companies,companies,1
+provide advertisement,collectionPurpose,1
+antifraud,collectionPurpose,2
+personalize,collectionPurpose,3
+research,collectionPurpose,4
+contact you,collectionPurpose,5
+analytics,collectionPurpose,6
+network security,collectionPurpose,7
+provide services,collectionPurpose,8
+legal compliance,collectionPurpose,9
+other,collectionPurpose,10

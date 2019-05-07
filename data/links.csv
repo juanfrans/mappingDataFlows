@@ -1,0 +1,25 @@
+start,end
+devices,device data
+devices,location data
+applications,non-personal information
+applications,personal information
+applications,device data
+applications,location data
+wifi access points,location data
+wifi access points,device data
+account profile,non-personal information
+account profile,personal information
+account profile,device data
+other users,non-personal information
+other users,personal information
+cookies,personal information
+cookies,device data
+cookies,location data
+product use,device data
+product use,non-personal information
+product use,personal information
+product use,location data
+cell towers,device data
+cell towers,location data
+third parties,non-personal information
+third parties,personal information

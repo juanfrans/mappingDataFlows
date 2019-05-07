@@ -1,0 +1,18 @@
+body {
+  background-image: linear-gradient(to right, #12071b, #3c0535);
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+button {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#visualization {
+  width: 100%;
+  height: 90%;
+}

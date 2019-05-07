@@ -1,0 +1,75 @@
+<html>
+  <head>
+    <meta charset=utf-8>
+		<title>Mapping Data Flows</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+    <link rel="stylesheet" href="/css/master.css">
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js"></script>
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.js"></script>
+  </head>
+  <body class="white pa3 code">
+    <div class="pl5 pr5">
+      <div class="cf ph2-ns">
+        <div class="fl fl w-third pa1 f7 tr">
+          <label class="" for="companies">COMPANY</label>
+          <select class="white ba b--white-50 br2 pa1 tr" name="companies" id="companySelector">
+            <option value="all">All companies</option>
+            <option value="amazon">Amazon</option>
+            <option value="apple">Apple</option>
+            <option value="facebook">Facebook</option>
+            <option value="google">Google</option>
+          </select>
+        </div>
+        <div class="fl fl w-third pa1 f7 tr">
+          <label class="" for="purpose">COLLECTION PURPOSE</label>
+          <select class="white ba b--white-50 br2 pa1 tr" id="purposeSelector">
+            <option value="all">All purposes</option>
+            <option value="provide advertisement">Provide advertisement</option>
+            <option value="antifraud">Antifraud</option>
+            <option value="personalize">Personalize</option>
+            <option value="research">Research</option>
+            <option value="contact you">Contact you</option>
+            <option value="analytics">Analytics</option>
+            <option value="network security">Network security</option>
+            <option value="provide services">Provide services</option>
+            <option value="legal compliance">Legal compliance</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="fl fl w-third ph2 pv1 f7 tr">
+          <button type="button" class="white ba b--white-50 br2 ph3 pv1 link dim" id="resetButton">RESET FILTERS</button>
+        </div>
+      </div>
+      <div class="cf ph2-ns">
+        <div class="fl fl w-third pa1 f7 tr">
+          <label class="" for="privacy">PRIVACY LEVEL</label>
+          <select class="white ba b--white-50 br2 pa1 tr" name="privacy">
+            <option value="none">Lowest</option>
+            <option value="standard" selected="selected">Standard</option>
+            <option value="high">Highest</option>
+          </select>
+        </div>
+        <div class="fl fl w-third pa1 f7 tr">
+          <label class="" for="dataTypes">TYPES OF DATA</label>
+          <select class="white ba b--white-50 br2 pa1 tr" name="dataTypes" id="dataTypeSelector">
+            <option value="all">All types</option>
+            <option value="non-personal information">Non-personal information</option>
+            <option value="personal information">Personal information</option>
+            <option value="device data">Device data</option>
+            <option value="location data">Location data</option>
+          </select>
+        </div>
+        <div class="fl fl w-third pa2 f7 tr">
+          <label class="" for="vagueness">HIGHLIGHT VAGUENESS</label>
+          <input type="checkbox" name="vagueness" value="highlight">
+        </div>
+      </div>
+
+    </div>
+
+    <div id="visualization">
+    </div>
+    <script type='text/javascript' src="js/sketch.js"></script>
+  </body>
+</html>
