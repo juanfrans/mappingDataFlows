@@ -1,5 +1,4 @@
 /*To do:
-* Change opacity for nodes and labels based on filters
 * Hover over line and increase stroke
 * Hover or click on a node and use that as filter
 * Add text to line quoting from TOS
@@ -7,12 +6,6 @@
 * Add label saying what company is collecting the data
 * Add comparison option
 * Add vagueness functionality
-
-1. Eliminate c-links
-2. Eliminate nodes not touching c-links
-3. Eliminate links not touching nodes
-4. Eliminate nodes not touching links
-
 */
 
 // Get div width & height
@@ -20,7 +13,11 @@ var divWidth = document.getElementById('visualization').clientWidth;
 var divHeight = document.getElementById('visualization').clientHeight;
 
 // Get dropdown menus
-var companySelector;
+var allCompaniesButton = document.getElementById('allCompanies');
+var amazonButton = document.getElementById('amazon');
+var appleButton = document.getElementById('apple');
+var facebookButton = document.getElementById('facebook');
+var googleButton = document.getElementById('google');
 var dataTypeSelector;
 var purposeSelector;
 var resetButton;
@@ -155,8 +152,6 @@ function setup(){
   buildNodes();
   buildLinks();
   buildComplexLinks();
-  companySelector = select('#companySelector');
-  companySelector.input(updateLines);
   dataTypeSelector = select('#dataTypeSelector');
   dataTypeSelector.input(updateLines);
   purposeSelector = select('#purposeSelector');
@@ -165,9 +160,62 @@ function setup(){
   resetButton.mousePressed(resetFilters);
 }
 
+function updateButtons(button){
+  button.className = button.className.replace('bg-transparent', 'bg-gold');
+  button.className = button.className.replace('white', 'dark-gray');
+  button.className = button.className.replace('b--white-50', 'b--navy');
+  button.className = button.className.replace('hover-bg-white-20', '');
+}
+function resetButtons(button){
+  button.className = button.className.replace('bg-gold', 'bg-transparent');
+  button.className = button.className.replace('dark-gray', 'white');
+  button.className = button.className.replace('b--navy', 'b--white-50');
+  button.className = button.className.concat(' hover-bg-white-20');
+}
+
+allCompaniesButton.onclick = function(){
+  updateLines('all');
+  updateButtons(allCompanies);
+  resetButtons(amazonButton);
+  resetButtons(appleButton);
+  resetButtons(facebookButton);
+  resetButtons(googleButton);
+}
+amazonButton.onclick = function(){
+  updateLines('amazon');
+  updateButtons(amazonButton);
+  resetButtons(allCompaniesButton);
+  resetButtons(appleButton);
+  resetButtons(facebookButton);
+  resetButtons(googleButton);
+}
+appleButton.onclick = function(){
+  updateLines('apple');
+  updateButtons(appleButton);
+  resetButtons(amazonButton);
+  resetButtons(allCompaniesButton);
+  resetButtons(facebookButton);
+  resetButtons(googleButton);
+}
+facebookButton.onclick = function(){
+  updateLines('facebook');
+  updateButtons(facebookButton);
+  resetButtons(amazonButton);
+  resetButtons(appleButton);
+  resetButtons(allCompaniesButton);
+  resetButtons(googleButton);
+}
+googleButton.onclick = function(){
+  updateLines('amazon');
+  updateButtons(googleButton);
+  resetButtons(amazonButton);
+  resetButtons(appleButton);
+  resetButtons(facebookButton);
+  resetButtons(allCompaniesButton);
+}
+
 function resetFilters(){
   dataTypeSelector.value('all');
-  companySelector.value('all');
   purposeSelector.value('all');
   currentFilter = ['all', 'all', 'all'];
   for (complexLink of complexLinks) {
@@ -180,12 +228,17 @@ function resetFilters(){
     node.opacity = 1;
   }
   redraw();
+  updateButtons(allCompanies);
+  resetButtons(amazonButton);
+  resetButtons(appleButton);
+  resetButtons(facebookButton);
+  resetButtons(googleButton);
 }
 
 function updateLines(inputType){
   let activeNodes = [];
-  if (inputType.target.id == 'companySelector'){
-    currentFilter[0] = inputType.target.value;
+  if (typeof(inputType) == 'string'){
+    currentFilter[0] = inputType;
   }
   else if (inputType.target.id == 'dataTypeSelector'){
     currentFilter[1] = inputType.target.value;
