@@ -1,3 +1,20 @@
+/*To do:
+* Change opacity for nodes and labels based on filters
+* Hover over line and increase stroke
+* Hover or click on a node and use that as filter
+* Add text to line quoting from TOS
+* Add line tiying all together for the company
+* Add label saying what company is collecting the data
+* Add comparison option
+* Add vagueness functionality
+
+1. Eliminate c-links
+2. Eliminate nodes not touching c-links
+3. Eliminate links not touching nodes
+4. Eliminate nodes not touching links
+
+*/
+
 // Get div width & height
 var divWidth = document.getElementById('visualization').clientWidth;
 var divHeight = document.getElementById('visualization').clientHeight;
@@ -88,13 +105,14 @@ function buildLinks(){
 
 function buildComplexLinks(){
   for (var i = 0; i < complexLinksTable.getRowCount(); i++) {
-    var startName = complexLinksTable.getString(i, 'start').split(',');
-    var endName = complexLinksTable.getString(i, 'end').split(',');
+    var startName = ['all', complexLinksTable.getString(i, 'start')];
+    var endName = ['all', complexLinksTable.getString(i, 'end')];
     var amazon = complexLinksTable.getString(i, 'amazon');
     var apple = complexLinksTable.getString(i, 'apple');
     var facebook = complexLinksTable.getString(i, 'facebook');
     var google = complexLinksTable.getString(i, 'google');
     var companies = complexLinksTable.getString(i, 'companies').split(',');
+    companies.push('all');
     let startAnchor = createVector();
     let midAnchor = createVector();
     let endAnchor = createVector();
@@ -155,10 +173,17 @@ function resetFilters(){
   for (complexLink of complexLinks) {
     complexLink.update(currentFilter);
   }
+  for (link of links){
+    link.strokeAlpha = 1;
+  }
+  for (node of nodes){
+    node.opacity = 1;
+  }
   redraw();
 }
 
 function updateLines(inputType){
+  let activeNodes = [];
   if (inputType.target.id == 'companySelector'){
     currentFilter[0] = inputType.target.value;
   }
@@ -170,6 +195,26 @@ function updateLines(inputType){
   }
   for (complexLink of complexLinks) {
     complexLink.update(currentFilter);
+    if (complexLink.strokeAlpha == 1){
+      if (activeNodes.includes(complexLink.purpose[1])){}
+      else {activeNodes.push(complexLink.purpose[1]);}
+      if (activeNodes.includes(complexLink.dataType[1])){}
+      else {activeNodes.push(complexLink.dataType[1]);}
+    }
+  }
+  for (link of links){
+    link.update(activeNodes);
+  }
+  for (link of links){
+    if (link.strokeAlpha == 1){
+      if (activeNodes.includes(link.startName)){}
+      else {activeNodes.push(link.startName);}
+      if (activeNodes.includes(link.endName)){}
+      else {activeNodes.push(link.endName);}
+    }
+  }
+  for (node of nodes){
+    node.update(activeNodes);
   }
   redraw();
 }
@@ -214,17 +259,18 @@ class Node {
     this.textAlign = textAlign;
     this.textPositionX;
     this.textPositionY;
+    this.opacity = 1;
   }
   display(){
-    fill(39, 100, 100, 1);
+    fill(39, 100, 100, this.opacity);
     noStroke();
     ellipse(this.x, this.y, this.diameter, this.diameter);
     noFill();
-    stroke(39, 100, 100, 1);
+    stroke(39, 100, 100, this.opacity);
     strokeWeight(1);
     ellipse(this.x, this.y, this.outerDiamter, this.outerDiamter);
     noStroke();
-    fill(0, 0, 100, 1);
+    fill(0, 0, 100, this.opacity);
     if (this.textAlign == RIGHT){
       this.textPositionX = -15;
       this.textPositionY = 0;
@@ -241,6 +287,14 @@ class Node {
     textSize(9);
     text(this.name.toUpperCase(), this.x + this.textPositionX, this.y + this.textPositionY);
   }
+  update(activeNodes){
+    if (activeNodes.includes(node.name)){
+      this.opacity = 1;
+    }
+    else {
+      this.opacity = 0.1;
+    }
+  }
 }
 
 class Link {
@@ -251,12 +305,21 @@ class Link {
     this.endVector = endVector;
     this.midVector1 = midVector1;
     this.midVector2 = midVector2;
+    this.strokeAlpha = 1;
   }
   display(){
     noFill();
-    stroke(0, 0, 100, 1);
+    stroke(0, 0, 100, this.strokeAlpha);
     strokeWeight(1);
     bezier(this.startVector.x, this.startVector.y, this.midVector1.x, this.midVector1.y, this.midVector2.x, this.midVector2.y, this.endVector.x, this.endVector.y);
+  }
+  update(activeNodes){
+    if (activeNodes.includes(this.endName) || activeNodes.includes(this.startName)){
+      this.strokeAlpha = 1;
+    }
+    else {
+      this.strokeAlpha = 0.1;
+    }
   }
 }
 
