@@ -40,6 +40,10 @@ let currentFilter = ['all', 'all', 'all'];
 let myFont;
 let myTitleFont;
 
+// let lineColor = color(255, 255, 255);
+// let textColor = color(255, 255, 255);
+// let nodesColor = color(255, 161, 0);
+
 function preload(){
   nodesTable = loadTable('data/nodes.csv', 'csv', 'header');
   linksTable = loadTable('data/links.csv', 'csv', 'header');
@@ -110,6 +114,7 @@ function buildComplexLinks(){
     var google = complexLinksTable.getString(i, 'google');
     var companies = complexLinksTable.getString(i, 'companies').split(',');
     companies.push('all');
+    let testText = complexLinksTable.getString(i, 'testText');
     let startAnchor = createVector();
     let midAnchor = createVector();
     let endAnchor = createVector();
@@ -140,14 +145,14 @@ function buildComplexLinks(){
     control3.y = midAnchor.y - (startAnchor.y - endAnchor.y) / 3;
     control4.x = midAnchor.x + ((endAnchor.x - midAnchor.x) / 3) * 2;
     control4.y = endAnchor.y;
-    complexLinks.push(new ComplexLink(startName, endName, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies));
+    complexLinks.push(new ComplexLink(startName, endName, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies, testText));
   }
 }
 
 function setup(){
   let myCanvas = createCanvas(divWidth, divHeight);
   myCanvas.parent('visualization');
-  colorMode(HSB);
+  colorMode(HSB, 360, 100, 100, 1);
   noLoop();
   buildNodes();
   buildLinks();
@@ -164,13 +169,14 @@ function updateButtons(button){
   button.className = button.className.replace('bg-transparent', 'bg-gold');
   button.className = button.className.replace('white', 'dark-gray');
   button.className = button.className.replace('b--white-50', 'b--navy');
-  button.className = button.className.replace('hover-bg-white-20', '');
+  button.className = button.className.replace(' hover-bg-white-20', '');
 }
 function resetButtons(button){
   button.className = button.className.replace('bg-gold', 'bg-transparent');
   button.className = button.className.replace('dark-gray', 'white');
   button.className = button.className.replace('b--navy', 'b--white-50');
-  button.className = button.className.concat(' hover-bg-white-20');
+  if (button.className.includes('hover-bg-white-20')){}
+  else {button.className = button.className.concat(' hover-bg-white-20');}
 }
 
 allCompaniesButton.onclick = function(){
@@ -315,11 +321,11 @@ class Node {
     this.opacity = 1;
   }
   display(){
-    fill(39, 100, 100, this.opacity);
+    fill(38, 100, 100, this.opacity);
     noStroke();
     ellipse(this.x, this.y, this.diameter, this.diameter);
     noFill();
-    stroke(39, 100, 100, this.opacity);
+    stroke(38, 100, 100, this.opacity);
     strokeWeight(1);
     ellipse(this.x, this.y, this.outerDiamter, this.outerDiamter);
     noStroke();
@@ -377,7 +383,7 @@ class Link {
 }
 
 class ComplexLink {
-  constructor(dataType, purpose, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies){
+  constructor(dataType, purpose, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies, testText){
     this.dataType = dataType;
     this.purpose = purpose;
     this.startAnchor = startAnchor;
@@ -393,17 +399,44 @@ class ComplexLink {
     this.facebook = facebook;
     this.google = google;
     this.companies = companies;
+    this.strokeWeight = 1;
+    this.testText = testText;
+    this.displayText = false;
+    this.pointList = [];
+    for (var i = 0; i < 80; i++) {
+      let t = i/80;
+      let x = bezierPoint(this.startAnchor.x, this.control1.x, this.control2.x, this.midAnchor.x, t);
+      let y = bezierPoint(this.startAnchor.y, this.control1.y, this.control2.y, this.midAnchor.y, t);
+      let point = createVector(x, y);
+      this.pointList.push(point);
+      x = bezierPoint(this.midAnchor.x, this.control3.x, this.control4.x, this.endAnchor.x, t);
+      y = bezierPoint(this.midAnchor.y, this.control3.y, this.control4.y, this.endAnchor.y, t);
+      point = createVector(x, y);
+      this.pointList.push(point);
+    }
   }
   display(){
-    fill(0, 0, 100, 1);
     noFill();
     stroke(0, 0, 100, this.strokeAlpha);
-    strokeWeight(1);
+    strokeWeight(this.strokeWeight);
     beginShape();
     vertex(this.startAnchor.x, this.startAnchor.y);
     bezierVertex(this.control1.x, this.control1.y, this.control2.x, this.control2.y, this.midAnchor.x, this.midAnchor.y);
     bezierVertex(this.control3.x, this.control3.y, this.control4.x, this.control4.y, this.endAnchor.x, this.endAnchor.y);
     endShape();
+    if (this.displayText){
+      noStroke();
+      fill(0, 0, 100, 1);
+      textAlign(LEFT, TOP);
+      textSize(9);
+      text(this.testText, this.midAnchor.x, vizHeight, 200, 400);
+      console.log(this.testText);
+    }
+    // noStroke();
+    // fill(0, 0, 100, 1)
+    // for (var i = 0; i < this.pointList.length; i++) {
+    //   ellipse(this.pointList[i].x, this.pointList[i].y, 1, 3);
+    // }
   }
   update(currentFilter){
     if (this.companies.includes(currentFilter[0]) && this.dataType.includes(currentFilter[1]) && this.purpose.includes(currentFilter[2])){
@@ -411,4 +444,57 @@ class ComplexLink {
     }
     else {this.strokeAlpha = 0.1}
   }
+}
+
+// function mouseClicked() {
+//   let selectedBlue = 0;
+//   let selectedGreen = 0;
+//   let selectedRed = 0;
+//   for (var i = -10; i < 10; i++) {
+//     selectedBlue = max(selectedBlue, get(mouseX, mouseY + i)[2]);
+//     selectedGreen = max(selectedGreen, get(mouseX, mouseY + i)[1]);
+//     selectedRed = max(selectedRed, get(mouseX, mouseY + i)[0]);
+//   }
+//   // selectedBlue = get(mouseX + i, mouseY)[2];
+//   // selectedGreen = get(mouseX + i, mouseY)[1];
+//   // selectedRed = get(mouseX + i, mouseY)[0];
+//   // console.log(selectedRed);
+//   // console.log(selectedGreen);
+//   // console.log(selectedBlue);
+//   for (complexLink of complexLinks){
+//     if (complexLink.blue == selectedBlue && complexLink.green == selectedGreen && complexLink.red == selectedRed){
+//       console.log('match');
+//       complexLink.strokeWeight = 5;
+//     }
+//     else if (complexLink.strokeWeight == 5){
+//       complexLink.strokeWeight = 1;
+//     }
+//   }
+//   redraw();
+// }
+
+function mouseClicked() {
+  let match = false;
+  for (complexLink of complexLinks){
+    if (complexLink.strokeWeight == 4){
+      complexLink.strokeWeight = 1;
+      complexLink.displayText = false;
+    }
+  }
+  for (complexLink of complexLinks){
+    if (complexLink.strokeAlpha == 1){
+      for (thisPoint of complexLink.pointList){
+        if (dist(mouseX, mouseY, thisPoint.x, thisPoint.y) < 3){
+          match = true;
+          console.log('match');
+          complexLink.strokeWeight = 4;
+          complexLink.displayText = true;
+        }
+      }
+    }
+    if (match){
+      break;
+    }
+  }
+  redraw();
 }
