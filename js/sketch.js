@@ -1,7 +1,11 @@
-/*To do:
+/*TODO
+* Add title
+* Add intro paragraph
+* Add credits, links and methods at the end
 * Hover over line and increase stroke
 * Hover or click on a node and use that as filter
 * Add text to line quoting from TOS
+* Add link to TOS (with paragraph and section number)
 * Add line tiying all together for the company
 * Add label saying what company is collecting the data
 * Add comparison option

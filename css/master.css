@@ -16,3 +16,13 @@ button {
   width: 100%;
   height: 90%;
 }
+
+.robotoMono {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 300;
+}
+
+.robotoCondensed {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 300;
+}
