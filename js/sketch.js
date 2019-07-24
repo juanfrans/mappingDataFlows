@@ -1,14 +1,13 @@
+// TODO: Add comparison option
+// TODO: Hover or click on a node and use that as filter
 // TODO: Add intro paragraph
 // TODO: Add credits, links and methods at the end
-// TODO: Hover or click on a node and use that as filter
 // TODO: Add text to line quoting from TOS
 // TODO: Add link to TOS (with paragraph and section number)
-// TODO: Add comparison option
 // TODO: Add privacy functionality
 // TODO: Take a look at this link: https://public.os.alis.fund/
 // TODO: Add "built with p5 & tachyons"
 // TODO: Add "collection method" dropdown (harvested or user provided or from third parties)
-// TODO: Move the titles of the columns to align with the nodes
 
 var numberOfComplexLinks = 1000;
 
@@ -24,6 +23,7 @@ var facebookButton = document.getElementById('facebook');
 var googleButton = document.getElementById('google');
 var dataTypeSelector;
 var purposeSelector;
+var collectionMethodSelector;
 var resetButton;
 
 // Set global variables
@@ -174,6 +174,8 @@ function setup(){
   dataTypeSelector.input(updateLines);
   purposeSelector = select('#purposeSelector');
   purposeSelector.input(updateLines);
+  collectionMethodSelector = select('#collectionMethod');
+  collectionMethodSelector.input(updateLines);
   resetButton = select('#resetButton');
   resetButton.mousePressed(resetFilters);
 }
