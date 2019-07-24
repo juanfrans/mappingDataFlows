@@ -8,6 +8,7 @@
 // TODO: Take a look at this link: https://public.os.alis.fund/
 // TODO: Add "built with p5 & tachyons"
 // TODO: Add "collection method" dropdown (harvested or user provided or from third parties)
+// TODO: Move the titles of the columns to align with the nodes
 
 var numberOfComplexLinks = 1000;
 
@@ -68,7 +69,7 @@ function buildNodes(){
     var nodeCat = nodesTable.getString(i, 'category');
     var nodeSubCat = nodesTable.getString(i, 'subcategory');
     if (nodeCat == 'data source') {nodes.push(new Node(nodeName, nodeSubCat, marginLeft, marginTop + (vizHeight/(dataSourcesNum - 1)) * (nodeOrder - 1), RIGHT));}
-    else if (nodeCat == 'type of data') {nodes.push(new Node(nodeName, nodeSubCat, marginLeft + vizWidth / 3, marginTop + (vizHeight/(dataTypesNum - 1)) * (nodeOrder - 1), CENTER));}
+    else if (nodeCat == 'type of data') {nodes.push(new Node(nodeName, nodeSubCat, marginLeft + vizWidth / 2, marginTop + (vizHeight/(dataTypesNum - 1)) * (nodeOrder - 1), CENTER));}
     else if (nodeCat == 'companies') {nodes.push(new Node(nodeName, nodeSubCat, marginLeft + (vizWidth / 3) * 2, marginTop + (vizHeight/2), CENTER));}
     else {nodes.push(new Node(nodeName, nodeSubCat, marginLeft + vizWidth, marginTop + (vizHeight/(purposeNum - 1)) * (nodeOrder - 1), LEFT));}
   }
@@ -121,12 +122,14 @@ function buildComplexLinks(){
     if (textFacebook != ''){allText += 'Facebook: ' + textFacebook + '\n\n';}
     if (textGoogle != ''){allText += 'Google: ' + textGoogle + '\n\n';}
     let startAnchor = createVector();
-    let midAnchor = createVector();
+    let midAnchor1 = createVector();
+    let midAnchor2 = createVector();
+    // let midAnchor = createVector();
     let endAnchor = createVector();
-    let control1 = createVector();
-    let control2 = createVector();
-    let control3 = createVector();
-    let control4 = createVector();
+    // let control1 = createVector();
+    // let control2 = createVector();
+    // let control3 = createVector();
+    // let control4 = createVector();
     for (node of nodes){
       if (node.name == startName[1]){
         startAnchor.x = node.x;
@@ -137,20 +140,25 @@ function buildComplexLinks(){
         endAnchor.y = node.y;
       }
       if (node.name == 'companies'){
-        midAnchor.x = node.x;
-        midAnchor.y = node.y;
+        // midAnchor.x = node.x;
+        // midAnchor.y = node.y;
       }
     }
-    midAnchor.y = (startAnchor.y - (startAnchor.y - endAnchor.y)/2) - (startAnchor.y - (startAnchor.y - endAnchor.y)/2 - midAnchor.y)/3;
-    control1.x = startAnchor.x + (midAnchor.x - startAnchor.x) / 3;
-    control1.y = startAnchor.y;
-    control2.x = startAnchor.x + ((midAnchor.x - startAnchor.x) / 3) * 2;
-    control2.y = midAnchor.y + (startAnchor.y - endAnchor.y) / 3;
-    control3.x = midAnchor.x + (endAnchor.x - midAnchor.x) / 3;
-    control3.y = midAnchor.y - (startAnchor.y - endAnchor.y) / 3;
-    control4.x = midAnchor.x + ((endAnchor.x - midAnchor.x) / 3) * 2;
-    control4.y = endAnchor.y;
-    complexLinks.push(new ComplexLink(startName, dataTypeSubCat, endName, purposeSubCat, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies, allText));
+    midAnchor1.x = startAnchor.x + ((endAnchor.x - startAnchor.x)/8) * 3;
+    midAnchor1.y = startAnchor.y;
+    midAnchor2.x = startAnchor.x + ((endAnchor.x - startAnchor.x)/8) * 5;
+    midAnchor2.y = endAnchor.y;
+
+    // midAnchor.y = (startAnchor.y - (startAnchor.y - endAnchor.y)/2) - (startAnchor.y - (startAnchor.y - endAnchor.y)/2 - midAnchor.y)/3;
+    // control1.x = startAnchor.x + (midAnchor.x - startAnchor.x) / 3;
+    // control1.y = startAnchor.y;
+    // control2.x = startAnchor.x + ((midAnchor.x - startAnchor.x) / 3) * 2;
+    // control2.y = midAnchor.y + (startAnchor.y - endAnchor.y) / 3;
+    // control3.x = midAnchor.x + (endAnchor.x - midAnchor.x) / 3;
+    // control3.y = midAnchor.y - (startAnchor.y - endAnchor.y) / 3;
+    // control4.x = midAnchor.x + ((endAnchor.x - midAnchor.x) / 3) * 2;
+    // control4.y = endAnchor.y;
+    complexLinks.push(new ComplexLink(startName, dataTypeSubCat, endName, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, amazon, apple, facebook, google, companies, allText));
   }
 }
 
@@ -295,7 +303,7 @@ function drawTitles(){
   textAlign(CENTER, CENTER);
   text('DATA SOURCES', marginLeft, marginTop - 40);
   text('COLLECTION PURPOSE', marginLeft + vizWidth, marginTop - 40);
-  text('TYPES OF DATA', marginLeft + vizWidth / 3, marginTop - 40);
+  text('TYPES OF DATA', marginLeft + vizWidth / 2, marginTop - 40);
 }
 
 function draw(){
@@ -386,7 +394,7 @@ class Link {
   display(){
     noFill();
     stroke(0, 0, 100, this.strokeAlpha);
-    strokeWeight(1);
+    strokeWeight(0.8);
     bezier(this.startVector.x, this.startVector.y, this.midVector1.x, this.midVector1.y, this.midVector2.x, this.midVector2.y, this.endVector.x, this.endVector.y);
   }
   update(activeNodes){
@@ -394,24 +402,26 @@ class Link {
       this.strokeAlpha = 1;
     }
     else {
-      this.strokeAlpha = 0.1;
+      this.strokeAlpha = 0.05;
     }
   }
 }
 
 class ComplexLink {
-  constructor(dataType, dataTypeSubCat, purpose, purposeSubCat, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies, testText){
+  constructor(dataType, dataTypeSubCat, purpose, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, amazon, apple, facebook, google, companies, testText){
     this.dataType = dataType;
     this.dataTypeSubCat = dataTypeSubCat;
     this.purpose = purpose;
     this.purposeSubCat = purposeSubCat;
     this.startAnchor = startAnchor;
     this.endAnchor = endAnchor;
-    this.midAnchor = midAnchor;
-    this.control1 = control1;
-    this.control2 = control2;
-    this.control3 = control3;
-    this.control4 = control4;
+    this.midAnchor1 = midAnchor1;
+    this.midAnchor2 = midAnchor2;
+    // this.midAnchor = midAnchor;
+    // this.control1 = control1;
+    // this.control2 = control2;
+    // this.control3 = control3;
+    // this.control4 = control4;
     this.strokeAlpha = 1;
     this.amazon = amazon;
     this.apple = apple;
@@ -424,38 +434,39 @@ class ComplexLink {
     this.pointList = [];
     for (var i = 0; i < 80; i++) {
       let t = i/80;
-      let x = bezierPoint(this.startAnchor.x, this.control1.x, this.control2.x, this.midAnchor.x, t);
-      let y = bezierPoint(this.startAnchor.y, this.control1.y, this.control2.y, this.midAnchor.y, t);
+      let x = bezierPoint(this.startAnchor.x, this.midAnchor1.x, this.midAnchor2.x, this.endAnchor.x, t);
+      let y = bezierPoint(this.startAnchor.y, this.midAnchor1.y, this.midAnchor2.y, this.endAnchor.y, t);
       let point = createVector(x, y);
       this.pointList.push(point);
-      x = bezierPoint(this.midAnchor.x, this.control3.x, this.control4.x, this.endAnchor.x, t);
-      y = bezierPoint(this.midAnchor.y, this.control3.y, this.control4.y, this.endAnchor.y, t);
-      point = createVector(x, y);
-      this.pointList.push(point);
+      // x = bezierPoint(this.midAnchor.x, this.control3.x, this.control4.x, this.endAnchor.x, t);
+      // y = bezierPoint(this.midAnchor.y, this.control3.y, this.control4.y, this.endAnchor.y, t);
+      // point = createVector(x, y);
+      // this.pointList.push(point);
     }
   }
   display(){
     noFill();
     stroke(0, 0, 100, this.strokeAlpha);
     strokeWeight(this.strokeWeight);
-    beginShape();
-    vertex(this.startAnchor.x, this.startAnchor.y);
-    bezierVertex(this.control1.x, this.control1.y, this.control2.x, this.control2.y, this.midAnchor.x, this.midAnchor.y);
-    bezierVertex(this.control3.x, this.control3.y, this.control4.x, this.control4.y, this.endAnchor.x, this.endAnchor.y);
-    endShape();
+    bezier(this.startAnchor.x, this.startAnchor.y, this.midAnchor1.x, this.midAnchor1.y, this.midAnchor2.x, this.midAnchor2.y, this.endAnchor.x, this.endAnchor.y);
+    // beginShape();
+    // vertex(this.startAnchor.x, this.startAnchor.y);
+    // bezierVertex(this.control1.x, this.control1.y, this.control2.x, this.control2.y, this.midAnchor.x, this.midAnchor.y);
+    // bezierVertex(this.control3.x, this.control3.y, this.control4.x, this.control4.y, this.endAnchor.x, this.endAnchor.y);
+    // endShape();
     if (this.displayText){
       noStroke();
       fill(0, 0, 100, 1);
       textAlign(LEFT, TOP);
       textSize(9);
-      text(this.testText, this.midAnchor.x, vizHeight, 200, 400);
+      text(this.testText, this.midAnchor1.x, vizHeight, 200, 400);
     }
   }
   update(currentFilter){
     if (this.companies.includes(currentFilter[0]) && this.dataTypeSubCat.includes(currentFilter[1]) && this.purposeSubCat.includes(currentFilter[2])){
       this.strokeAlpha = 1;
     }
-    else {this.strokeAlpha = 0.1}
+    else {this.strokeAlpha = 0.05}
   }
 }
 
