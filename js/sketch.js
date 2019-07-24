@@ -1,22 +1,21 @@
-/*TODO
-* Add title
-* Add intro paragraph
-* Add credits, links and methods at the end
-* Hover over line and increase stroke
-* Hover or click on a node and use that as filter
-* Add text to line quoting from TOS
-* Add link to TOS (with paragraph and section number)
-* Add line tiying all together for the company
-* Add label saying what company is collecting the data
-* Add comparison option
-* Add vagueness functionality
-*/
+// TODO: Add intro paragraph
+// TODO: Add credits, links and methods at the end
+// TODO: Hover or click on a node and use that as filter
+// TODO: Add text to line quoting from TOS
+// TODO: Add link to TOS (with paragraph and section number)
+// TODO: Add comparison option
+// TODO: Add privacy functionality
+// TODO: Take a look at this link: https://public.os.alis.fund/
+// TODO: Add "built with p5 & tachyons"
+// TODO: Add "collection method" dropdown (harvested or user provided or from third parties)
+
+var numberOfComplexLinks = 1000;
 
 // Get div width & height
 var divWidth = document.getElementById('visualization').clientWidth;
 var divHeight = document.getElementById('visualization').clientHeight;
 
-// Get dropdown menus
+// Get dropdown menus & buttons
 var allCompaniesButton = document.getElementById('allCompanies');
 var amazonButton = document.getElementById('amazon');
 var appleButton = document.getElementById('apple');
@@ -26,70 +25,64 @@ var dataTypeSelector;
 var purposeSelector;
 var resetButton;
 
-let marginTop = 120;
-let marginBottom = 50;
-let marginLeft = 120;
-let marginRight = 150;
-let vizWidth = divWidth - marginLeft - marginRight;
-let vizHeight = divHeight - marginTop - marginBottom;
-
-let nodesTable;
-let linksTable;
-let complexLinksTable;
-let nodes = [];
-let links = [];
-let complexLinks = [];
-let currentFilter = ['all', 'all', 'all'];
-
-let myFont;
-let myTitleFont;
-
-// let lineColor = color(255, 255, 255);
-// let textColor = color(255, 255, 255);
-// let nodesColor = color(255, 161, 0);
+// Set global variables
+var marginTop = 100;
+var marginBottom = 50;
+var marginLeft = 120;
+var marginRight = 150;
+var vizWidth = divWidth - marginLeft - marginRight;
+var vizHeight = divHeight - marginTop - marginBottom;
+var nodesTable;
+var linksTable;
+var complexLinksTable;
+var nodes = [];
+var links = [];
+var complexLinks = [];
+var currentFilter = ['all', 'all', 'all'];
+var myFont;
+var myTitleFont;
 
 function preload(){
-  nodesTable = loadTable('data/nodes.csv', 'csv', 'header');
-  linksTable = loadTable('data/links.csv', 'csv', 'header');
-  complexLinksTable = loadTable('data/complexLinks.csv', 'csv', 'header');
+  console.log('Loading data...');
+  nodesTable = loadTable('data/tempNodes.csv', 'csv', 'header');
+  linksTable = loadTable('data/tempLinks.csv', 'csv', 'header');
+  complexLinksTable = loadTable('data/tempComplexLinks.csv', 'csv', 'header');
   myFont = loadFont('fonts/Inconsolata-Regular.ttf');
   myTitleFont = loadFont('fonts/Inconsolata-Bold.ttf');
 }
 
 function buildNodes(){
+  console.log('Building nodes...');
   let dataSourcesNum = 0;
   let dataTypesNum = 0;
-  let companiesNum = 1;
   let purposeNum = 0;
   for (var i = 0; i < nodesTable.getRowCount(); i++) {
     var nodeCat = nodesTable.getString(i, 'category');
-    if (nodeCat == 'dataSources') {dataSourcesNum += 1;}
-    else if (nodeCat == 'dataTypes') {dataTypesNum += 1;}
-    else if (nodeCat == 'collectionPurpose') {purposeNum += 1;}
+    if (nodeCat == 'data source') {dataSourcesNum += 1;}
+    else if (nodeCat == 'type of data') {dataTypesNum += 1;}
+    else if (nodeCat == 'purpose') {purposeNum += 1;}
   }
   for (var i = 0; i < nodesTable.getRowCount(); i++) {
     var nodeOrder = nodesTable.getNum(i, 'order');
     var nodeName = nodesTable.getString(i, 'name');
     var nodeCat = nodesTable.getString(i, 'category');
-    if (nodeCat == 'dataSources') {nodes.push(new Node(nodeName, marginLeft, marginTop + (vizHeight/(dataSourcesNum - 1)) * (nodeOrder - 1), RIGHT));}
-    else if (nodeCat == 'dataTypes') {nodes.push(new Node(nodeName, marginLeft + vizWidth / 3, marginTop + (vizHeight/(dataTypesNum - 1)) * (nodeOrder - 1), CENTER));}
-    else if (nodeCat == 'companies') {nodes.push(new Node(nodeName, marginLeft + (vizWidth / 3) * 2, marginTop + (vizHeight/2), CENTER));}
-    else {nodes.push(new Node(nodeName, marginLeft + vizWidth, marginTop + (vizHeight/(purposeNum - 1)) * (nodeOrder - 1), LEFT));}
+    var nodeSubCat = nodesTable.getString(i, 'subcategory');
+    if (nodeCat == 'data source') {nodes.push(new Node(nodeName, nodeSubCat, marginLeft, marginTop + (vizHeight/(dataSourcesNum - 1)) * (nodeOrder - 1), RIGHT));}
+    else if (nodeCat == 'type of data') {nodes.push(new Node(nodeName, nodeSubCat, marginLeft + vizWidth / 3, marginTop + (vizHeight/(dataTypesNum - 1)) * (nodeOrder - 1), CENTER));}
+    else if (nodeCat == 'companies') {nodes.push(new Node(nodeName, nodeSubCat, marginLeft + (vizWidth / 3) * 2, marginTop + (vizHeight/2), CENTER));}
+    else {nodes.push(new Node(nodeName, nodeSubCat, marginLeft + vizWidth, marginTop + (vizHeight/(purposeNum - 1)) * (nodeOrder - 1), LEFT));}
   }
 }
 
 function buildLinks(){
+  console.log('Building simple links...');
   for (var i = 0; i < linksTable.getRowCount(); i++) {
-    var startName = linksTable.getString(i, 'start');
-    var endName = linksTable.getString(i, 'end');
+    let startName = linksTable.getString(i, 'dataSource');
+    let endName = linksTable.getString(i, 'typeOfData');
     let startVector = createVector();
     let endVector = createVector();
     let midVector1 = createVector();
     let midVector2 = createVector();
-    var mid1X;
-    var mid1Y;
-    var mid2X;
-    var mid2Y;
     for (node of nodes){
       if (node.name == startName){
         startVector.x = node.x;
@@ -109,16 +102,24 @@ function buildLinks(){
 }
 
 function buildComplexLinks(){
+  console.log('Building complex links...');
   for (var i = 0; i < complexLinksTable.getRowCount(); i++) {
-    var startName = ['all', complexLinksTable.getString(i, 'start')];
-    var endName = ['all', complexLinksTable.getString(i, 'end')];
-    var amazon = complexLinksTable.getString(i, 'amazon');
-    var apple = complexLinksTable.getString(i, 'apple');
-    var facebook = complexLinksTable.getString(i, 'facebook');
-    var google = complexLinksTable.getString(i, 'google');
-    var companies = complexLinksTable.getString(i, 'companies').split(',');
+  // for (var i = 0; i < numberOfComplexLinks; i++) {
+    let startName = ['all', complexLinksTable.getString(i, 'dataType')];
+    let endName = ['all', complexLinksTable.getString(i, 'purpose')];
+    let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'dataTypeSubCat')];
+    let purposeSubCat = ['all', complexLinksTable.getString(i, 'purposeSubCat')];
+    let companies = complexLinksTable.getString(i, 'companies').split(',');
     companies.push('all');
-    let testText = complexLinksTable.getString(i, 'testText');
+    let textAmazon = complexLinksTable.getString(i, 'TextAmazon');
+    let textApple = complexLinksTable.getString(i, 'TextApple');
+    let textFacebook = complexLinksTable.getString(i, 'TextFacebook');
+    let textGoogle = complexLinksTable.getString(i, 'TextGoogle');
+    let allText = '';
+    if (textAmazon != ''){allText += 'Amazon: ' + textAmazon + '\n\n';}
+    if (textApple != ''){allText += 'Apple: ' + textApple + '\n\n';}
+    if (textFacebook != ''){allText += 'Facebook: ' + textFacebook + '\n\n';}
+    if (textGoogle != ''){allText += 'Google: ' + textGoogle + '\n\n';}
     let startAnchor = createVector();
     let midAnchor = createVector();
     let endAnchor = createVector();
@@ -149,7 +150,7 @@ function buildComplexLinks(){
     control3.y = midAnchor.y - (startAnchor.y - endAnchor.y) / 3;
     control4.x = midAnchor.x + ((endAnchor.x - midAnchor.x) / 3) * 2;
     control4.y = endAnchor.y;
-    complexLinks.push(new ComplexLink(startName, endName, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies, testText));
+    complexLinks.push(new ComplexLink(startName, dataTypeSubCat, endName, purposeSubCat, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies, allText));
   }
 }
 
@@ -175,6 +176,7 @@ function updateButtons(button){
   button.className = button.className.replace('b--white-50', 'b--navy');
   button.className = button.className.replace(' hover-bg-white-20', '');
 }
+
 function resetButtons(button){
   button.className = button.className.replace('bg-gold', 'bg-transparent');
   button.className = button.className.replace('dark-gray', 'white');
@@ -192,6 +194,7 @@ allCompaniesButton.onclick = function(){
   resetButtons(googleButton);
 }
 amazonButton.onclick = function(){
+  console.log('Amazon pressed...');
   updateLines('amazon');
   updateButtons(amazonButton);
   resetButtons(allCompaniesButton);
@@ -200,6 +203,7 @@ amazonButton.onclick = function(){
   resetButtons(googleButton);
 }
 appleButton.onclick = function(){
+  console.log('Apple pressed...');
   updateLines('apple');
   updateButtons(appleButton);
   resetButtons(amazonButton);
@@ -208,6 +212,7 @@ appleButton.onclick = function(){
   resetButtons(googleButton);
 }
 facebookButton.onclick = function(){
+  console.log('Facebook pressed...');
   updateLines('facebook');
   updateButtons(facebookButton);
   resetButtons(amazonButton);
@@ -216,7 +221,8 @@ facebookButton.onclick = function(){
   resetButtons(googleButton);
 }
 googleButton.onclick = function(){
-  updateLines('amazon');
+  console.log('Google pressed...');
+  updateLines('google');
   updateButtons(googleButton);
   resetButtons(amazonButton);
   resetButtons(appleButton);
@@ -300,6 +306,9 @@ function draw(){
   for (link of links){
     link.display();
   }
+  // for (let index = 0; index < numberOfComplexLinks; index++) {
+  //   complexLinks[index].display();
+  // }
   for (complexLink of complexLinks){
     complexLink.display();
   }
@@ -311,8 +320,9 @@ function draw(){
 }
 
 class Node {
-  constructor(name, xCoord, yCoord, textAlign) {
+  constructor(name, subCat, xCoord, yCoord, textAlign) {
     this.name = name;
+    this.subCat = subCat;
     this.x = xCoord;
     this.y = yCoord;
     this.diameter = 10;
@@ -340,12 +350,15 @@ class Node {
     }
     else if (this.textAlign == CENTER) {
       this.textPositionX = 0;
-      this.textPositionY = 20;
+      this.textPositionY = 0;
+      fill(38, 100, 100, this.opacity / 1.5);
+      rect(this.x -(this.name.length*4.8)/2, this.y -4, this.name.length * 4.8, 10);
     }
     else {
       this.textPositionX = 15;
       this.textPositionY = 0;
     }
+    fill(0, 0, 100, this.opacity);
     textAlign(this.textAlign, CENTER);
     textSize(9);
     text(this.name.toUpperCase(), this.x + this.textPositionX, this.y + this.textPositionY);
@@ -368,7 +381,7 @@ class Link {
     this.endVector = endVector;
     this.midVector1 = midVector1;
     this.midVector2 = midVector2;
-    this.strokeAlpha = 1;
+    this.strokeAlpha = 0.8;
   }
   display(){
     noFill();
@@ -387,9 +400,11 @@ class Link {
 }
 
 class ComplexLink {
-  constructor(dataType, purpose, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies, testText){
+  constructor(dataType, dataTypeSubCat, purpose, purposeSubCat, startAnchor, control1, control2, midAnchor, control3, control4, endAnchor, amazon, apple, facebook, google, companies, testText){
     this.dataType = dataType;
+    this.dataTypeSubCat = dataTypeSubCat;
     this.purpose = purpose;
+    this.purposeSubCat = purposeSubCat;
     this.startAnchor = startAnchor;
     this.endAnchor = endAnchor;
     this.midAnchor = midAnchor;
@@ -403,7 +418,7 @@ class ComplexLink {
     this.facebook = facebook;
     this.google = google;
     this.companies = companies;
-    this.strokeWeight = 1;
+    this.strokeWeight = 0.8;
     this.testText = testText;
     this.displayText = false;
     this.pointList = [];
@@ -434,48 +449,15 @@ class ComplexLink {
       textAlign(LEFT, TOP);
       textSize(9);
       text(this.testText, this.midAnchor.x, vizHeight, 200, 400);
-      console.log(this.testText);
     }
-    // noStroke();
-    // fill(0, 0, 100, 1)
-    // for (var i = 0; i < this.pointList.length; i++) {
-    //   ellipse(this.pointList[i].x, this.pointList[i].y, 1, 3);
-    // }
   }
   update(currentFilter){
-    if (this.companies.includes(currentFilter[0]) && this.dataType.includes(currentFilter[1]) && this.purpose.includes(currentFilter[2])){
+    if (this.companies.includes(currentFilter[0]) && this.dataTypeSubCat.includes(currentFilter[1]) && this.purposeSubCat.includes(currentFilter[2])){
       this.strokeAlpha = 1;
     }
     else {this.strokeAlpha = 0.1}
   }
 }
-
-// function mouseClicked() {
-//   let selectedBlue = 0;
-//   let selectedGreen = 0;
-//   let selectedRed = 0;
-//   for (var i = -10; i < 10; i++) {
-//     selectedBlue = max(selectedBlue, get(mouseX, mouseY + i)[2]);
-//     selectedGreen = max(selectedGreen, get(mouseX, mouseY + i)[1]);
-//     selectedRed = max(selectedRed, get(mouseX, mouseY + i)[0]);
-//   }
-//   // selectedBlue = get(mouseX + i, mouseY)[2];
-//   // selectedGreen = get(mouseX + i, mouseY)[1];
-//   // selectedRed = get(mouseX + i, mouseY)[0];
-//   // console.log(selectedRed);
-//   // console.log(selectedGreen);
-//   // console.log(selectedBlue);
-//   for (complexLink of complexLinks){
-//     if (complexLink.blue == selectedBlue && complexLink.green == selectedGreen && complexLink.red == selectedRed){
-//       console.log('match');
-//       complexLink.strokeWeight = 5;
-//     }
-//     else if (complexLink.strokeWeight == 5){
-//       complexLink.strokeWeight = 1;
-//     }
-//   }
-//   redraw();
-// }
 
 function mouseClicked() {
   let match = false;

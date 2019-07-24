@@ -1,0 +1,124 @@
+name,category,subcategory,order
+Active Product Use,dataSources,dataSources,1
+Cell towers,dataSources,dataSources,2
+Cookies,dataSources,dataSources,3
+Device ,dataSources,dataSources,4
+GPS location,dataSources,dataSources,5
+Third Parties ,dataSources,dataSources,6
+Third Party Applications,dataSources,dataSources,7
+User behavior,dataSources,dataSources,8
+User provided,dataSources,dataSources,9
+Wifi Access Points,dataSources,dataSources,10
+Measure ad performance,collectionPurpose,Advertising,1
+Personalize ads,collectionPurpose,Advertising,2
+Provide ads,collectionPurpose,Advertising,3
+Third party advertising,collectionPurpose,Advertising,4
+Customize search results,collectionPurpose,Analytics,5
+Improve content,collectionPurpose,Analytics,6
+Improve stores,collectionPurpose,Analytics,7
+Learn from users,collectionPurpose,Analytics,8
+Personalize content,collectionPurpose,Analytics,9
+Technical services,collectionPurpose,Business services,10
+Algorithms,collectionPurpose,Internal,11
+Auditing,collectionPurpose,Internal,12
+Deliver purchases,collectionPurpose,Location-based services,13
+Directions,collectionPurpose,Location-based services,14
+Nearby recommendations,collectionPurpose,Location-based services,15
+Maintain products/services,collectionPurpose,Operations,16
+Provide products,collectionPurpose,Operations,17
+Search results,collectionPurpose,Operations,18
+Track outages,collectionPurpose,Operations,19
+Improve products/services,collectionPurpose,Research and Development,20
+Public interest,collectionPurpose,Research and Development,21
+Surveys,collectionPurpose,Research and Development,22
+Technological advancement,collectionPurpose,Research and Development,23
+Test products/services,collectionPurpose,Research and Development,24
+Account security,collectionPurpose,Safety and Security,25
+Anti-Fraud,collectionPurpose,Safety and Security,26
+Detect malware,collectionPurpose,Safety and Security,27
+Detect suspicious content,collectionPurpose,Safety and Security,28
+Detect/prevent spam,collectionPurpose,Safety and Security,29
+Network security,collectionPurpose,Safety and Security,30
+Verify identity,collectionPurpose,Safety and Security,31
+App names,dataTypes,Device,1
+Battery level,dataTypes,Device,2
+Behaviors on device,dataTypes,Device,3
+Bluetooth signals,dataTypes,Device,4
+Browser data,dataTypes,Device,5
+Camera Settings,dataTypes,Device,6
+Camera type,dataTypes,Device,7
+Connection speed,dataTypes,Device,8
+Cookie data,dataTypes,Device,9
+Crash reports,dataTypes,Device,10
+Device attributes,dataTypes,Device,11
+File names,dataTypes,Device,12
+File types,dataTypes,Device,13
+Hardware version,dataTypes,Device,14
+Internet Service Provider,dataTypes,Device,15
+IP address,dataTypes,Device,16
+Language device setting,dataTypes,Device,17
+Mobile ID ,dataTypes,Device,18
+Mobile operator,dataTypes,Device,19
+Mouse movements,dataTypes,Device,20
+Nearby devices,dataTypes,Device,21
+Operating platform/system,dataTypes,Device,22
+Plugins,dataTypes,Device,23
+Referrer URL,dataTypes,Device,24
+Session information,dataTypes,Device,25
+Signal strength,dataTypes,Device,26
+Software versions,dataTypes,Device,27
+Storage space,dataTypes,Device,28
+Unique device identifier,dataTypes,Device,29
+Wi-Fi signal,dataTypes,Device,30
+Window placement,dataTypes,Device,31
+Businesses nearby,dataTypes,Location,32
+Current Location,dataTypes,Location,33
+Frequently visited locations,dataTypes,Location,34
+GPS location ,dataTypes,Location,35
+Location History,dataTypes,Location,36
+Time zone,dataTypes,Location,37
+Wi-Fi access points,dataTypes,Location,38
+Accounts,dataTypes,Non-Personal,39
+Actions,dataTypes,Non-Personal,40
+Ad interactions/views,dataTypes,Non-Personal,41
+Area code,dataTypes,Non-Personal,42
+Clicks/taps ,dataTypes,Non-Personal,43
+Content,dataTypes,Non-Personal,44
+Date of calls,dataTypes,Non-Personal,45
+Date of messages,dataTypes,Non-Personal,46
+Duration of calls,dataTypes,Non-Personal,47
+Features use,dataTypes,Non-Personal,48
+Occupation,dataTypes,Non-Personal,49
+Page interactions,dataTypes,Non-Personal,50
+Political view,dataTypes,Non-Personal,51
+Posts,dataTypes,Non-Personal,52
+Public data,dataTypes,Non-Personal,53
+Religion,dataTypes,Non-Personal,54
+Reviews,dataTypes,Non-Personal,55
+Scrolling,dataTypes,Non-Personal,56
+Search results ,dataTypes,Non-Personal,57
+Telephony log,dataTypes,Non-Personal,58
+Types of calls,dataTypes,Non-Personal,59
+Zip code,dataTypes,Non-Personal,60
+Authentication information,dataTypes,Personal,61
+Billing,dataTypes,Personal,62
+Contacts,dataTypes,Personal,63
+Credit card number,dataTypes,Personal,64
+Credit history,dataTypes,Personal,65
+Date of birth,dataTypes,Personal,66
+Driver's license number,dataTypes,Personal,67
+E-mail Address,dataTypes,Personal,68
+Emails received,dataTypes,Personal,69
+Emails written,dataTypes,Personal,70
+Family members information,dataTypes,Personal,71
+Gender,dataTypes,Personal,72
+Home Address,dataTypes,Personal,73
+Name,dataTypes,Personal,74
+Password,dataTypes,Personal,75
+Payment card number,dataTypes,Personal,76
+Phone number,dataTypes,Personal,77
+Photos,dataTypes,Personal,78
+Purchase information,dataTypes,Personal,79
+Shipping,dataTypes,Personal,80
+Social Security Number,dataTypes,Personal,81
+companies,companies,companies,1

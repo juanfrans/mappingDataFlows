@@ -1,0 +1,292 @@
+start,end
+Active Product Use,Actions
+Active Product Use,App names
+Active Product Use,Authentication information
+Active Product Use,Battery level
+Active Product Use,Connection speed
+Active Product Use,Contacts
+Active Product Use,Cookie data
+Active Product Use,Date of birth
+Active Product Use,Device attributes
+Active Product Use,Driver's license number
+Active Product Use,E-mail Address
+Active Product Use,Emails received
+Active Product Use,Location History
+Active Product Use,Mobile ID 
+Active Product Use,Mobile operator
+Active Product Use,Occupation
+Active Product Use,Page interactions
+Active Product Use,Plugins
+Active Product Use,Political view
+Active Product Use,Posts
+Active Product Use,Public data
+Active Product Use,Purchase information
+Active Product Use,Referrer URL
+Active Product Use,Signal strength
+Active Product Use,Telephony log
+Cell towers,App names
+Cell towers,Bluetooth signals
+Cell towers,Businesses nearby
+Cell towers,Cookie data
+Cell towers,Credit history
+Cell towers,Date of messages
+Cell towers,Duration of calls
+Cell towers,Features use
+Cell towers,Features use
+Cell towers,IP address
+Cell towers,Language device setting
+Cell towers,Mobile operator
+Cell towers,Mobile operator
+Cell towers,Nearby devices
+Cell towers,Occupation
+Cell towers,Phone number
+Cell towers,Photos
+Cell towers,Political view
+Cell towers,Posts
+Cell towers,Posts
+Cell towers,Scrolling
+Cell towers,Signal strength
+Cell towers,Time zone
+Cookies,Actions
+Cookies,Ad interactions/views
+Cookies,Authentication information
+Cookies,Behaviors on device
+Cookies,Businesses nearby
+Cookies,Camera type
+Cookies,Contacts
+Cookies,Content
+Cookies,Date of birth
+Cookies,Date of calls
+Cookies,Device attributes
+Cookies,Emails written
+Cookies,Features use
+Cookies,Features use
+Cookies,File names
+Cookies,File names
+Cookies,File types
+Cookies,Location History
+Cookies,Occupation
+Cookies,Occupation
+Cookies,Operating platform/system
+Cookies,Page interactions
+Cookies,Password
+Cookies,Password
+Cookies,Phone number
+Cookies,Political view
+Cookies,Public data
+Cookies,Reviews
+Cookies,Session information
+Cookies,Session information
+Cookies,Session information
+Cookies,Shipping
+Cookies,Social Security Number
+Cookies,Time zone
+Cookies,Types of calls
+Device ,Ad interactions/views
+Device ,Behaviors on device
+Device ,Bluetooth signals
+Device ,Businesses nearby
+Device ,Camera Settings
+Device ,Clicks/taps 
+Device ,Connection speed
+Device ,Cookie data
+Device ,Cookie data
+Device ,Date of messages
+Device ,Features use
+Device ,Hardware version
+Device ,IP address
+Device ,Location History
+Device ,Mouse movements
+Device ,Occupation
+Device ,Occupation
+Device ,Political view
+Device ,Posts
+Device ,Posts
+Device ,Scrolling
+Device ,Session information
+Device ,Signal strength
+Device ,Signal strength
+Device ,Social Security Number
+Device ,Time zone
+Device ,Types of calls
+Device ,Unique device identifier
+GPS location,Actions
+GPS location,Authentication information
+GPS location,Authentication information
+GPS location,Battery level
+GPS location,Billing
+GPS location,Billing
+GPS location,Content
+GPS location,Credit card number
+GPS location,Date of birth
+GPS location,Date of messages
+GPS location,Duration of calls
+GPS location,E-mail Address
+GPS location,Family members information
+GPS location,Frequently visited locations
+GPS location,Gender
+GPS location,Hardware version
+GPS location,Internet Service Provider
+GPS location,IP address
+GPS location,IP address
+GPS location,Mobile ID 
+GPS location,Nearby devices
+GPS location,Nearby devices
+GPS location,Political view
+GPS location,Reviews
+GPS location,Search results 
+GPS location,Unique device identifier
+GPS location,Wi-Fi signal
+GPS location,Wi-Fi signal
+Third Parties ,Accounts
+Third Parties ,Area code
+Third Parties ,Battery level
+Third Parties ,Behaviors on device
+Third Parties ,Connection speed
+Third Parties ,Connection speed
+Third Parties ,Contacts
+Third Parties ,Crash reports
+Third Parties ,Driver's license number
+Third Parties ,Emails written
+Third Parties ,Family members information
+Third Parties ,Frequently visited locations
+Third Parties ,GPS location 
+Third Parties ,Home Address
+Third Parties ,Internet Service Provider
+Third Parties ,Location History
+Third Parties ,Location History
+Third Parties ,Mobile ID 
+Third Parties ,Mobile operator
+Third Parties ,Name
+Third Parties ,Name
+Third Parties ,Occupation
+Third Parties ,Page interactions
+Third Parties ,Payment card number
+Third Parties ,Payment card number
+Third Parties ,Plugins
+Third Parties ,Political view
+Third Parties ,Posts
+Third Parties ,Session information
+Third Parties ,Session information
+Third Parties ,Shipping
+Third Parties ,Time zone
+Third Parties ,Types of calls
+Third Parties ,Types of calls
+Third Parties ,Window placement
+Third Party Applications,Area code
+Third Party Applications,Area code
+Third Party Applications,Battery level
+Third Party Applications,Behaviors on device
+Third Party Applications,Billing
+Third Party Applications,Browser data
+Third Party Applications,Device attributes
+Third Party Applications,Frequently visited locations
+Third Party Applications,GPS location 
+Third Party Applications,Internet Service Provider
+Third Party Applications,Location History
+Third Party Applications,Mobile ID 
+Third Party Applications,Religion
+Third Party Applications,Scrolling
+Third Party Applications,Session information
+Third Party Applications,Shipping
+Third Party Applications,Shipping
+Third Party Applications,Storage space
+Third Party Applications,Storage space
+Third Party Applications,Types of calls
+Third Party Applications,Unique device identifier
+Third Party Applications,Wi-Fi access points
+User behavior,Ad interactions/views
+User behavior,Authentication information
+User behavior,Authentication information
+User behavior,Billing
+User behavior,Bluetooth signals
+User behavior,Browser data
+User behavior,Camera Settings
+User behavior,Camera type
+User behavior,Content
+User behavior,Cookie data
+User behavior,Credit card number
+User behavior,Credit card number
+User behavior,Current Location
+User behavior,Date of birth
+User behavior,Date of calls
+User behavior,Date of calls
+User behavior,E-mail Address
+User behavior,E-mail Address
+User behavior,GPS location 
+User behavior,Home Address
+User behavior,Home Address
+User behavior,Location History
+User behavior,Mobile ID 
+User behavior,Mouse movements
+User behavior,Nearby devices
+User behavior,Occupation
+User behavior,Page interactions
+User behavior,Phone number
+User behavior,Photos
+User behavior,Political view
+User behavior,Posts
+User behavior,Public data
+User behavior,Referrer URL
+User behavior,Reviews
+User behavior,Wi-Fi access points
+User behavior,Zip code
+User provided,Accounts
+User provided,Accounts
+User provided,App names
+User provided,Area code
+User provided,Authentication information
+User provided,Browser data
+User provided,File types
+User provided,Home Address
+User provided,Internet Service Provider
+User provided,Mobile ID 
+User provided,Mobile operator
+User provided,Name
+User provided,Posts
+User provided,Religion
+User provided,Reviews
+User provided,Search results 
+User provided,Search results 
+User provided,Shipping
+User provided,Shipping
+User provided,Signal strength
+User provided,Telephony log
+User provided,Window placement
+User provided,Zip code
+Wifi Access Points,Actions
+Wifi Access Points,Bluetooth signals
+Wifi Access Points,Content
+Wifi Access Points,Cookie data
+Wifi Access Points,Crash reports
+Wifi Access Points,Crash reports
+Wifi Access Points,Current Location
+Wifi Access Points,Date of birth
+Wifi Access Points,Driver's license number
+Wifi Access Points,E-mail Address
+Wifi Access Points,E-mail Address
+Wifi Access Points,File names
+Wifi Access Points,File names
+Wifi Access Points,File names
+Wifi Access Points,File names
+Wifi Access Points,Frequently visited locations
+Wifi Access Points,GPS location 
+Wifi Access Points,Home Address
+Wifi Access Points,Language device setting
+Wifi Access Points,Location History
+Wifi Access Points,Mobile operator
+Wifi Access Points,Name
+Wifi Access Points,Occupation
+Wifi Access Points,Operating platform/system
+Wifi Access Points,Plugins
+Wifi Access Points,Posts
+Wifi Access Points,Posts
+Wifi Access Points,Purchase information
+Wifi Access Points,Reviews
+Wifi Access Points,Search results 
+Wifi Access Points,Shipping
+Wifi Access Points,Software versions
+Wifi Access Points,Telephony log
+Wifi Access Points,Time zone
+Wifi Access Points,Time zone
+Wifi Access Points,Time zone

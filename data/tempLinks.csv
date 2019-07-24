@@ -1,0 +1,148 @@
+dataSource,typeOfData,method,exists,exists2
+active product use,"active status (current, last use)",harvested,3,4
+active product use,ad interactions/views,harvested,3,5
+active product use,browsing history,harvested,3,24
+active product use,clicks/taps ,harvested,3,30
+active product use,clickstream (to and from),harvested,3,31
+active product use,contacts' information,harvested,3,35
+active product use,content created,user provided,3,36
+active product use,content interactions,harvested,3,38
+active product use,content interactions,harvested,3,38
+active product use,download & crash errors,harvested,3,62
+active product use,emails received,harvested,3,66
+active product use,emails written,harvested,3,67
+active product use,engages,harvested,3,68
+active product use,facebook pages ,harvested,3,69
+active product use,features use,harvested,3,72
+active product use,file names,harvested,3,73
+active product use,file types,harvested,3,74
+active product use,forwarding numbers,harvested,3,76
+active product use,groups,harvested,3,80
+active product use,hashtags,harvested,3,82
+active product use,information about other users of your account,harvested,3,90
+active product use,information about third parties you interact with,harvested,3,91
+active product use,interaction with other users of the products and service ,harvested,3,92
+active product use,login information,harvested,3,100
+active product use,page response times,harvested,3,128
+active product use,photos,user provided,3,137
+active product use,"product use (google, apple, amazon, facebook)",harvested,3,141
+active product use,products viewed,harvested,3,142
+active product use,purchase history,user provided,3,153
+active product use,reviews,user provided,3,161
+active product use,scrolling,harvested,3,163
+active product use,"searches (terms, results, history)",user provided,3,164
+active product use,session information,harvested,3,167
+active product use,telephony log,harvested,3,180
+active product use,time zone,harvested,3,186
+active product use,views,harvested,3,193
+active product use,window placement,harvested,3,198
+beacons,businesses nearby,harvested,20,25
+beacons,current location,harvested,20,42
+beacons,frequently visited locations,harvested,20,77
+beacons,people nearby,harvested,20,131
+cell towers,area code,harvested,29,17
+cell towers,businesses nearby,harvested,29,25
+cell towers,cell tower data,harvested,29,28
+cell towers,current location,harvested,29,42
+cell towers,frequently visited locations,harvested,29,77
+cell towers,people nearby,harvested,29,131
+cookies,accounts,harvested,39,2
+cookies,browser data,harvested,39,23
+cookies,browsing history,harvested,39,24
+cookies,cookies and cookie data,harvested,39,40
+cookies,referrer url,harvested,39,157
+device,battery level,harvested,55,19
+device,behaviors on device,harvested,55,21
+device,bluetooth signals,harvested,55,22
+device,browser data,harvested,55,23
+device,browsing history,harvested,55,24
+device,businesses nearby,harvested,55,25
+device,camera settings,harvested,55,26
+device,camera type,harvested,55,27
+device,clicks/taps ,harvested,55,30
+device,clickstream (to and from),harvested,55,31
+device,connection speed,harvested,55,33
+device,current location,harvested,55,42
+device,device ids ,harvested,55,56
+device,device network,harvested,55,57
+device,device settings ,harvested,55,58
+device,"device type (phone, computer) ",harvested,55,59
+device,download & crash errors,harvested,55,62
+device,duration of calls,harvested,55,64
+device,family device ids ,harvested,55,70
+device,file names,harvested,55,73
+device,file types,harvested,55,74
+device,frequently visited locations,harvested,55,77
+device,hardware version,harvested,55,81
+device,internet service provider,harvested,55,93
+device,ip address,harvested,55,95
+device,languages,harvested,55,96
+device,location history,harvested,55,99
+device,mobile operator,harvested,55,107
+device,mouse movements,harvested,55,108
+device,nearby devices,harvested,55,110
+device,operating platform/system,harvested,55,115
+device,other device information,harvested,55,120
+device,other device use,harvested,55,121
+device,page response times,harvested,55,128
+device,people nearby,harvested,55,131
+device,referrer url,harvested,55,157
+device,scrolling,harvested,55,163
+device,signal strength,harvested,55,169
+device,software versions,harvested,55,171
+device,storage space,harvested,55,173
+device,system activity,harvested,55,177
+device,time,harvested,55,185
+device,time zone,harvested,55,186
+device,use of other application,harvested,55,189
+device,wi-fi signal,harvested,55,196
+device,window placement,harvested,55,198
+third parties,accounts,from third parties,182,2
+third parties,businesses nearby,harvested,182,25
+third parties,credit history,from third parties,182,41
+third parties,driver's license number,from third parties,182,63
+third parties,family members information,from third parties,182,71
+third parties,information about third parties you interact with,from third parties,182,91
+third parties,internet service provider,harvested,182,93
+third parties,languages,from third parties,182,96
+third parties,people nearby,harvested,182,131
+third parties,potential customers,from third parties,182,138
+third parties,public data,harvested,182,152
+third parties,redemtion information,from third parties,182,156
+third parties,customer lists,from third parties,182,43
+third parties,delivery info,harvested,182,50
+third party applications,accounts,harvested,184,2
+third party applications,app ids,harvested,184,12
+third party applications,app names,harvested,184,13
+third party applications,app types,harvested,184,14
+third party applications,"searches (terms, results, history)",user provided,184,164
+third party applications,use of other application,harvested,184,189
+user provided,accounts,user provided,190,2
+user provided,contact preferences,user provided,190,34
+user provided,contacts' information,user provided,190,35
+user provided,content created,user provided,190,36
+user provided,current location,user provided,190,42
+user provided,customer service communication,user provided,190,45
+user provided,date of birth,user provided,190,48
+user provided,driver's license number,user provided,190,63
+user provided,e-mail address,user provided,190,65
+user provided,family members information,user provided,190,71
+user provided,frequently visited locations,harvested,190,77
+user provided,home address,user provided,190,84
+user provided,information about other users of your account,user provided,190,90
+user provided,languages,user provided,190,96
+user provided,login information,user provided,190,100
+user provided,name,user provided,190,109
+user provided,other account information,user provided,190,116
+user provided,payment card information,user provided,190,130
+user provided,phone number,user provided,190,135
+user provided,photograph from profile,user provided,190,136
+user provided,photos,user provided,190,137
+user provided,purchase history,user provided,190,153
+user provided,shipping,user provided,190,168
+user provided,social security number,user provided,190,170
+wifi access points,businesses nearby,harvested,197,25
+wifi access points,current location,harvested,197,42
+wifi access points,frequently visited locations,harvested,197,77
+wifi access points,people nearby,harvested,197,131
+wifi access points,wi-fi access point data,harvested,197,195
