@@ -1,5 +1,3 @@
-// TODO: Add comparison option
-// TODO: Uncolor (recolor) buttons when comparison works
 // TODO: Hover or click on a node and use that as filter
 // TODO: Add intro paragraph
 // TODO: Add credits, links and methods at the end
@@ -416,7 +414,7 @@ class Node {
     else if (this.textAlign == CENTER) {
       this.textPositionX = 0;
       this.textPositionY = 0;
-      fill(38, 100, 100, this.opacity / 1.5);
+      fill(38, 100, 100, this.opacity / 1.3);
       rect(this.x - (this.name.length * 4.8) / 2, this.y - 4, this.name.length * 4.8, 10);
     }
     else {
