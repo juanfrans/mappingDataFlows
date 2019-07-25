@@ -179,8 +179,8 @@ function setup() {
   dataTypeSelector.input(updateLines);
   purposeSelector = select('#purposeSelector');
   purposeSelector.input(updateLines);
-  collectionMethodSelector = select('#collectionMethod');
-  collectionMethodSelector.input(updateLines);
+  // collectionMethodSelector = select('#collectionMethod');
+  // collectionMethodSelector.input(updateLines);
   companyComparison1 = select('#companyComparison1');
   companyComparison2 = select('#companyComparison2');
   companyComparison1.input(updateLines);
