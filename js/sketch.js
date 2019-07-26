@@ -8,7 +8,7 @@
 // TODO: Add "built with p5 & tachyons"
 // TODO: Add "collection method" dropdown (harvested or user provided or from third parties)
 
-var numberOfComplexLinks = 1000;
+var numberOfComplexLinks = 100;
 
 // Get div width & height
 var divWidth = document.getElementById('visualization').clientWidth;
@@ -60,21 +60,21 @@ function buildNodes() {
   let dataSourcesNum = 0;
   let dataTypesNum = 0;
   let purposeNum = 0;
-  for (var i = 0; i < nodesTable.getRowCount(); i++) {
-    var nodeCat = nodesTable.getString(i, 'category');
+  for (let i = 0; i < nodesTable.getRowCount(); i++) {
+    let nodeCat = nodesTable.getString(i, 'category');
     if (nodeCat == 'data source') { dataSourcesNum += 1; }
     else if (nodeCat == 'type of data') { dataTypesNum += 1; }
     else if (nodeCat == 'purpose') { purposeNum += 1; }
   }
-  for (var i = 0; i < nodesTable.getRowCount(); i++) {
-    var nodeOrder = nodesTable.getNum(i, 'order');
-    var nodeName = nodesTable.getString(i, 'name');
-    var nodeCat = nodesTable.getString(i, 'category');
-    var nodeSubCat = nodesTable.getString(i, 'subcategory');
-    if (nodeCat == 'data source') { nodes.push(new Node(nodeName, nodeSubCat, marginLeft, marginTop + (vizHeight / (dataSourcesNum - 1)) * (nodeOrder - 1), RIGHT)); }
-    else if (nodeCat == 'type of data') { nodes.push(new Node(nodeName, nodeSubCat, marginLeft + vizWidth / 2, marginTop + (vizHeight / (dataTypesNum - 1)) * (nodeOrder - 1), CENTER)); }
-    else if (nodeCat == 'companies') { nodes.push(new Node(nodeName, nodeSubCat, marginLeft + (vizWidth / 3) * 2, marginTop + (vizHeight / 2), CENTER)); }
-    else { nodes.push(new Node(nodeName, nodeSubCat, marginLeft + vizWidth, marginTop + (vizHeight / (purposeNum - 1)) * (nodeOrder - 1), LEFT)); }
+  for (let i = 0; i < nodesTable.getRowCount(); i++) {
+    let nodeOrder = nodesTable.getNum(i, 'order');
+    let nodeName = nodesTable.getString(i, 'name');
+    let nodeCat = nodesTable.getString(i, 'category');
+    let nodeSubCat = nodesTable.getString(i, 'subcategory');
+    if (nodeCat == 'data source') { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, marginLeft, marginTop + (vizHeight / (dataSourcesNum - 1)) * (nodeOrder - 1), RIGHT)); }
+    else if (nodeCat == 'type of data') { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, marginLeft + vizWidth / 2, marginTop + (vizHeight / (dataTypesNum - 1)) * (nodeOrder - 1), CENTER)); }
+    else if (nodeCat == 'companies') { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, marginLeft + (vizWidth / 3) * 2, marginTop + (vizHeight / 2), CENTER)); }
+    else { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, marginLeft + vizWidth, marginTop + (vizHeight / (purposeNum - 1)) * (nodeOrder - 1), LEFT)); }
   }
 }
 
@@ -299,6 +299,7 @@ function resetFilters() {
 
 function updateLines(inputType) {
   let activeNodes = [];
+  // Assign the imput type to the right place in the filter array
   if (typeof (inputType) == 'string') {
     currentFilter[0] = inputType;
     currentFilter[3][0] = 'none';
@@ -325,8 +326,10 @@ function updateLines(inputType) {
     clearButtons();
   }
   console.log(currentFilter);
+  // Hide the complex links that don't meet the filter conditions
   for (complexLink of complexLinks) {
     complexLink.update(currentFilter);
+    // Run through the active complex links and create a list of active nodes
     if (complexLink.strokeAlpha == 1) {
       if (activeNodes.includes(complexLink.purpose[1])) { }
       else { activeNodes.push(complexLink.purpose[1]); }
@@ -334,10 +337,10 @@ function updateLines(inputType) {
       else { activeNodes.push(complexLink.dataType[1]); }
     }
   }
+  // Hide simple links based on the list of active nodes
   for (link of links) {
     link.update(activeNodes);
-  }
-  for (link of links) {
+    // Update the list of active nodes based on the visible simple links
     if (link.strokeAlpha == 1) {
       if (activeNodes.includes(link.startName)) { }
       else { activeNodes.push(link.startName); }
@@ -345,11 +348,16 @@ function updateLines(inputType) {
       else { activeNodes.push(link.endName); }
     }
   }
+  // Update nodes' visibility based on the list of active nodes
   for (node of nodes) {
     node.update(activeNodes);
   }
   redraw();
 }
+
+// Click on a node
+// Depending on the type of node, start with the simple or complex links at one point or another
+// Hide the lines not connected to the node or lines
 
 function drawTitles() {
   fill(0, 0, 100, 1);
@@ -383,8 +391,9 @@ function draw() {
 }
 
 class Node {
-  constructor(name, subCat, xCoord, yCoord, textAlign) {
+  constructor(name, category, subCat, xCoord, yCoord, textAlign) {
     this.name = name;
+    this.category = category;
     this.subCat = subCat;
     this.x = xCoord;
     this.y = yCoord;
@@ -396,6 +405,7 @@ class Node {
     this.textPositionX;
     this.textPositionY;
     this.opacity = 1;
+    this.selected = false;
   }
   display() {
     fill(38, 100, 100, this.opacity);
@@ -565,27 +575,95 @@ class ComplexLink {
 }
 
 function mouseClicked() {
-  let match = false;
+  let matchComplexLink = false;
+  let matchNode = false;
+  // Reset the nodes and links to full view
   for (complexLink of complexLinks) {
     if (complexLink.strokeWeight == 4) {
       complexLink.strokeWeight = 1;
       complexLink.displayText = false;
     }
   }
-  for (complexLink of complexLinks) {
-    if (complexLink.strokeAlpha == 1) {
-      for (thisPoint of complexLink.pointList) {
-        if (dist(mouseX, mouseY, thisPoint.x, thisPoint.y) < 3) {
-          match = true;
-          console.log('match');
-          complexLink.strokeWeight = 4;
-          complexLink.displayText = true;
-        }
+  for (node of nodes){
+    node.selected = false;
+    node.opacity = 1;
+  }
+  // Was a node clicked?
+  for (node of nodes){
+    if (dist(mouseX, mouseY, node.x, node.y) < 6){
+      console.log('matchNode');
+      matchNode = true;
+      node.selected = true;
+      selectBasedOnNodes(node);
+    }
+  }
+  // If a node was clicked
+  if (matchNode){
+    for (node of nodes){
+      if (node.selected == false){
+        node.opacity = 0.1;
+      }
+      else{
+        node.opacity = 1;
       }
     }
-    if (match) {
-      break;
+  }
+  else {
+    // Was an active line clicked?
+    for (complexLink of complexLinks) {
+      if (complexLink.strokeAlpha == 1) {
+        for (thisPoint of complexLink.pointList) {
+          if (dist(mouseX, mouseY, thisPoint.x, thisPoint.y) < 3) {
+            matchComplexLink = true;
+            console.log('matchComplexLink');
+            complexLink.strokeWeight = 4;
+            complexLink.displayText = true;
+          }
+        }
+      }
+      if (matchComplexLink) {
+        break;
+      }
     }
   }
   redraw();
+}
+
+function selectBasedOnNodes(clickedNode){
+  console.log(clickedNode);
+  let activeNodes = [];
+  if (clickedNode.category == 'data source'){
+    console.log('select simple links first...');
+    for (link of links){
+      if (link.startName == clickedNode.name){
+        link.strokeAlpha = 1;
+        activeNodes.push(link.endName);
+      }
+      else {
+        link.strokeAlpha = 0.05;
+      }
+    }
+    console.log(activeNodes);
+    for (complexLink of complexLinks){
+      if (activeNodes.includes(complexLink.dataType[1])){
+        complexLink.strokeAlpha = 1;
+        activeNodes.push(complexLink.purpose[1]);
+      }
+      else {
+        complexLink.strokeAlpha = 0.05;
+      }
+    }
+    console.log(activeNodes);
+    for (node of nodes){
+      if (activeNodes.includes(node.name)){
+        node.selected = true;
+      }
+    }
+  }
+  else if (node.category == 'type of data'){
+    console.log('select simple links & complex links...');
+  }
+  else {
+    console.log('select complex links first...');
+  }
 }
