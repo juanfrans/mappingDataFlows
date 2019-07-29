@@ -73,6 +73,14 @@ class Link {
     this.strokeAlpha = 0.8;
     this.visible = true;
     this.active = true;
+    this.pointList = [];
+    for (var i = 0; i < 100; i++) {
+      let t = i / 100;
+      let x = bezierPoint(this.startVector.x, this.midVector1.x, this.midVector2.x, this.endVector.x, t);
+      let y = bezierPoint(this.startVector.y, this.midVector1.y, this.midVector2.y, this.endVector.y, t);
+      let point = createVector(x, y);
+      this.pointList.push(point);
+    }
   }
   display() {
     if (this.active && this.visible){

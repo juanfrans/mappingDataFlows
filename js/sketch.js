@@ -401,6 +401,7 @@ function mouseClicked() {
   if (canvasClicked) {
     let matchComplexLink = false;
     let matchNode = false;
+    let matchLink = false;
     // Was a node clicked?
     for (node of nodes) {
       if (node.active){
@@ -430,6 +431,23 @@ function mouseClicked() {
       }
     }
     if (matchNode == false && matchComplexLink == false) {
+      for (link of links) {
+        if (matchLink) {
+          break;
+        }
+        if (link.active) {
+          for (thisPoint of link.pointList) {
+            if (dist(mouseX, mouseY, thisPoint.x, thisPoint.y) < 3) {
+              matchLink = true;
+              console.log('matchLink');
+              selectBasedOnLink(link);
+              break;
+            }
+          }
+        }
+      }
+    }
+    if (matchNode == false && matchComplexLink == false && matchLink == false) {
       for (complexLink of complexLinks) {
         if (complexLink.active) {
           complexLink.visible = true;
@@ -466,6 +484,37 @@ function selectBasedOnComplexLink(clickedLink){
       }
       else{
         link.visible = false;
+      }
+    }
+  }
+  for (node of nodes){
+    if (node.active){
+      if (visibleNodes.includes(node.name)){
+        node.visible = true;
+      }
+      else {
+        node.visible = false;
+      }
+    }
+  }
+}
+
+function selectBasedOnLink(clickedLink){
+  clickedLink.visible = true;
+  let visibleNodes = [clickedLink.startName, clickedLink.endName];
+  for (link of links){
+    if (link != clickedLink){
+      link.visible = false;
+    }
+  }
+  for (complexLink of complexLinks){
+    if (complexLink.active){
+      if (complexLink.dataType[1] == clickedLink.endName){
+        complexLink.visible = true;
+        visibleNodes.push(complexLink.purpose[1]);
+      }
+      else{
+        complexLink.visible = false;
       }
     }
   }
