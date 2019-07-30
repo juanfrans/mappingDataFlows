@@ -146,8 +146,8 @@ function buildLinks() {
 // Build complex links
 function buildComplexLinks() {
   console.log('Building complex links...');
-  // for (var i = 0; i < complexLinksTable.getRowCount(); i++) {
-  for (var i = 0; i < numberOfComplexLinks; i++) {
+  for (var i = 0; i < complexLinksTable.getRowCount(); i++) {
+  // for (var i = 0; i < numberOfComplexLinks; i++) {
     let startName = ['all', complexLinksTable.getString(i, 'dataType')];
     let endName = ['all', complexLinksTable.getString(i, 'purpose')];
     let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'dataTypeSubCat')];
