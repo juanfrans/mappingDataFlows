@@ -7,12 +7,6 @@
 // TODO: Add "built with p5 & tachyons"
 // TODO: Add "collection method" dropdown (harvested or user provided or from third parties)
 
-/*
-Clicking on a node or line should isolate them but maintain the current filters ==> done
-Clicking outside a line or node should bring back all the lines or nodes, still within the current filters ==> done
-Clicking "reset filters" should reset the filters and bring back all the lines and nodes ==> done
-*/
-
 document.addEventListener('click', function (event) {
   if (event.target.parentElement.id == 'visualization') {
     canvasClicked = true;
@@ -152,8 +146,8 @@ function buildLinks() {
 // Build complex links
 function buildComplexLinks() {
   console.log('Building complex links...');
-  for (var i = 0; i < complexLinksTable.getRowCount(); i++) {
-  // for (var i = 0; i < numberOfComplexLinks; i++) {
+  // for (var i = 0; i < complexLinksTable.getRowCount(); i++) {
+  for (var i = 0; i < numberOfComplexLinks; i++) {
     let startName = ['all', complexLinksTable.getString(i, 'dataType')];
     let endName = ['all', complexLinksTable.getString(i, 'purpose')];
     let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'dataTypeSubCat')];
@@ -266,7 +260,7 @@ googleButton.onclick = function () {
 // This function updates lines and nodes based on the filters
 function updateLines(inputType) {
   let activeNodes = [];
-  // Assign the imput type to the right place in the filter array
+  // Assign the input type to the right place in the filter array
   if (typeof (inputType) == 'string') {
     currentFilter[0] = inputType;
     currentFilter[3][0] = 'none';
@@ -299,20 +293,22 @@ function updateLines(inputType) {
     // Run through the active complex links and create a list of active nodes
     if (complexLink.active) {
       if (activeNodes.includes(complexLink.purpose[1])) { }
-      else { activeNodes.push(complexLink.purpose[1]); }
+      else { activeNodes.push(complexLink.purpose[1]);}
       if (activeNodes.includes(complexLink.dataType[1])) { }
-      else { activeNodes.push(complexLink.dataType[1]); }
+      else { activeNodes.push(complexLink.dataType[1]);}
     }
   }
   // Deactivate simple links based on the list of active nodes
   for (link of links) {
     link.update(activeNodes);
-    // Update the list of active nodes based on the visible simple links
+  }
+  // Update the list of active nodes based on the visible simple links
+  for (link of links){
     if (link.active) {
       if (activeNodes.includes(link.startName)) { }
-      else { activeNodes.push(link.startName); }
+      else { activeNodes.push(link.startName);}
       if (activeNodes.includes(link.endName)) { }
-      else { activeNodes.push(link.endName); }
+      else { activeNodes.push(link.endName);}
     }
   }
   // Update nodes' visibility based on the list of active nodes

@@ -52,8 +52,8 @@ class Node {
     textSize(9);
     text(this.name.toUpperCase(), this.x + this.textPositionX, this.y + this.textPositionY);
   }
-  update(activeNodes) {
-    if (activeNodes.includes(node.name)) {
+  update(chosenNodes) {
+    if (chosenNodes.includes(node.name)) {
       this.active = true;
     }
     else {
@@ -94,8 +94,8 @@ class Link {
     strokeWeight(0.8);
     bezier(this.startVector.x, this.startVector.y, this.midVector1.x, this.midVector1.y, this.midVector2.x, this.midVector2.y, this.endVector.x, this.endVector.y);
   }
-  update(activeNodes) {
-    if (activeNodes.includes(this.endName) || activeNodes.includes(this.startName)) {
+  update(chosenNodes) {
+    if (chosenNodes.includes(this.endName) || chosenNodes.includes(this.startName)) {
       this.active = true;
     }
     else {
