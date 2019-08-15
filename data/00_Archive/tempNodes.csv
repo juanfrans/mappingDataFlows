@@ -1,124 +1,200 @@
-name,category,subcategory,order
-Active Product Use,dataSources,dataSources,1
-Cell towers,dataSources,dataSources,2
-Cookies,dataSources,dataSources,3
-Device ,dataSources,dataSources,4
-GPS location,dataSources,dataSources,5
-Third Parties ,dataSources,dataSources,6
-Third Party Applications,dataSources,dataSources,7
-User behavior,dataSources,dataSources,8
-User provided,dataSources,dataSources,9
-Wifi Access Points,dataSources,dataSources,10
-Measure ad performance,collectionPurpose,Advertising,1
-Personalize ads,collectionPurpose,Advertising,2
-Provide ads,collectionPurpose,Advertising,3
-Third party advertising,collectionPurpose,Advertising,4
-Customize search results,collectionPurpose,Analytics,5
-Improve content,collectionPurpose,Analytics,6
-Improve stores,collectionPurpose,Analytics,7
-Learn from users,collectionPurpose,Analytics,8
-Personalize content,collectionPurpose,Analytics,9
-Technical services,collectionPurpose,Business services,10
-Algorithms,collectionPurpose,Internal,11
-Auditing,collectionPurpose,Internal,12
-Deliver purchases,collectionPurpose,Location-based services,13
-Directions,collectionPurpose,Location-based services,14
-Nearby recommendations,collectionPurpose,Location-based services,15
-Maintain products/services,collectionPurpose,Operations,16
-Provide products,collectionPurpose,Operations,17
-Search results,collectionPurpose,Operations,18
-Track outages,collectionPurpose,Operations,19
-Improve products/services,collectionPurpose,Research and Development,20
-Public interest,collectionPurpose,Research and Development,21
-Surveys,collectionPurpose,Research and Development,22
-Technological advancement,collectionPurpose,Research and Development,23
-Test products/services,collectionPurpose,Research and Development,24
-Account security,collectionPurpose,Safety and Security,25
-Anti-Fraud,collectionPurpose,Safety and Security,26
-Detect malware,collectionPurpose,Safety and Security,27
-Detect suspicious content,collectionPurpose,Safety and Security,28
-Detect/prevent spam,collectionPurpose,Safety and Security,29
-Network security,collectionPurpose,Safety and Security,30
-Verify identity,collectionPurpose,Safety and Security,31
-App names,dataTypes,Device,1
-Battery level,dataTypes,Device,2
-Behaviors on device,dataTypes,Device,3
-Bluetooth signals,dataTypes,Device,4
-Browser data,dataTypes,Device,5
-Camera Settings,dataTypes,Device,6
-Camera type,dataTypes,Device,7
-Connection speed,dataTypes,Device,8
-Cookie data,dataTypes,Device,9
-Crash reports,dataTypes,Device,10
-Device attributes,dataTypes,Device,11
-File names,dataTypes,Device,12
-File types,dataTypes,Device,13
-Hardware version,dataTypes,Device,14
-Internet Service Provider,dataTypes,Device,15
-IP address,dataTypes,Device,16
-Language device setting,dataTypes,Device,17
-Mobile ID ,dataTypes,Device,18
-Mobile operator,dataTypes,Device,19
-Mouse movements,dataTypes,Device,20
-Nearby devices,dataTypes,Device,21
-Operating platform/system,dataTypes,Device,22
-Plugins,dataTypes,Device,23
-Referrer URL,dataTypes,Device,24
-Session information,dataTypes,Device,25
-Signal strength,dataTypes,Device,26
-Software versions,dataTypes,Device,27
-Storage space,dataTypes,Device,28
-Unique device identifier,dataTypes,Device,29
-Wi-Fi signal,dataTypes,Device,30
-Window placement,dataTypes,Device,31
-Businesses nearby,dataTypes,Location,32
-Current Location,dataTypes,Location,33
-Frequently visited locations,dataTypes,Location,34
-GPS location ,dataTypes,Location,35
-Location History,dataTypes,Location,36
-Time zone,dataTypes,Location,37
-Wi-Fi access points,dataTypes,Location,38
-Accounts,dataTypes,Non-Personal,39
-Actions,dataTypes,Non-Personal,40
-Ad interactions/views,dataTypes,Non-Personal,41
-Area code,dataTypes,Non-Personal,42
-Clicks/taps ,dataTypes,Non-Personal,43
-Content,dataTypes,Non-Personal,44
-Date of calls,dataTypes,Non-Personal,45
-Date of messages,dataTypes,Non-Personal,46
-Duration of calls,dataTypes,Non-Personal,47
-Features use,dataTypes,Non-Personal,48
-Occupation,dataTypes,Non-Personal,49
-Page interactions,dataTypes,Non-Personal,50
-Political view,dataTypes,Non-Personal,51
-Posts,dataTypes,Non-Personal,52
-Public data,dataTypes,Non-Personal,53
-Religion,dataTypes,Non-Personal,54
-Reviews,dataTypes,Non-Personal,55
-Scrolling,dataTypes,Non-Personal,56
-Search results ,dataTypes,Non-Personal,57
-Telephony log,dataTypes,Non-Personal,58
-Types of calls,dataTypes,Non-Personal,59
-Zip code,dataTypes,Non-Personal,60
-Authentication information,dataTypes,Personal,61
-Billing,dataTypes,Personal,62
-Contacts,dataTypes,Personal,63
-Credit card number,dataTypes,Personal,64
-Credit history,dataTypes,Personal,65
-Date of birth,dataTypes,Personal,66
-Driver's license number,dataTypes,Personal,67
-E-mail Address,dataTypes,Personal,68
-Emails received,dataTypes,Personal,69
-Emails written,dataTypes,Personal,70
-Family members information,dataTypes,Personal,71
-Gender,dataTypes,Personal,72
-Home Address,dataTypes,Personal,73
-Name,dataTypes,Personal,74
-Password,dataTypes,Personal,75
-Payment card number,dataTypes,Personal,76
-Phone number,dataTypes,Personal,77
-Photos,dataTypes,Personal,78
-Purchase information,dataTypes,Personal,79
-Shipping,dataTypes,Personal,80
-Social Security Number,dataTypes,Personal,81
-companies,companies,companies,1
+name,category,subcategory,order,exists1,exists2
+companies,companies,companies,1,,
+active product use,data source,data source,1,,
+beacons,data source,data source,2,,
+cell towers,data source,data source,3,,
+cookies,data source,data source,4,,
+device,data source,data source,5,,
+third parties,data source,data source,6,,
+third party applications,data source,data source,7,,
+user provided,data source,data source,8,,
+wifi access points,data source,data source,9,,
+account security,purpose,safety and security,1,,
+advertisers,purpose,third party,2,,
+affiliated businesses and partners,purpose,third party,3,,
+algorithms,purpose,operations,4,,
+anti-fraud,purpose,safety and security,5,,
+any purpose,purpose,any purpose,6,,
+apis,purpose,third party,7,,
+applications,purpose,operations,8,,
+apps,purpose,third party,9,,
+auditing,purpose,operations,10,,
+connect across products/devices,purpose,operations,11,,
+content creators,purpose,third party,12,,
+customer service,purpose,operations,13,,
+customize search results,purpose,analytics,14,,
+data providers,purpose,third party,15,,
+deliver purchases,purpose,location-based services,16,,
+detect malware,purpose,safety and security,17,,
+detect suspicious content,purpose,safety and security,18,,
+detect/prevent spam,purpose,safety and security,19,,
+directions,purpose,location-based services,20,,
+domain administrators,purpose,third party,21,,
+financial transactions,purpose,operations,22,,
+fulfillment,purpose,business services,23,,
+government and law enforcement,purpose,third party,24,,
+help advertisers,purpose,business services,25,,
+improve ads,purpose,advertising,26,,
+improve applications,purpose,analytics,27,,
+improve content,purpose,analytics,28,,
+improve products/services,purpose,analytics,29,,
+improve stores,purpose,analytics,30,,
+investigate violations,purpose,safety and security,31,,
+learn from users,purpose,analytics,32,,
+legal compliance,purpose,operations,33,,
+loss prevention,purpose,safety and security,34,,
+maintain products/services,purpose,operations,35,,
+measure ad performance,purpose,advertising,36,,
+measure performance,purpose,analytics,37,,
+measurement partners,purpose,third party,38,,
+merchants/vendors,purpose,third party,39,,
+nearby recommendations,purpose,location-based services,40,,
+network security,purpose,safety and security,41,,
+new owner,purpose,third party,42,,
+new products/services,purpose,research and development,43,,
+other advertising,purpose,advertising,44,,
+other analytics/data analysis,purpose,analytics,45,,
+other business services,purpose,business services,46,,
+other internal purposes,purpose,operations,47,,
+other location-based services,purpose,location-based services,48,,
+other operations,purpose,operations,49,,
+other research and development,purpose,research and development,50,,
+other safety and security,purpose,safety and security,51,,
+other unspecified third parties (anyone),purpose,third party,52,,
+personailze products/services,purpose,analytics,53,,
+personalize ads,purpose,advertising,54,,
+personalize content,purpose,analytics,55,,
+prevent harm,purpose,safety and security,56,,
+processing search terms,purpose,analytics,57,,
+protect company,purpose,safety and security,58,,
+protect services,purpose,safety and security,59,,
+protect users/public,purpose,safety and security,60,,
+provide ads,purpose,advertising,61,,
+provide content,purpose,operations,62,,
+provide features,purpose,operations,63,,
+provide products,purpose,operations,64,,
+provide search results,purpose,operations,65,,
+provide services,purpose,operations,66,,
+purchases,purpose,operations,67,,
+recognize faces,purpose,operations,68,,
+regulators,purpose,third party,69,,
+research and innovate for social good,purpose,research and development,70,,
+researchers/academics,purpose,third party,71,,
+select ads,purpose,advertising,72,,
+service providers/carriers,purpose,third party,73,,
+sponsored content,purpose,advertising,74,,
+suggestions/recommendations,purpose,operations,75,,
+surveys,purpose,research and development,76,,
+technical services,purpose,business services,77,,
+technological advancement,purpose,research and development,78,,
+test products/services,purpose,research and development,79,,
+third party advertising,purpose,advertising,80,,
+track outages,purpose,operations,81,,
+understand customer behavior,purpose,analytics,82,,
+verify activity,purpose,safety and security,83,,
+verify identity,purpose,safety and security,84,,
+websites,purpose,third party,85,,
+accounts,type of data,non-personal data,1,,
+"active status (current, last use)",type of data,non-personal data,2,,
+ad interactions/views,type of data,non-personal data,3,,
+app ids,type of data,personal data,4,,
+app names,type of data,device,5,,
+app types,type of data,device,6,,
+area code,type of data,non-personal data,7,,
+battery level,type of data,device,8,,
+behaviors on device,type of data,device,9,,
+bluetooth signals,type of data,device,10,,
+browser data,type of data,device,11,,
+browsing history,type of data,non-personal data,12,,
+businesses nearby,type of data,location data,13,,
+camera settings,type of data,device,14,,
+camera type,type of data,device,15,,
+cell tower data,type of data,location data,16,,
+clicks/taps ,type of data,non-personal data,17,,
+clickstream (to and from),type of data,non-personal data,18,,
+connection speed,type of data,device,19,,
+contact preferences,type of data,non-personal data,20,,
+contacts' information,type of data,personal data,21,,
+content created,type of data,non-personal data,22,,
+content interactions,type of data,non-personal data,23,,
+cookies and cookie data,type of data,device,24,,
+credit history,type of data,personal data,25,,
+current location,type of data,location data,26,,
+customer lists,type of data,personal data,27,,
+customer service communication,type of data,non-personal data,28,,
+date of birth,type of data,personal data,29,,
+delivery info,type of data,non-personal data,30,,
+demographics,type of data,personal data,31,,
+device ids ,type of data,personal data,32,,
+device network,type of data,device,33,,
+device settings ,type of data,device,34,,
+"device type (phone, computer) ",type of data,device,35,,
+download & crash errors,type of data,device,36,,
+driver's license number,type of data,personal data,37,,
+duration of calls,type of data,non-personal data,38,,
+e-mail address,type of data,personal data,39,,
+emails received,type of data,personal data,40,,
+emails written,type of data,personal data,41,,
+engages,type of data,non-personal data,42,,
+facebook pages ,type of data,non-personal data,43,,
+family device ids ,type of data,personal data,44,,
+family members information,type of data,personal data,45,,
+features use,type of data,non-personal data,46,,
+file names,type of data,device,47,,
+file types,type of data,device,48,,
+forwarding numbers,type of data,non-personal data,49,,
+frequently visited locations,type of data,location data,50,,
+groups,type of data,non-personal data,51,,
+hardware version,type of data,device,52,,
+hashtags,type of data,non-personal data,53,,
+home address,type of data,personal data,54,,
+information about other users of your account,type of data,non-personal data,55,,
+information about third parties you interact with,type of data,non-personal data,56,,
+interaction with other users of the products and service ,type of data,non-personal data,57,,
+internet service provider,type of data,device,58,,
+ip address,type of data,device,59,,
+languages,type of data,non-personal data,60,,
+location history,type of data,location data,61,,
+login information,type of data,personal data,62,,
+mobile operator,type of data,device,63,,
+mouse movements,type of data,device,64,,
+name,type of data,personal data,65,,
+nearby devices,type of data,device,66,,
+operating platform/system,type of data,device,67,,
+other account information,type of data,personal data,68,,
+other device information,type of data,device,69,,
+other device use,type of data,non-personal data,70,,
+page response times,type of data,device,71,,
+password,type of data,personal data,72,,
+payment card information,type of data,personal data,73,,
+people nearby,type of data,location data,74,,
+phone number,type of data,personal data,75,,
+photograph from profile,type of data,personal data,76,,
+photos,type of data,personal data,77,,
+potential customers,type of data,non-personal data,78,,
+"product use (google, apple, amazon, facebook)",type of data,non-personal data,79,,
+products viewed,type of data,non-personal data,80,,
+public data,type of data,non-personal data,81,,
+purchase history,type of data,non-personal data,82,,
+redemtion information,type of data,personal data,83,,
+referrer url,type of data,device,84,,
+reviews,type of data,non-personal data,85,,
+routing information,type of data,non-personal data,86,,
+scrolling,type of data,non-personal data,87,,
+"searches (terms, results, history)",type of data,non-personal data,88,,
+session information,type of data,device,89,,
+shipping,type of data,personal data,90,,
+signal strength,type of data,device,91,,
+social security number,type of data,personal data,92,,
+software versions,type of data,device,93,,
+storage space,type of data,device,94,,
+system activity,type of data,device,95,,
+telephony log,type of data,non-personal data,96,,
+time,type of data,non-personal data,97,,
+time zone,type of data,device,98,,
+use of other application,type of data,non-personal data,99,,
+views,type of data,non-personal data,100,,
+wi-fi access point data,type of data,location data,101,,
+wi-fi signal,type of data,device,102,,
+window placement,type of data,device,103,,
+zip code,type of data,non-personal data,104,,

@@ -61,9 +61,9 @@ var canvasClicked = false;
 // Load the datasets
 function preload() {
   console.log('Loading data...');
-  nodesTable = loadTable('data/tempNodes.csv', 'csv', 'header');
-  linksTable = loadTable('data/tempLinks.csv', 'csv', 'header');
-  complexLinksTable = loadTable('data/tempComplexLinks.csv', 'csv', 'header');
+  nodesTable = loadTable('data/Nodes.csv', 'csv', 'header');
+  linksTable = loadTable('data/SimpleLinks.csv', 'csv', 'header');
+  complexLinksTable = loadTable('data/ComplexLinks.csv', 'csv', 'header');
   myFont = loadFont('fonts/Inconsolata-Regular.ttf');
   myTitleFont = loadFont('fonts/Inconsolata-Bold.ttf');
 }
@@ -98,20 +98,21 @@ function buildNodes() {
   let dataTypesNum = 0;
   let purposeNum = 0;
   for (let i = 0; i < nodesTable.getRowCount(); i++) {
-    let nodeCat = nodesTable.getString(i, 'category');
-    if (nodeCat == 'data source') { dataSourcesNum += 1; }
-    else if (nodeCat == 'type of data') { dataTypesNum += 1; }
-    else if (nodeCat == 'purpose') { purposeNum += 1; }
+    let nodeCat = nodesTable.getString(i, 'CATEGORY');
+    if (nodeCat == 'DATASOURCE') { dataSourcesNum += 1; }
+    else if (nodeCat == 'TYPE OF DATA') { dataTypesNum += 1; }
+    else if (nodeCat == 'PURPOSE') { purposeNum += 1; }
   }
   for (let i = 0; i < nodesTable.getRowCount(); i++) {
-    let nodeOrder = nodesTable.getNum(i, 'order');
-    let nodeName = nodesTable.getString(i, 'name');
-    let nodeCat = nodesTable.getString(i, 'category');
-    let nodeSubCat = nodesTable.getString(i, 'subcategory');
-    if (nodeCat == 'data source') { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, marginLeft, marginTop + (vizHeight / (dataSourcesNum - 1)) * (nodeOrder - 1), RIGHT)); }
-    else if (nodeCat == 'type of data') { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, marginLeft + vizWidth / 2, marginTop + (vizHeight / (dataTypesNum - 1)) * (nodeOrder - 1), CENTER)); }
-    else if (nodeCat == 'companies') { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, marginLeft + (vizWidth / 3) * 2, marginTop + (vizHeight / 2), CENTER)); }
-    else { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, marginLeft + vizWidth, marginTop + (vizHeight / (purposeNum - 1)) * (nodeOrder - 1), LEFT)); }
+    let nodeOrder = nodesTable.getNum(i, 'ORDER');
+    let nodeName = nodesTable.getString(i, 'NAME');
+    let nodeCat = nodesTable.getString(i, 'CATEGORY');
+    let nodeSubCat = nodesTable.getString(i, 'SUBCATEGORY');
+    let includes = nodesTable.getString(i, 'INCLUDES');
+    if (nodeCat == 'DATASOURCE') { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, includes, marginLeft, marginTop + (vizHeight / (dataSourcesNum - 1)) * (nodeOrder - 1), RIGHT)); }
+    else if (nodeCat == 'TYPE OF DATA') { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, includes, marginLeft + vizWidth / 2, marginTop + (vizHeight / (dataTypesNum - 1)) * (nodeOrder - 1), CENTER)); }
+    else if (nodeCat == 'companies') { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, includes, marginLeft + (vizWidth / 3) * 2, marginTop + (vizHeight / 2), CENTER)); }
+    else { nodes.push(new Node(nodeName, nodeCat, nodeSubCat, includes, marginLeft + vizWidth, marginTop + (vizHeight / (purposeNum - 1)) * (nodeOrder - 1), LEFT)); }
   }
 }
 
@@ -119,8 +120,9 @@ function buildNodes() {
 function buildLinks() {
   console.log('Building simple links...');
   for (var i = 0; i < linksTable.getRowCount(); i++) {
-    let startName = linksTable.getString(i, 'dataSource');
-    let endName = linksTable.getString(i, 'typeOfData');
+    let startName = linksTable.getString(i, 'DATASOURCE');
+    let endName = linksTable.getString(i, 'DATATYPE');
+    let how = linksTable.getString(i, 'HOW');
     let startVector = createVector();
     let endVector = createVector();
     let midVector1 = createVector();
@@ -139,7 +141,7 @@ function buildLinks() {
     midVector1.y = startVector.y;
     midVector2.x = startVector.x + ((endVector.x - startVector.x) / 8) * 5;
     midVector2.y = endVector.y;
-    links.push(new Link(startName, endName, startVector, endVector, midVector1, midVector2));
+    links.push(new Link(startName, endName, how, startVector, endVector, midVector1, midVector2));
   }
 }
 
@@ -148,16 +150,20 @@ function buildComplexLinks() {
   console.log('Building complex links...');
   for (var i = 0; i < complexLinksTable.getRowCount(); i++) {
   // for (var i = 0; i < numberOfComplexLinks; i++) {
-    let startName = ['all', complexLinksTable.getString(i, 'dataType')];
-    let endName = ['all', complexLinksTable.getString(i, 'purpose')];
-    let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'dataTypeSubCat')];
-    let purposeSubCat = ['all', complexLinksTable.getString(i, 'purposeSubCat')];
-    let companies = complexLinksTable.getString(i, 'companies').split(',');
+    let startName = ['all', complexLinksTable.getString(i, 'DATATYPE')];
+    let endName = ['all', complexLinksTable.getString(i, 'PURPOSE')];
+    let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'DATATYPESUBCATEGORY')];
+    let purposeSubCat = ['all', complexLinksTable.getString(i, 'PURPOSESUBCATEGORY')];
+    let companies = complexLinksTable.getString(i, 'COMPANIES').split(',');
     companies.push('all');
-    let textAmazon = complexLinksTable.getString(i, 'TextAmazon');
-    let textApple = complexLinksTable.getString(i, 'TextApple');
-    let textFacebook = complexLinksTable.getString(i, 'TextFacebook');
-    let textGoogle = complexLinksTable.getString(i, 'TextGoogle');
+    // let textAmazon = complexLinksTable.getString(i, 'TextAmazon');
+    // let textApple = complexLinksTable.getString(i, 'TextApple');
+    // let textFacebook = complexLinksTable.getString(i, 'TextFacebook');
+    // let textGoogle = complexLinksTable.getString(i, 'TextGoogle');
+    let textAmazon = '';
+    let textApple = '';
+    let textFacebook = '';
+    let textGoogle = '';
     let allText = '';
     if (textAmazon != '') { allText += 'Amazon: ' + textAmazon + '\n\n'; }
     if (textApple != '') { allText += 'Apple: ' + textApple + '\n\n'; }
@@ -218,7 +224,7 @@ allCompaniesButton.onclick = function () {
 }
 amazonButton.onclick = function () {
   console.log('Amazon pressed...');
-  updateLines('amazon');
+  updateLines('AMAZON');
   updateButtons(amazonButton);
   resetButtons(allCompaniesButton);
   resetButtons(appleButton);
@@ -228,7 +234,7 @@ amazonButton.onclick = function () {
 }
 appleButton.onclick = function () {
   console.log('Apple pressed...');
-  updateLines('apple');
+  updateLines('APPLE');
   updateButtons(appleButton);
   resetButtons(amazonButton);
   resetButtons(allCompaniesButton);
@@ -238,7 +244,7 @@ appleButton.onclick = function () {
 }
 facebookButton.onclick = function () {
   console.log('Facebook pressed...');
-  updateLines('facebook');
+  updateLines('FACEBOOK');
   updateButtons(facebookButton);
   resetButtons(amazonButton);
   resetButtons(appleButton);
@@ -248,7 +254,7 @@ facebookButton.onclick = function () {
 }
 googleButton.onclick = function () {
   console.log('Google pressed...');
-  updateLines('google');
+  updateLines('GOOGLE');
   updateButtons(googleButton);
   resetButtons(amazonButton);
   resetButtons(appleButton);
@@ -528,7 +534,7 @@ function selectBasedOnLink(clickedLink){
 
 function selectBasedOnNode(clickedNode) {
   let visibleNodes = [clickedNode.name];
-  if (clickedNode.category == 'data source') {
+  if (clickedNode.category == 'DATASOURCE') {
     for (link of links) {
       if (link.startName == clickedNode.name) {
         link.visible = true;
@@ -556,7 +562,7 @@ function selectBasedOnNode(clickedNode) {
       }
     }
   }
-  else if (clickedNode.category == 'type of data') {
+  else if (clickedNode.category == 'TYPE OF DATA') {
     for (link of links) {
       if (link.endName == clickedNode.name) {
         link.visible = true;

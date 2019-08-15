@@ -1,9 +1,10 @@
 // Classes definitions
 class Node {
-  constructor(name, category, subCat, xCoord, yCoord, textAlign) {
+  constructor(name, category, subCat, includes, xCoord, yCoord, textAlign) {
     this.name = name;
     this.category = category;
     this.subCat = subCat;
+    this.includes = includes;
     this.x = xCoord;
     this.y = yCoord;
     this.diameter = 10;
@@ -39,9 +40,9 @@ class Node {
     }
     else if (this.textAlign == CENTER) {
       this.textPositionX = 0;
-      this.textPositionY = 0;
-      fill(38, 100, 100, this.opacity / 1.3);
-      rect(this.x - (this.name.length * 4.8) / 2, this.y - 4, this.name.length * 4.8, 10);
+      this.textPositionY = 15;
+      // fill(38, 100, 100, this.opacity / 2);
+      // rect(this.x - (this.name.length * 4.8) / 2, this.y - 4 + this.textPositionY, this.name.length * 4.8, 10);
     }
     else {
       this.textPositionX = 15;
@@ -63,9 +64,10 @@ class Node {
 }
 
 class Link {
-  constructor(startName, endName, startVector, endVector, midVector1, midVector2) {
+  constructor(startName, endName, how, startVector, endVector, midVector1, midVector2) {
     this.startName = startName;
     this.endName = endName;
+    this.how = how;
     this.startVector = startVector;
     this.endVector = endVector;
     this.midVector1 = midVector1;
