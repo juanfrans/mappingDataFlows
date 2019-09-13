@@ -165,18 +165,21 @@ class ComplexLink {
           this.h = 213;
           this.s = 100;
           this.b = 61;
+          this.strokeWeight = 1.5;
           this.active = true;
         }
         else if (this.companies.includes(currentFilter[3][1]) & (this.companies.includes(currentFilter[3][0]) == false)) {
           this.h = 22;
           this.s = 100;
           this.b = 100;
+          this.strokeWeight = 1.5;
           this.active = true;
         }
         else if (this.companies.includes(currentFilter[3][0]) & this.companies.includes(currentFilter[3][1])) {
           this.h = 0;
           this.s = 0;
           this.b = 100;
+          this.strokeWeight = 0.4;
           this.active = true;
         }
         else {
@@ -190,6 +193,7 @@ class ComplexLink {
         this.h = 0;
         this.s = 0;
         this.b = 100;
+        this.strokeWeight = 0.8;
         this.active = true;
       }
     }
