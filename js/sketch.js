@@ -19,6 +19,48 @@ document.addEventListener('click', function (event) {
   }
 }, false);
 
+// Modals code
+// Get the modal
+var case1_1Modal = document.getElementById("case1_1Modal");
+// Get the button that opens the modal
+var buttonCase1 = document.getElementById("case1");
+// Get the <span> element that closes the modal
+var nextCase1_1Modal = document.getElementsByClassName("nextCase1_1Modal")[0];
+var nextCase1_2Modal = document.getElementsByClassName("nextCase1_2Modal")[0];
+var nextCase1_3Modal = document.getElementsByClassName("nextCase1_3Modal")[0];
+// When the user clicks on the button, open the modal
+buttonCase1.onclick = function () {
+  case1_1Modal.className = case1_1Modal.className.replace('dn', 'db');
+  resetFilters();
+  // case1_1Modal.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+nextCase1_1Modal.onclick = function () {
+  case1_1Modal.className = case1_1Modal.className.replace('db', 'dn');
+  case1_2Modal.className = case1_2Modal.className.replace('dn', 'db');
+}
+nextCase1_2Modal.onclick = function () {
+  case1_2Modal.className = case1_1Modal.className.replace('db', 'dn');
+  case1_3Modal.className = case1_2Modal.className.replace('dn', 'db');
+}
+nextCase1_3Modal.onclick = function () {
+  case1_3Modal.className = case1_1Modal.className.replace('db', 'dn');
+  console.log('Apple pressed...');
+  comparisonButtons('reset');
+  updateLines('APPLE');
+  updateButtons(appleButton);
+  resetButtons(amazonButton);
+  resetButtons(allCompaniesButton);
+  resetButtons(facebookButton);
+  resetButtons(googleButton);
+}
+// When the user clicks anywhere outside of the modal, close it
+// window.onclick = function (event) {
+//   if (event.target == case1_1Modal) {
+//     case1_1Modal.className = case1_1Modal.className.replace('db', 'dn');
+//   }
+// } 
+
 var numberOfComplexLinks = 2000;
 
 // Get div width & height
