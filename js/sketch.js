@@ -1,10 +1,10 @@
-// TODO: Add includes tooltip
 // TODO: Add selected cases
+// TODO: Add download data option (with creative commons license)
+// TODO: Add privacy functionality
 // TODO: Add intro paragraph
 // TODO: Add credits, links and methods at the end
 // TODO: Add text to line quoting from TOS
 // TODO: Add link to TOS (with paragraph and section number)
-// TODO: Add privacy functionality
 // TODO: Take a look at this link: https://public.os.alis.fund/
 // TODO: Add "built with p5 & tachyons"
 // TODO: Add "collection method" dropdown (harvested or user provided or from third parties)
