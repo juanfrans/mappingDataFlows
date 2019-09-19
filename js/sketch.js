@@ -1,3 +1,7 @@
+// TODO: When comparing companies, dim the simple links and the shared complex links
+// TODO: When comparing companies, add legend
+// TODO: Add includes tooltip
+// TODO: Add selected cases
 // TODO: Add intro paragraph
 // TODO: Add credits, links and methods at the end
 // TODO: Add text to line quoting from TOS
@@ -57,6 +61,7 @@ var myTitleFont;
 var hiddenLinkStroke = 0.03;
 var hiddenNodeOpacity = 0.08;
 var canvasClicked = false;
+var comparisonActive = false;
 
 // Load the datasets
 function preload() {
@@ -214,53 +219,53 @@ function draw() {
 
 // Companies buttons
 allCompaniesButton.onclick = function () {
+  comparisonButtons('reset');
   updateLines('all');
   updateButtons(allCompanies);
   resetButtons(amazonButton);
   resetButtons(appleButton);
   resetButtons(facebookButton);
   resetButtons(googleButton);
-  comparisonButtons('reset');
 }
 amazonButton.onclick = function () {
   console.log('Amazon pressed...');
+  comparisonButtons('reset');
   updateLines('AMAZON');
   updateButtons(amazonButton);
   resetButtons(allCompaniesButton);
   resetButtons(appleButton);
   resetButtons(facebookButton);
   resetButtons(googleButton);
-  comparisonButtons('reset');
 }
 appleButton.onclick = function () {
   console.log('Apple pressed...');
+  comparisonButtons('reset');
   updateLines('APPLE');
   updateButtons(appleButton);
   resetButtons(amazonButton);
   resetButtons(allCompaniesButton);
   resetButtons(facebookButton);
   resetButtons(googleButton);
-  comparisonButtons('reset');
 }
 facebookButton.onclick = function () {
   console.log('Facebook pressed...');
+  comparisonButtons('reset');
   updateLines('FACEBOOK');
   updateButtons(facebookButton);
   resetButtons(amazonButton);
   resetButtons(appleButton);
   resetButtons(allCompaniesButton);
   resetButtons(googleButton);
-  comparisonButtons('reset');
 }
 googleButton.onclick = function () {
   console.log('Google pressed...');
+  comparisonButtons('reset');
   updateLines('GOOGLE');
   updateButtons(googleButton);
   resetButtons(amazonButton);
   resetButtons(appleButton);
   resetButtons(facebookButton);
   resetButtons(allCompaniesButton);
-  comparisonButtons('reset');
 }
 
 // This function updates lines and nodes based on the filters
@@ -283,6 +288,7 @@ function updateLines(inputType) {
     currentFilter[3][0] = companyComparison1.value();
     currentFilter[3][1] = companyComparison2.value();
     comparisonButtons('compare');
+    comparisonActive = true;
     clearButtons();
   }
   else if (inputType.target.id == 'companyComparison2' & companyComparison2.value() != 'none' & companyComparison1.value() != 'none' & companyComparison1.value() != companyComparison2.value()) {
@@ -290,6 +296,7 @@ function updateLines(inputType) {
     currentFilter[3][0] = companyComparison1.value();
     currentFilter[3][1] = companyComparison2.value();
     comparisonButtons('compare');
+    comparisonActive = true;
     clearButtons();
   }
   console.log(currentFilter);
@@ -344,13 +351,13 @@ function resetFilters() {
     node.active = true;
     node.visible = true;
   }
-  redraw();
   updateButtons(allCompanies);
   resetButtons(amazonButton);
   resetButtons(appleButton);
   resetButtons(facebookButton);
   resetButtons(googleButton);
   comparisonButtons('reset');
+  redraw();
 }
 
 function updateButtons(button) {
@@ -370,6 +377,7 @@ function comparisonButtons(action) {
     comparisonButton2.className = comparisonButton2.className.replace('bg-orange', 'bg-transparent');
     companyComparison1.value('none');
     companyComparison2.value('none');
+    comparisonActive = false;
   }
 }
 

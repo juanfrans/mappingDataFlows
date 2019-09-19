@@ -86,7 +86,12 @@ class Link {
   }
   display() {
     if (this.active && this.visible){
-      this.strokeAlpha = 0.8;
+      if (comparisonActive){
+        this.strokeAlpha = 0.3;
+      }
+      else {
+        this.strokeAlpha = 0.8;
+      }
     }
     else {
       this.strokeAlpha = hiddenLinkStroke;
@@ -179,7 +184,7 @@ class ComplexLink {
           this.h = 0;
           this.s = 0;
           this.b = 100;
-          this.strokeWeight = 0.4;
+          this.strokeWeight = 0.3;
           this.active = true;
         }
         else {
