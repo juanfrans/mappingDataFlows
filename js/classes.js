@@ -17,6 +17,7 @@ class Node {
     this.opacity = 1;
     this.visible = true;
     this.active = true;
+    this.showIncludes = false;
   }
   display() {
     if (this.active && this.visible){
@@ -24,6 +25,7 @@ class Node {
     }
     else{
       this.opacity = hiddenNodeOpacity;
+      this.showIncludes = false;
     }
     fill(38, 100, 100, this.opacity);
     noStroke();
@@ -52,6 +54,23 @@ class Node {
     textAlign(this.textAlign, CENTER);
     textSize(9);
     text(this.name.toUpperCase(), this.x + this.textPositionX, this.y + this.textPositionY);
+    if (this.showIncludes){
+      let includesWidth;
+      let includesHeight;
+      if (textWidth('INCLUDES: ' + this.includes.toUpperCase()) < 250){
+        includesWidth = textWidth('INCLUDES: ' + this.includes.toUpperCase()) + 10;
+        includesHeight = 15;
+      }
+      else {
+        includesWidth = 250;
+        includesHeight = 12 * ceil(textWidth('INCLUDES: ' + this.includes.toUpperCase()) / 250);
+      }
+      fill(308, 92, 24, 0.5);
+      rect(this.x + this.textPositionX - includesWidth / 2, this.y + this.textPositionY + 8, includesWidth, includesHeight);
+      fill(0, 0, 100);
+      textAlign(CENTER, TOP);
+      text('INCLUDES: ' + this.includes.toUpperCase(), this.x + this.textPositionX - 125, this.y + this.textPositionY + 10, 250, 50);
+    }
   }
   update(chosenNodes) {
     if (chosenNodes.includes(node.name)) {

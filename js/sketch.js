@@ -1,5 +1,3 @@
-// TODO: When comparing companies, dim the simple links and the shared complex links
-// TODO: When comparing companies, add legend
 // TODO: Add includes tooltip
 // TODO: Add selected cases
 // TODO: Add intro paragraph
@@ -348,6 +346,7 @@ function resetFilters() {
     link.visible = true;
   }
   for (node of nodes) {
+    node.showIncludes = false;
     node.active = true;
     node.visible = true;
   }
@@ -464,6 +463,7 @@ function mouseClicked() {
         }
       }
       for (node of nodes) {
+        node.showIncludes = false;
         if (node.active) {
           node.visible = true;
         }
@@ -498,6 +498,7 @@ function selectBasedOnComplexLink(clickedLink){
     }
   }
   for (node of nodes){
+    node.showIncludes = false;
     if (node.active){
       if (visibleNodes.includes(node.name)){
         node.visible = true;
@@ -529,6 +530,7 @@ function selectBasedOnLink(clickedLink){
     }
   }
   for (node of nodes){
+    node.showIncludes = false;
     if (node.active){
       if (visibleNodes.includes(node.name)){
         node.visible = true;
@@ -541,6 +543,14 @@ function selectBasedOnLink(clickedLink){
 }
 
 function selectBasedOnNode(clickedNode) {
+  for (node of nodes){
+    if (node == clickedNode){
+      node.showIncludes = true;
+    }
+    else {
+      node.showIncludes = false;
+    }
+  }
   let visibleNodes = [clickedNode.name];
   if (clickedNode.category == 'DATASOURCE') {
     for (link of links) {
