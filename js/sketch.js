@@ -1,3 +1,5 @@
+// TODO: Filter nodes that don't include anything
+// TODO: Add harvested vs. user provided filter
 // TODO: Add selected cases
 // TODO: Add download data option (with creative commons license)
 // TODO: Add privacy functionality
