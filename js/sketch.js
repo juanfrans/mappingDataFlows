@@ -127,8 +127,8 @@ function setup() {
   dataTypeSelector.input(updateLines);
   purposeSelector = select('#purposeSelector');
   purposeSelector.input(updateLines);
-  // collectionMethodSelector = select('#collectionMethod');
-  // collectionMethodSelector.input(updateLines);
+  collectionMethodSelector = select('#collectionMethod');
+  collectionMethodSelector.input(selectByCollectionMethod);
   companyComparison1 = select('#companyComparison1');
   companyComparison2 = select('#companyComparison2');
   companyComparison1.input(updateLines);
@@ -379,6 +379,7 @@ function resetFilters() {
   companyComparison1.value('none');
   companyComparison2.value('none');
   currentFilter = ['all', 'all', 'all', ['none', 'none']];
+  collectionMethodSelector.value('all');
   for (complexLink of complexLinks) {
     complexLink.update(currentFilter);
     complexLink.active = true;
@@ -583,6 +584,51 @@ function selectBasedOnLink(clickedLink){
       }
     }
   }
+}
+
+function selectByCollectionMethod(input){
+  let collectionMethod = input.target.value;
+  console.log(collectionMethod);
+  let visibleNodes = [];
+  for (link of links){
+    if (collectionMethod == 'all'){
+      link.visible = true;
+      visibleNodes.push(link.startName);
+      visibleNodes.push(link.endName);
+    }
+    else{
+      if (link.how == collectionMethod) {
+        link.visible = true;
+        visibleNodes.push(link.startName);
+        visibleNodes.push(link.endName);
+      }
+      else {
+        link.visible = false;
+      }
+    }
+  }
+  for (complexLink of complexLinks) {
+    if (complexLink.active) {
+      if (visibleNodes.includes(complexLink.dataType[1])) {
+        complexLink.visible = true;
+        visibleNodes.push(complexLink.purpose[1]);
+      }
+      else {
+        complexLink.visible = false;
+      }
+    }
+  }
+  for (node of nodes) {
+    if (node.active) {
+      if (visibleNodes.includes(node.name)) {
+        node.visible = true;
+      }
+      else {
+        node.visible = false;
+      }
+    }
+  }
+  redraw();
 }
 
 function selectBasedOnNode(clickedNode) {
