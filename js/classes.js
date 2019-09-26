@@ -54,7 +54,7 @@ class Node {
     textAlign(this.textAlign, CENTER);
     textSize(9);
     text(this.name.toUpperCase(), this.x + this.textPositionX, this.y + this.textPositionY);
-    if (this.showIncludes){
+    if (this.showIncludes && this.includes != ''){
       let includesWidth;
       let includesHeight;
       if (textWidth('INCLUDES: ' + this.includes.toUpperCase()) < 250){
