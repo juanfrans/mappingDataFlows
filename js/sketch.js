@@ -1,7 +1,7 @@
 // TODO: Add harvested vs. user provided filter
 // TODO: Add selected cases
 // TODO: Add download data option (with creative commons license)
-// TODO: Add privacy functionality
+// TODO: Add privacy functionality ("default" & "strict" ==> there are 3 options, full (disappears), partial (grays out) and no control (white))
 // TODO: Add intro paragraph
 // TODO: Add credits, links and methods at the end
 // TODO: Add text to line quoting from TOS
