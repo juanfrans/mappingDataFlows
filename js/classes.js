@@ -42,7 +42,7 @@ class Node {
     }
     else if (this.textAlign == CENTER) {
       this.textPositionX = 0;
-      this.textPositionY = 15;
+      this.textPositionY = 13;
       // fill(38, 100, 100, this.opacity / 2);
       // rect(this.x - (this.name.length * 4.8) / 2, this.y - 4 + this.textPositionY, this.name.length * 4.8, 10);
     }
@@ -185,21 +185,21 @@ class ComplexLink {
   update(currentFilter) {
     if (this.companies.includes(currentFilter[0]) && this.dataTypeSubCat.includes(currentFilter[1]) && this.purposeSubCat.includes(currentFilter[2])) {
       if (currentFilter[3][0] != 'none') {
-        if (this.companies.includes(currentFilter[3][0]) & (this.companies.includes(currentFilter[3][1]) == false)) {
-          this.h = 213;
-          this.s = 100;
-          this.b = 61;
+        if (this.companies.includes(currentFilter[3][0]) && !(this.companies.includes(currentFilter[3][1]))) {
+          this.h = 209;
+          this.s = 41;
+          this.b = 100;
           this.strokeWeight = 1.5;
           this.active = true;
         }
-        else if (this.companies.includes(currentFilter[3][1]) & (this.companies.includes(currentFilter[3][0]) == false)) {
-          this.h = 22;
+        else if (this.companies.includes(currentFilter[3][1]) && !(this.companies.includes(currentFilter[3][0]))) {
+          this.h = 23;
           this.s = 100;
           this.b = 100;
           this.strokeWeight = 1.5;
           this.active = true;
         }
-        else if (this.companies.includes(currentFilter[3][0]) & this.companies.includes(currentFilter[3][1])) {
+        else if (this.companies.includes(currentFilter[3][0]) && this.companies.includes(currentFilter[3][1])) {
           this.h = 0;
           this.s = 0;
           this.b = 100;

@@ -108,8 +108,8 @@ var comparisonActive = false;
 function preload() {
   console.log('Loading data...');
   nodesTable = loadTable('data/Nodes.csv', 'csv', 'header');
-  linksTable = loadTable('data/SimpleLinks.csv', 'csv', 'header');
-  complexLinksTable = loadTable('data/ComplexLinks.csv', 'csv', 'header');
+  linksTable = loadTable('data/Generates.csv', 'csv', 'header');
+  complexLinksTable = loadTable('data/CollectsUsesShares.csv', 'csv', 'header');
   myFont = loadFont('fonts/Inconsolata-Regular.ttf');
   myTitleFont = loadFont('fonts/Inconsolata-Bold.ttf');
 }
@@ -412,11 +412,11 @@ function updateButtons(button) {
 
 function comparisonButtons(action) {
   if (action == 'compare') {
-    comparisonButton1.className = comparisonButton1.className.replace('bg-transparent', 'bg-dark-blue');
+    comparisonButton1.className = comparisonButton1.className.replace('bg-transparent', 'bg-light-blue');
     comparisonButton2.className = comparisonButton2.className.replace('bg-transparent', 'bg-orange');
   }
   else {
-    comparisonButton1.className = comparisonButton1.className.replace('bg-dark-blue', 'bg-transparent');
+    comparisonButton1.className = comparisonButton1.className.replace('bg-light-blue', 'bg-transparent');
     comparisonButton2.className = comparisonButton2.className.replace('bg-orange', 'bg-transparent');
     companyComparison1.value('none');
     companyComparison2.value('none');
