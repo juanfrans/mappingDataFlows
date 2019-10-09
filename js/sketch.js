@@ -23,29 +23,21 @@ document.addEventListener('click', function (event) {
 // Modals code
 // Get the modal
 var case1_1Modal = document.getElementById("case1_1Modal");
+var case2_1Modal = document.getElementById("case2_1Modal");
 // Get the button that opens the modal
 var buttonCase1 = document.getElementById("case1");
+var buttonCase2 = document.getElementById("case2");
 // Get the <span> element that closes the modal
 var nextCase1_1Modal = document.getElementsByClassName("nextCase1_1Modal")[0];
 var nextCase1_2Modal = document.getElementsByClassName("nextCase1_2Modal")[0];
 var nextCase1_3Modal = document.getElementsByClassName("nextCase1_3Modal")[0];
+var nextCase2_1Modal = document.getElementsByClassName("nextCase2_1Modal")[0];
+var nextCase2_2Modal = document.getElementsByClassName("nextCase2_2Modal")[0];
+var nextCase2_3Modal = document.getElementsByClassName("nextCase2_3Modal")[0];
 // When the user clicks on the button, open the modal
 buttonCase1.onclick = function () {
   case1_1Modal.className = case1_1Modal.className.replace('dn', 'db');
   resetFilters();
-  // case1_1Modal.style.display = "block";
-}
-// When the user clicks on <span> (x), close the modal
-nextCase1_1Modal.onclick = function () {
-  case1_1Modal.className = case1_1Modal.className.replace('db', 'dn');
-  case1_2Modal.className = case1_2Modal.className.replace('dn', 'db');
-}
-nextCase1_2Modal.onclick = function () {
-  case1_2Modal.className = case1_1Modal.className.replace('db', 'dn');
-  case1_3Modal.className = case1_2Modal.className.replace('dn', 'db');
-}
-nextCase1_3Modal.onclick = function () {
-  case1_3Modal.className = case1_1Modal.className.replace('db', 'dn');
   console.log('Apple pressed...');
   comparisonButtons('reset');
   updateLines('APPLE');
@@ -54,6 +46,104 @@ nextCase1_3Modal.onclick = function () {
   resetButtons(allCompaniesButton);
   resetButtons(facebookButton);
   resetButtons(googleButton);
+}
+buttonCase2.onclick = function () {
+  case2_1Modal.className = case2_1Modal.className.replace('dn', 'db');
+  resetFilters();
+  console.log('Facebook pressed...');
+  comparisonButtons('reset');
+  updateLines('FACEBOOK');
+  updateButtons(facebookButton);
+  resetButtons(amazonButton);
+  resetButtons(allCompaniesButton);
+  resetButtons(appleButton);
+  resetButtons(googleButton);
+}
+// When the user clicks on <span> (x), close the modal
+// Case 1
+nextCase1_1Modal.onclick = function () {
+  case1_1Modal.className = case1_1Modal.className.replace('db', 'dn');
+  case1_2Modal.className = case1_2Modal.className.replace('dn', 'db');
+  let visibleNodes = [];
+  for (node of nodes){
+    if (node.subCat != 'PERSONAL DATA'){
+      visibleNodes.push(node.name);
+    }
+  }
+  for (link of links) {
+    if (visibleNodes.includes(link.endName)) {
+      link.visible = true;
+      visibleNodes.push(link.startName);
+    }
+    else {
+      link.visible = false;
+    }
+  }
+  for (complexLink of complexLinks) {
+    if (visibleNodes.includes(complexLink.dataType[1])) {
+      complexLink.visible = true;
+      visibleNodes.push(complexLink.purpose[1]);
+    }
+    else {
+      complexLink.visible = false;
+    }
+  }
+  for (node of nodes) {
+    if (visibleNodes.includes(node.name)) {
+      node.visible = true;
+    }
+    else {
+      node.visible = false;
+    }
+  }
+  redraw();
+}
+nextCase1_2Modal.onclick = function () {
+  case1_2Modal.className = case1_1Modal.className.replace('db', 'dn');
+  case1_3Modal.className = case1_2Modal.className.replace('dn', 'db');
+}
+nextCase1_3Modal.onclick = function () {
+  case1_3Modal.className = case1_1Modal.className.replace('db', 'dn');
+}
+// Case 2
+nextCase2_1Modal.onclick = function () {
+  case2_1Modal.className = case2_1Modal.className.replace('db', 'dn');
+  case2_2Modal.className = case2_2Modal.className.replace('dn', 'db');
+}
+nextCase2_2Modal.onclick = function () {
+  case2_2Modal.className = case2_1Modal.className.replace('db', 'dn');
+  case2_3Modal.className = case2_2Modal.className.replace('dn', 'db');
+}
+nextCase2_3Modal.onclick = function () {
+  case2_3Modal.className = case2_1Modal.className.replace('db', 'dn');
+  let visibleNodes = ['CURRENT LOCATION', 'LOCATION HISTORY', 'NEARBY LOCATIONS AND PEOPLE', 'BEHAVIOR ON DEVICES', 'DEVICE IDENTIFIERS'];
+  for (link of links) {
+    if (visibleNodes.includes(link.endName)) {
+      link.visible = true;
+      visibleNodes.push(link.startName);
+    }
+    else {
+      link.visible = false;
+    }
+  }
+  for (complexLink of complexLinks) {
+    if (visibleNodes.includes(complexLink.dataType[1])) {
+      complexLink.visible = true;
+      visibleNodes.push(complexLink.purpose[1]);
+    }
+    else {
+      complexLink.visible = false;
+    }
+  }
+  for (node of nodes) {
+    if (visibleNodes.includes(node.name)) {
+      node.visible = true;
+    }
+    else {
+      node.visible = false;
+    }
+  }
+  redraw();
 }
 // When the user clicks anywhere outside of the modal, close it
 // window.onclick = function (event) {
@@ -195,7 +285,7 @@ function buildLinks() {
 function buildComplexLinks() {
   console.log('Building complex links...');
   for (var i = 0; i < complexLinksTable.getRowCount(); i++) {
-  // for (var i = 0; i < numberOfComplexLinks; i++) {
+    // for (var i = 0; i < numberOfComplexLinks; i++) {
     let startName = ['all', complexLinksTable.getString(i, 'DATATYPE')];
     let endName = ['all', complexLinksTable.getString(i, 'PURPOSE')];
     let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'DATATYPESUBCATEGORY')];
@@ -347,9 +437,9 @@ function updateLines(inputType) {
     // Run through the active complex links and create a list of active nodes
     if (complexLink.active) {
       if (activeNodes.includes(complexLink.purpose[1])) { }
-      else { activeNodes.push(complexLink.purpose[1]);}
+      else { activeNodes.push(complexLink.purpose[1]); }
       if (activeNodes.includes(complexLink.dataType[1])) { }
-      else { activeNodes.push(complexLink.dataType[1]);}
+      else { activeNodes.push(complexLink.dataType[1]); }
     }
   }
   // Deactivate simple links based on the list of active nodes
@@ -357,12 +447,12 @@ function updateLines(inputType) {
     link.update(activeNodes);
   }
   // Update the list of active nodes based on the visible simple links
-  for (link of links){
+  for (link of links) {
     if (link.active) {
       if (activeNodes.includes(link.startName)) { }
-      else { activeNodes.push(link.startName);}
+      else { activeNodes.push(link.startName); }
       if (activeNodes.includes(link.endName)) { }
-      else { activeNodes.push(link.endName);}
+      else { activeNodes.push(link.endName); }
     }
   }
   // Update nodes' visibility based on the list of active nodes
@@ -457,7 +547,7 @@ function mouseClicked() {
     let matchLink = false;
     // Was a node clicked?
     for (node of nodes) {
-      if (node.active){
+      if (node.active) {
         if (dist(mouseX, mouseY, node.x, node.y) < 6) {
           console.log('matchNode');
           matchNode = true;
@@ -522,29 +612,29 @@ function mouseClicked() {
   }
 }
 
-function selectBasedOnComplexLink(clickedLink){
+function selectBasedOnComplexLink(clickedLink) {
   clickedLink.visible = true;
   let visibleNodes = [clickedLink.dataType[1], clickedLink.purpose[1]];
-  for (complexLink of complexLinks){
-    if (complexLink != clickedLink){
+  for (complexLink of complexLinks) {
+    if (complexLink != clickedLink) {
       complexLink.visible = false;
     }
   }
-  for (link of links){
-    if (link.active){
-      if (link.endName == clickedLink.dataType[1]){
+  for (link of links) {
+    if (link.active) {
+      if (link.endName == clickedLink.dataType[1]) {
         link.visible = true;
         visibleNodes.push(link.startName);
       }
-      else{
+      else {
         link.visible = false;
       }
     }
   }
-  for (node of nodes){
+  for (node of nodes) {
     node.showIncludes = false;
-    if (node.active){
-      if (visibleNodes.includes(node.name)){
+    if (node.active) {
+      if (visibleNodes.includes(node.name)) {
         node.visible = true;
       }
       else {
@@ -554,29 +644,29 @@ function selectBasedOnComplexLink(clickedLink){
   }
 }
 
-function selectBasedOnLink(clickedLink){
+function selectBasedOnLink(clickedLink) {
   clickedLink.visible = true;
   let visibleNodes = [clickedLink.startName, clickedLink.endName];
-  for (link of links){
-    if (link != clickedLink){
+  for (link of links) {
+    if (link != clickedLink) {
       link.visible = false;
     }
   }
-  for (complexLink of complexLinks){
-    if (complexLink.active){
-      if (complexLink.dataType[1] == clickedLink.endName){
+  for (complexLink of complexLinks) {
+    if (complexLink.active) {
+      if (complexLink.dataType[1] == clickedLink.endName) {
         complexLink.visible = true;
         visibleNodes.push(complexLink.purpose[1]);
       }
-      else{
+      else {
         complexLink.visible = false;
       }
     }
   }
-  for (node of nodes){
+  for (node of nodes) {
     node.showIncludes = false;
-    if (node.active){
-      if (visibleNodes.includes(node.name)){
+    if (node.active) {
+      if (visibleNodes.includes(node.name)) {
         node.visible = true;
       }
       else {
@@ -586,17 +676,17 @@ function selectBasedOnLink(clickedLink){
   }
 }
 
-function selectByCollectionMethod(input){
+function selectByCollectionMethod(input) {
   let collectionMethod = input.target.value;
   console.log(collectionMethod);
   let visibleNodes = [];
-  for (link of links){
-    if (collectionMethod == 'all'){
+  for (link of links) {
+    if (collectionMethod == 'all') {
       link.visible = true;
       visibleNodes.push(link.startName);
       visibleNodes.push(link.endName);
     }
-    else{
+    else {
       if (link.how == collectionMethod) {
         link.visible = true;
         visibleNodes.push(link.startName);
@@ -632,8 +722,8 @@ function selectByCollectionMethod(input){
 }
 
 function selectBasedOnNode(clickedNode) {
-  for (node of nodes){
-    if (node == clickedNode){
+  for (node of nodes) {
+    if (node == clickedNode) {
       node.showIncludes = true;
     }
     else {
