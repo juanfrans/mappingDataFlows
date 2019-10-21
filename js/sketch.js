@@ -101,6 +101,40 @@ nextCase1_1Modal.onclick = function () {
 nextCase1_2Modal.onclick = function () {
   case1_2Modal.className = case1_1Modal.className.replace('db', 'dn');
   case1_3Modal.className = case1_2Modal.className.replace('dn', 'db');
+  let visibleNodes = [];
+  let selectedNodes = ['ACCOUNT SECURITY', 'ADVERTISING', 'ANALYTICS', 'COMPANY OPERATIONS', 'IMPROVE PRODUCTS', 'LEGAL COMPLIANCE', 'PROVIDE SERVICES', 'RESEARCH AND DEVELOPMENT'];
+  for (node of nodes){
+    if (node.subCat == 'PERSONAL DATA' || selectedNodes.includes(node.name)){
+      visibleNodes.push(node.name);
+    }
+  }
+  for (link of links) {
+    if (visibleNodes.includes(link.endName)) {
+      link.visible = true;
+      visibleNodes.push(link.startName);
+    }
+    else {
+      link.visible = false;
+    }
+  }
+  for (complexLink of complexLinks) {
+    if (visibleNodes.includes(complexLink.dataType[1])) {
+      complexLink.visible = true;
+      visibleNodes.push(complexLink.purpose[1]);
+    }
+    else {
+      complexLink.visible = false;
+    }
+  }
+  for (node of nodes) {
+    if (visibleNodes.includes(node.name)) {
+      node.visible = true;
+    }
+    else {
+      node.visible = false;
+    }
+  }
+  redraw();
 }
 nextCase1_3Modal.onclick = function () {
   case1_3Modal.className = case1_1Modal.className.replace('db', 'dn');
@@ -113,9 +147,6 @@ nextCase2_1Modal.onclick = function () {
 nextCase2_2Modal.onclick = function () {
   case2_2Modal.className = case2_1Modal.className.replace('db', 'dn');
   case2_3Modal.className = case2_2Modal.className.replace('dn', 'db');
-}
-nextCase2_3Modal.onclick = function () {
-  case2_3Modal.className = case2_1Modal.className.replace('db', 'dn');
   let visibleNodes = ['CURRENT LOCATION', 'LOCATION HISTORY', 'NEARBY LOCATIONS AND PEOPLE', 'BEHAVIOR ON DEVICES', 'DEVICE IDENTIFIERS'];
   for (link of links) {
     if (visibleNodes.includes(link.endName)) {
@@ -145,12 +176,30 @@ nextCase2_3Modal.onclick = function () {
   }
   redraw();
 }
+nextCase2_3Modal.onclick = function () {
+  case2_3Modal.className = case2_1Modal.className.replace('db', 'dn');
+}
 // When the user clicks anywhere outside of the modal, close it
-// window.onclick = function (event) {
-//   if (event.target == case1_1Modal) {
-//     case1_1Modal.className = case1_1Modal.className.replace('db', 'dn');
-//   }
-// } 
+window.onclick = function (event) {
+  if (event.target == case1_1Modal) {
+    case1_1Modal.className = case1_1Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case1_2Modal){
+    case1_2Modal.className = case1_2Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case1_3Modal) {
+    case1_3Modal.className = case1_3Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case2_1Modal) {
+    case2_1Modal.className = case2_1Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case2_2Modal) {
+    case2_2Modal.className = case2_2Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case2_3Modal) {
+    case2_3Modal.className = case2_3Modal.className.replace('db', 'dn');
+  }
+} 
 
 var numberOfComplexLinks = 2000;
 
