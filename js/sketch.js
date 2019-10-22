@@ -162,11 +162,17 @@ nextCase1_3Modal.onclick = function () {
 nextCase2_1Modal.onclick = function () {
   case2_1Modal.className = case2_1Modal.className.replace('db', 'dn');
   case2_2Modal.className = case2_2Modal.className.replace('dn', 'db');
-}
-nextCase2_2Modal.onclick = function () {
-  case2_2Modal.className = case2_1Modal.className.replace('db', 'dn');
-  case2_3Modal.className = case2_2Modal.className.replace('dn', 'db');
-  let visibleNodes = ['CURRENT LOCATION', 'LOCATION HISTORY', 'NEARBY LOCATIONS AND PEOPLE', 'BEHAVIOR ON DEVICES', 'DEVICE IDENTIFIERS'];
+  let visibleNodes = [];
+  for (complexLink of complexLinks){
+    if (complexLink.privacySettings == 'No' || complexLink.privacySettings == ''){
+      visibleNodes.push(complexLink.purpose[1]);
+      visibleNodes.push(complexLink.dataType[1]);
+      complexLink.visible = true;
+    }
+    else{
+      complexLink.visible = false;
+    }
+  }
   for (link of links) {
     if (visibleNodes.includes(link.endName)) {
       link.visible = true;
@@ -176,8 +182,31 @@ nextCase2_2Modal.onclick = function () {
       link.visible = false;
     }
   }
+  for (node of nodes) {
+    if (visibleNodes.includes(node.name)) {
+      node.visible = true;
+    }
+    else {
+      node.visible = false;
+    }
+  }
+  redraw();
+}
+nextCase2_2Modal.onclick = function () {
+  case2_2Modal.className = case2_1Modal.className.replace('db', 'dn');
+  case2_3Modal.className = case2_2Modal.className.replace('dn', 'db');
+  let visibleNodes = ['CURRENT LOCATION', 'LOCATION HISTORY', 'NEARBY LOCATIONS AND PEOPLE', 'BEHAVIOR ON DEVICES', 'DEVICE IDENTIFIERS'];
+  for (link of links) {
+    if (link.visible && visibleNodes.includes(link.endName)) {
+      link.visible = true;
+      visibleNodes.push(link.startName);
+    }
+    else {
+      link.visible = false;
+    }
+  }
   for (complexLink of complexLinks) {
-    if (visibleNodes.includes(complexLink.dataType[1])) {
+    if (complexLink.visible && visibleNodes.includes(complexLink.dataType[1])) {
       complexLink.visible = true;
       visibleNodes.push(complexLink.purpose[1]);
     }
@@ -301,6 +330,7 @@ var purposeSelector;
 var collectionMethodSelector;
 var companyComparison1;
 var companyComparison2;
+var privacySelector;
 var resetButton;
 
 // Set global variables
@@ -421,6 +451,10 @@ function buildComplexLinks() {
     let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'DATATYPESUBCATEGORY')];
     let purposeSubCat = ['all', complexLinksTable.getString(i, 'PURPOSESUBCATEGORY')];
     let companies = complexLinksTable.getString(i, 'COMPANIES').split(',');
+    let privacySettings = complexLinksTable.getString(i, 'USER_CONTROL_FACEBOOK');
+    if (privacySettings == ''){
+      privacySettings = 'No';
+    }
     companies.push('all');
     // let textAmazon = complexLinksTable.getString(i, 'TextAmazon');
     // let textApple = complexLinksTable.getString(i, 'TextApple');
@@ -455,7 +489,7 @@ function buildComplexLinks() {
     midAnchor1.y = startAnchor.y;
     midAnchor2.x = startAnchor.x + ((endAnchor.x - startAnchor.x) / 8) * 5;
     midAnchor2.y = endAnchor.y;
-    complexLinks.push(new ComplexLink(startName, dataTypeSubCat, endName, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, amazon, apple, facebook, google, companies, allText));
+    complexLinks.push(new ComplexLink(startName, dataTypeSubCat, endName, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, amazon, apple, facebook, google, companies, allText, privacySettings));
   }
 }
 

@@ -131,7 +131,7 @@ class Link {
 }
 
 class ComplexLink {
-  constructor(dataType, dataTypeSubCat, purpose, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, amazon, apple, facebook, google, companies, testText) {
+  constructor(dataType, dataTypeSubCat, purpose, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, amazon, apple, facebook, google, companies, testText, privacySettings) {
     this.dataType = dataType;
     this.dataTypeSubCat = dataTypeSubCat;
     this.purpose = purpose;
@@ -149,6 +149,7 @@ class ComplexLink {
     this.facebook = facebook;
     this.google = google;
     this.companies = companies;
+    this.privacySettings = privacySettings;
     this.strokeWeight = 0.8;
     this.testText = testText;
     this.displayText = false;
