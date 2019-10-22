@@ -24,9 +24,11 @@ document.addEventListener('click', function (event) {
 // Get the modal
 var case1_1Modal = document.getElementById("case1_1Modal");
 var case2_1Modal = document.getElementById("case2_1Modal");
+var case3_1Modal = document.getElementById("case3_1Modal");
 // Get the button that opens the modal
 var buttonCase1 = document.getElementById("case1");
 var buttonCase2 = document.getElementById("case2");
+var buttonCase3 = document.getElementById("case3");
 // Get the <span> element that closes the modal
 var nextCase1_1Modal = document.getElementsByClassName("nextCase1_1Modal")[0];
 var nextCase1_2Modal = document.getElementsByClassName("nextCase1_2Modal")[0];
@@ -34,6 +36,11 @@ var nextCase1_3Modal = document.getElementsByClassName("nextCase1_3Modal")[0];
 var nextCase2_1Modal = document.getElementsByClassName("nextCase2_1Modal")[0];
 var nextCase2_2Modal = document.getElementsByClassName("nextCase2_2Modal")[0];
 var nextCase2_3Modal = document.getElementsByClassName("nextCase2_3Modal")[0];
+var nextCase3_1Modal = document.getElementsByClassName("nextCase3_1Modal")[0];
+var nextCase3_2Modal = document.getElementsByClassName("nextCase3_2Modal")[0];
+var nextCase3_3Modal = document.getElementsByClassName("nextCase3_3Modal")[0];
+var nextCase3_4Modal = document.getElementsByClassName("nextCase3_4Modal")[0];
+var nextCase3_5Modal = document.getElementsByClassName("nextCase3_5Modal")[0];
 // When the user clicks on the button, open the modal
 buttonCase1.onclick = function () {
   case1_1Modal.className = case1_1Modal.className.replace('dn', 'db');
@@ -49,6 +56,18 @@ buttonCase1.onclick = function () {
 }
 buttonCase2.onclick = function () {
   case2_1Modal.className = case2_1Modal.className.replace('dn', 'db');
+  resetFilters();
+  console.log('Facebook pressed...');
+  comparisonButtons('reset');
+  updateLines('FACEBOOK');
+  updateButtons(facebookButton);
+  resetButtons(amazonButton);
+  resetButtons(allCompaniesButton);
+  resetButtons(appleButton);
+  resetButtons(googleButton);
+}
+buttonCase3.onclick = function(){
+  case3_1Modal.className = case3_1Modal.className.replace('dn', 'db');
   resetFilters();
   console.log('Facebook pressed...');
   comparisonButtons('reset');
@@ -178,6 +197,68 @@ nextCase2_2Modal.onclick = function () {
 }
 nextCase2_3Modal.onclick = function () {
   case2_3Modal.className = case2_1Modal.className.replace('db', 'dn');
+}
+// Case 3
+nextCase3_1Modal.onclick = function() {
+  case3_1Modal.className = case3_1Modal.className.replace('db', 'dn');
+  case3_2Modal.className = case3_2Modal.className.replace('dn', 'db');
+  let visibleNodes = [];
+  let visibleNodes2 = [];
+  for (node of nodes) {
+    if (node.subCat == 'ADVERTISING') {
+      visibleNodes.push(node.name);
+      visibleNodes2.push(node.name);
+    }
+  }
+  for (complexLink of complexLinks){
+    if (visibleNodes.includes(complexLink.purpose[1])){
+      visibleNodes.push(complexLink.dataType[1]);
+    }
+  }
+  for (link of links) {
+    if (visibleNodes.includes(link.endName) && link.how == 'HARVESTED') {
+      link.visible = true;
+      visibleNodes2.push(link.startName);
+      visibleNodes2.push(link.endName);
+    }
+    else {
+      link.visible = false;
+    }
+  }
+  for (node of nodes) {
+    if (visibleNodes2.includes(node.name)) {
+      node.visible = true;
+    }
+    else {
+      node.visible = false;
+    }
+  }
+  for (complexLink of complexLinks) {
+    if (visibleNodes2.includes(complexLink.purpose[1]) && visibleNodes2.includes(complexLink.dataType[1])) {
+      complexLink.visible = true;
+    }
+    else {
+      complexLink.visible = false;
+    }
+  }
+  redraw();
+  collectionMethodSelector.value('HARVESTED');
+
+}
+nextCase3_2Modal.onclick = function () {
+  case3_2Modal.className = case3_2Modal.className.replace('db', 'dn');
+  case3_3Modal.className = case3_3Modal.className.replace('dn', 'db');
+}
+nextCase3_3Modal.onclick = function () {
+  case3_3Modal.className = case3_3Modal.className.replace('db', 'dn');
+  case3_4Modal.className = case3_4Modal.className.replace('dn', 'db');
+}
+nextCase3_4Modal.onclick = function () {
+  case3_4Modal.className = case3_4Modal.className.replace('db', 'dn');
+  case3_5Modal.className = case3_5Modal.className.replace('dn', 'db');
+}
+nextCase3_5Modal.onclick = function () {
+  case3_5Modal.className = case3_5Modal.className.replace('db', 'dn');
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
