@@ -1,13 +1,8 @@
-// TODO: Add harvested vs. user provided filter
-// TODO: Add selected cases
-// TODO: Add download data option (with creative commons license)
 // TODO: Add privacy functionality ("default" & "strict" ==> there are 3 options, full (disappears), partial (grays out) and no control (white))
-// TODO: Add intro paragraph
 // TODO: Add credits, links and methods at the end
 // TODO: Add text to line quoting from TOS
 // TODO: Add link to TOS (with paragraph and section number)
 // TODO: Take a look at this link: https://public.os.alis.fund/
-// TODO: Add "collection method" dropdown (harvested or user provided or from third parties)
 
 document.addEventListener('click', function (event) {
   if (event.target.parentElement.id == 'visualization') {
@@ -24,10 +19,12 @@ document.addEventListener('click', function (event) {
 var case1_1Modal = document.getElementById("case1_1Modal");
 var case2_1Modal = document.getElementById("case2_1Modal");
 var case3_1Modal = document.getElementById("case3_1Modal");
+var case4_1Modal = document.getElementById("case4_1Modal");
 // Get the button that opens the modal
 var buttonCase1 = document.getElementById("case1");
 var buttonCase2 = document.getElementById("case2");
 var buttonCase3 = document.getElementById("case3");
+var buttonCase4 = document.getElementById("case4");
 // Get the <span> element that closes the modal
 var nextCase1_1Modal = document.getElementsByClassName("nextCase1_1Modal")[0];
 var nextCase1_2Modal = document.getElementsByClassName("nextCase1_2Modal")[0];
@@ -40,6 +37,9 @@ var nextCase3_2Modal = document.getElementsByClassName("nextCase3_2Modal")[0];
 var nextCase3_3Modal = document.getElementsByClassName("nextCase3_3Modal")[0];
 var nextCase3_4Modal = document.getElementsByClassName("nextCase3_4Modal")[0];
 var nextCase3_5Modal = document.getElementsByClassName("nextCase3_5Modal")[0];
+var nextCase4_1Modal = document.getElementsByClassName("nextCase4_1Modal")[0];
+var nextCase4_2Modal = document.getElementsByClassName("nextCase4_2Modal")[0];
+var nextCase4_3Modal = document.getElementsByClassName("nextCase4_3Modal")[0];
 // When the user clicks on the button, open the modal
 buttonCase1.onclick = function () {
   case1_1Modal.className = case1_1Modal.className.replace('dn', 'db');
@@ -77,6 +77,10 @@ buttonCase3.onclick = function(){
   resetButtons(appleButton);
   resetButtons(googleButton);
 }
+buttonCase4.onclick = function () {
+  case4_1Modal.className = case4_1Modal.className.replace('dn', 'db');
+  resetFilters();
+}
 
 // When the user clicks on <span> (x), close the modal
 // Case 1 (Apple @Zoe)
@@ -90,7 +94,7 @@ nextCase1_1Modal.onclick = function () {
     }
   }
   for (link of links) {
-    if (visibleNodes.includes(link.endName)) {
+    if (visibleNodes.includes(link.endName) && link.active) {
       link.visible = true;
       visibleNodes.push(link.startName);
     }
@@ -99,7 +103,7 @@ nextCase1_1Modal.onclick = function () {
     }
   }
   for (complexLink of complexLinks) {
-    if (visibleNodes.includes(complexLink.dataType[1])) {
+    if (visibleNodes.includes(complexLink.dataType[1]) && complexLink.active) {
       complexLink.visible = true;
       visibleNodes.push(complexLink.purpose[1]);
     }
@@ -128,7 +132,7 @@ nextCase1_2Modal.onclick = function () {
     }
   }
   for (link of links) {
-    if (visibleNodes.includes(link.endName)) {
+    if (visibleNodes.includes(link.endName) && link.active) {
       link.visible = true;
       visibleNodes.push(link.startName);
     }
@@ -137,7 +141,7 @@ nextCase1_2Modal.onclick = function () {
     }
   }
   for (complexLink of complexLinks) {
-    if (visibleNodes.includes(complexLink.dataType[1])) {
+    if (visibleNodes.includes(complexLink.dataType[1]) && complexLink.active) {
       complexLink.visible = true;
       visibleNodes.push(complexLink.purpose[1]);
     }
@@ -165,7 +169,7 @@ nextCase2_1Modal.onclick = function () {
   case2_2Modal.className = case2_2Modal.className.replace('dn', 'db');
   let visibleNodes = [];
   for (complexLink of complexLinks){
-    if (complexLink.privacySettings == 'No' || complexLink.privacySettings == ''){
+    if ((complexLink.privacySettings == 'No' || complexLink.privacySettings == '') && complexLink.active){
       visibleNodes.push(complexLink.purpose[1]);
       visibleNodes.push(complexLink.dataType[1]);
       complexLink.visible = true;
@@ -175,7 +179,7 @@ nextCase2_1Modal.onclick = function () {
     }
   }
   for (link of links) {
-    if (visibleNodes.includes(link.endName)) {
+    if (visibleNodes.includes(link.endName) && link.active) {
       link.visible = true;
       visibleNodes.push(link.startName);
     }
@@ -198,7 +202,7 @@ nextCase2_2Modal.onclick = function () {
   case2_3Modal.className = case2_2Modal.className.replace('dn', 'db');
   let visibleNodes = ['CURRENT LOCATION', 'LOCATION HISTORY', 'NEARBY LOCATIONS AND PEOPLE', 'BEHAVIOR ON DEVICES', 'DEVICE IDENTIFIERS'];
   for (link of links) {
-    if (link.visible && visibleNodes.includes(link.endName)) {
+    if (link.visible && visibleNodes.includes(link.endName) && link.active) {
       link.visible = true;
       visibleNodes.push(link.startName);
     }
@@ -207,7 +211,7 @@ nextCase2_2Modal.onclick = function () {
     }
   }
   for (complexLink of complexLinks) {
-    if (complexLink.visible && visibleNodes.includes(complexLink.dataType[1])) {
+    if (complexLink.visible && visibleNodes.includes(complexLink.dataType[1]) && complexLink.active) {
       complexLink.visible = true;
       visibleNodes.push(complexLink.purpose[1]);
     }
@@ -385,6 +389,55 @@ nextCase3_5Modal.onclick = function () {
   case3_5Modal.className = case3_5Modal.className.replace('db', 'dn');
 }
 
+// Case 4 (Amazon - Vagueness @Matt)
+nextCase4_1Modal.onclick = function () {
+  case4_1Modal.className = case4_1Modal.className.replace('db', 'dn');
+  case4_2Modal.className = case4_2Modal.className.replace('dn', 'db');
+  console.log('Amazon pressed...');
+  comparisonButtons('reset');
+  updateLines('AMAZON');
+  updateButtons(amazonButton);
+  resetButtons(facebookButton);
+  resetButtons(allCompaniesButton);
+  resetButtons(appleButton);
+  resetButtons(googleButton);
+}
+nextCase4_2Modal.onclick = function () {
+  case4_2Modal.className = case4_1Modal.className.replace('db', 'dn');
+  case4_3Modal.className = case4_2Modal.className.replace('dn', 'db');
+  let visibleNodes = ['RESEARCH AND DEVELOPMENT'];
+  for (complexLink of complexLinks) {
+    if (complexLink.visible && visibleNodes.includes(complexLink.purpose[1]) && complexLink.active) {
+      complexLink.visible = true;
+      visibleNodes.push(complexLink.dataType[1]);
+    }
+    else {
+      complexLink.visible = false;
+    }
+  }
+  for (link of links) {
+    if (link.visible && visibleNodes.includes(link.endName) && link.active) {
+      link.visible = true;
+      visibleNodes.push(link.startName);
+    }
+    else {
+      link.visible = false;
+    }
+  }
+  for (node of nodes) {
+    if (visibleNodes.includes(node.name)) {
+      node.visible = true;
+    }
+    else {
+      node.visible = false;
+    }
+  }
+  redraw();
+}
+nextCase4_3Modal.onclick = function () {
+  case4_3Modal.className = case4_1Modal.className.replace('db', 'dn');
+}
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == case1_1Modal) {
@@ -419,6 +472,15 @@ window.onclick = function (event) {
   }
   else if (event.target == case3_5Modal) {
     case3_5Modal.className = case3_5Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case4_1Modal) {
+    case4_1Modal.className = case4_1Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case4_2Modal) {
+    case4_2Modal.className = case4_2Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case4_3Modal) {
+    case4_3Modal.className = case4_3Modal.className.replace('db', 'dn');
   }
 } 
 
