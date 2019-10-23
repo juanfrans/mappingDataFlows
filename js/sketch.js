@@ -7,7 +7,6 @@
 // TODO: Add text to line quoting from TOS
 // TODO: Add link to TOS (with paragraph and section number)
 // TODO: Take a look at this link: https://public.os.alis.fund/
-// TODO: Add "built with p5 & tachyons"
 // TODO: Add "collection method" dropdown (harvested or user provided or from third parties)
 
 document.addEventListener('click', function (event) {
@@ -78,8 +77,9 @@ buttonCase3.onclick = function(){
   resetButtons(appleButton);
   resetButtons(googleButton);
 }
+
 // When the user clicks on <span> (x), close the modal
-// Case 1
+// Case 1 (Apple @Zoe)
 nextCase1_1Modal.onclick = function () {
   case1_1Modal.className = case1_1Modal.className.replace('db', 'dn');
   case1_2Modal.className = case1_2Modal.className.replace('dn', 'db');
@@ -158,7 +158,8 @@ nextCase1_2Modal.onclick = function () {
 nextCase1_3Modal.onclick = function () {
   case1_3Modal.className = case1_1Modal.className.replace('db', 'dn');
 }
-// Case 2
+
+// Case 2 (Facebook - Privacy Settings @Veronica)
 nextCase2_1Modal.onclick = function () {
   case2_1Modal.className = case2_1Modal.className.replace('db', 'dn');
   case2_2Modal.className = case2_2Modal.className.replace('dn', 'db');
@@ -227,7 +228,8 @@ nextCase2_2Modal.onclick = function () {
 nextCase2_3Modal.onclick = function () {
   case2_3Modal.className = case2_1Modal.className.replace('db', 'dn');
 }
-// Case 3
+
+// Case 3 (Facebook - @Natasha)
 nextCase3_1Modal.onclick = function() {
   case3_1Modal.className = case3_1Modal.className.replace('db', 'dn');
   case3_2Modal.className = case3_2Modal.className.replace('dn', 'db');
@@ -240,12 +242,12 @@ nextCase3_1Modal.onclick = function() {
     }
   }
   for (complexLink of complexLinks){
-    if (visibleNodes.includes(complexLink.purpose[1])){
+    if (visibleNodes.includes(complexLink.purpose[1]) && complexLink.active){
       visibleNodes.push(complexLink.dataType[1]);
     }
   }
   for (link of links) {
-    if (visibleNodes.includes(link.endName) && link.how == 'HARVESTED') {
+    if (visibleNodes.includes(link.endName) && link.how == 'HARVESTED' && link.active) {
       link.visible = true;
       visibleNodes2.push(link.startName);
       visibleNodes2.push(link.endName);
@@ -272,23 +274,117 @@ nextCase3_1Modal.onclick = function() {
   }
   redraw();
   collectionMethodSelector.value('HARVESTED');
-
 }
 nextCase3_2Modal.onclick = function () {
   case3_2Modal.className = case3_2Modal.className.replace('db', 'dn');
   case3_3Modal.className = case3_3Modal.className.replace('dn', 'db');
+  let visibleNodes = ['PRODUCT USE','ADVERTISING'];
+  for (complexLink of complexLinks) {
+    if (visibleNodes.includes(complexLink.purpose[1]) && visibleNodes.includes(complexLink.dataType[1]) && complexLink.active) {
+      complexLink.visible = true;
+    }
+    else{
+      complexLink.visible = false;
+    }
+  }
+  for (link of links){
+    if (visibleNodes.includes(link.endName) && link.how == 'HARVESTED' && link.active){
+      link.visible = true;
+      visibleNodes.push(link.startName);
+    }
+    else{
+      link.visible = false;
+    }
+  }
+  for (node of nodes){
+    if (visibleNodes.includes(node.name)){
+      node.visible = true;
+    }
+    else {
+      node.visible = false;
+    }
+  }
+  redraw();
 }
 nextCase3_3Modal.onclick = function () {
   case3_3Modal.className = case3_3Modal.className.replace('db', 'dn');
   case3_4Modal.className = case3_4Modal.className.replace('dn', 'db');
+  let visibleNodes = ['CURRENT LOCATION', 'IP ADDRESS', 'LOCATION HISTORY', 'NETWORK INFORMATION', 'ADVERTISING'];
+  for (complexLink of complexLinks) {
+    if (visibleNodes.includes(complexLink.purpose[1]) && visibleNodes.includes(complexLink.dataType[1]) && complexLink.active) {
+      complexLink.visible = true;
+    }
+    else {
+      complexLink.visible = false;
+    }
+  }
+  for (link of links) {
+    if (visibleNodes.includes(link.endName) && link.how == 'HARVESTED' && link.active) {
+      link.visible = true;
+      visibleNodes.push(link.startName);
+    }
+    else {
+      link.visible = false;
+    }
+  }
+  for (node of nodes) {
+    if (visibleNodes.includes(node.name)) {
+      node.visible = true;
+    }
+    else {
+      node.visible = false;
+    }
+  }
+  redraw();
 }
 nextCase3_4Modal.onclick = function () {
   case3_4Modal.className = case3_4Modal.className.replace('db', 'dn');
   case3_5Modal.className = case3_5Modal.className.replace('dn', 'db');
+  let visibleNodes = [];
+  let visibleNodes2 = [];
+  for (node of nodes) {
+    if (node.subCat == 'ADVERTISING') {
+      visibleNodes.push(node.name);
+      visibleNodes2.push(node.name);
+    }
+  }
+  for (complexLink of complexLinks) {
+    if (visibleNodes.includes(complexLink.purpose[1]) && complexLink.active) {
+      visibleNodes.push(complexLink.dataType[1]);
+    }
+  }
+  for (link of links) {
+    if (visibleNodes.includes(link.endName) && link.how == 'HARVESTED' && link.active) {
+      link.visible = true;
+      visibleNodes2.push(link.startName);
+      visibleNodes2.push(link.endName);
+    }
+    else {
+      link.visible = false;
+    }
+  }
+  for (node of nodes) {
+    if (visibleNodes2.includes(node.name)) {
+      node.visible = true;
+    }
+    else {
+      node.visible = false;
+    }
+  }
+  for (complexLink of complexLinks) {
+    if (visibleNodes2.includes(complexLink.purpose[1]) && visibleNodes2.includes(complexLink.dataType[1])) {
+      complexLink.visible = true;
+    }
+    else {
+      complexLink.visible = false;
+    }
+  }
+  redraw();
 }
 nextCase3_5Modal.onclick = function () {
   case3_5Modal.className = case3_5Modal.className.replace('db', 'dn');
 }
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == case1_1Modal) {
@@ -308,6 +404,21 @@ window.onclick = function (event) {
   }
   else if (event.target == case2_3Modal) {
     case2_3Modal.className = case2_3Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case3_1Modal) {
+    case3_1Modal.className = case3_1Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case3_2Modal) {
+    case3_2Modal.className = case3_2Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case3_3Modal) {
+    case3_3Modal.className = case3_3Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case3_4Modal) {
+    case3_4Modal.className = case3_4Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == case3_5Modal) {
+    case3_5Modal.className = case3_5Modal.className.replace('db', 'dn');
   }
 } 
 
