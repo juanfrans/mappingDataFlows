@@ -13,6 +13,25 @@ document.addEventListener('click', function (event) {
   }
 }, false);
 
+// Mobile warning
+var mobile_modal = document.getElementById("mobile_modal");
+var close_mobile_modal = document.getElementsByClassName("close_mobile_modal")[0];
+function myFunction(x) {
+  if (x.matches) { // If media query matches
+    mobile_modal.className = mobile_modal.className.replace('dn', 'db');
+  }
+  else {
+    mobile_modal.className = mobile_modal.className.replace('db', 'dn');
+  }
+}
+
+var x = window.matchMedia("(max-width: 1200px)")
+myFunction(x) // Call listener function at run time
+// x.addListener(myFunction) // Attach listener function on state changes
+close_mobile_modal.onclick = function(){
+  mobile_modal.className = mobile_modal.className.replace('db', 'dn');
+}
+
 // Modals code
 // Get the modal
 var case1_1Modal = document.getElementById("case1_1Modal");
@@ -480,6 +499,9 @@ window.onclick = function (event) {
   }
   else if (event.target == case4_3Modal) {
     case4_3Modal.className = case4_3Modal.className.replace('db', 'dn');
+  }
+  else if (event.target == mobile_modal) {
+    mobile_modal.className = mobile_modal.className.replace('db', 'dn');
   }
 } 
 
