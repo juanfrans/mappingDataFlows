@@ -484,8 +484,6 @@ window.onclick = function (event) {
   }
 } 
 
-var numberOfComplexLinks = 2000;
-
 // Get div width & height
 var divWidth = document.getElementById('visualization').clientWidth;
 var divHeight = document.getElementById('visualization').clientHeight;
@@ -509,8 +507,8 @@ var resetButton;
 // Set global variables
 var marginTop = 100;
 var marginBottom = 50;
-var marginLeft = 120;
-var marginRight = 150;
+var marginLeft = 140;
+var marginRight = 160;
 var vizWidth = divWidth - marginLeft - marginRight;
 var vizHeight = divHeight - marginTop - marginBottom;
 var nodesTable;
@@ -618,7 +616,6 @@ function buildLinks() {
 function buildComplexLinks() {
   console.log('Building complex links...');
   for (var i = 0; i < complexLinksTable.getRowCount(); i++) {
-    // for (var i = 0; i < numberOfComplexLinks; i++) {
     let startName = ['all', complexLinksTable.getString(i, 'DATATYPE')];
     let endName = ['all', complexLinksTable.getString(i, 'PURPOSE')];
     let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'DATATYPESUBCATEGORY')];

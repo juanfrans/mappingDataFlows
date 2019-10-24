@@ -36,6 +36,8 @@ class Node {
     ellipse(this.x, this.y, this.outerDiamter, this.outerDiamter);
     noStroke();
     fill(0, 0, 100, this.opacity);
+    textSize(9);
+    textAlign(this.textAlign, CENTER);
     if (this.textAlign == RIGHT) {
       this.textPositionX = -15;
       this.textPositionY = 0;
@@ -50,9 +52,6 @@ class Node {
       this.textPositionX = 15;
       this.textPositionY = 0;
     }
-    fill(0, 0, 100, this.opacity);
-    textAlign(this.textAlign, CENTER);
-    textSize(9);
     text(this.name.toUpperCase(), this.x + this.textPositionX, this.y + this.textPositionY);
     if (this.showIncludes && this.includes != ''){
       let includesWidth;
@@ -63,13 +62,13 @@ class Node {
       }
       else {
         includesWidth = 250;
-        includesHeight = 12 * ceil(textWidth('INCLUDES: ' + this.includes.toUpperCase()) / 250);
+        includesHeight = 14 * ceil(textWidth('INCLUDES: ' + this.includes.toUpperCase()) / 250);
       }
       fill(308, 92, 24, 0.5);
       rect(this.x + this.textPositionX - includesWidth / 2, this.y + this.textPositionY + 8, includesWidth, includesHeight);
       fill(0, 0, 100);
       textAlign(CENTER, TOP);
-      text('INCLUDES: ' + this.includes.toUpperCase(), this.x + this.textPositionX - 125, this.y + this.textPositionY + 10, 250, 50);
+      text('INCLUDES: ' + this.includes.toUpperCase(), this.x + this.textPositionX - 125, this.y + this.textPositionY + 10, 252, 100);
     }
   }
   update(chosenNodes) {
