@@ -1,8 +1,7 @@
-// TODO: Add privacy functionality ("default" & "strict" ==> there are 3 options, full (disappears), partial (grays out) and no control (white))
-// TODO: Add credits, links and methods at the end
-// TODO: Add text to line quoting from TOS
-// TODO: Add link to TOS (with paragraph and section number)
-// TODO: Take a look at this link: https://public.os.alis.fund/
+// Written by Juan Francisco Saldarriaga
+// Brown Institute for Media Innovation
+// Columbia University
+// 2019
 
 document.addEventListener('click', function (event) {
   if (event.target.parentElement.id == 'visualization') {

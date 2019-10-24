@@ -94,8 +94,8 @@ class Link {
     this.visible = true;
     this.active = true;
     this.pointList = [];
-    for (var i = 0; i < 100; i++) {
-      let t = i / 100;
+    for (var i = 0; i < 200; i++) {
+      let t = i / 200;
       let x = bezierPoint(this.startVector.x, this.midVector1.x, this.midVector2.x, this.endVector.x, t);
       let y = bezierPoint(this.startVector.y, this.midVector1.y, this.midVector2.y, this.endVector.y, t);
       let point = createVector(x, y);
@@ -118,6 +118,11 @@ class Link {
     stroke(0, 0, 100, this.strokeAlpha);
     strokeWeight(0.8);
     bezier(this.startVector.x, this.startVector.y, this.midVector1.x, this.midVector1.y, this.midVector2.x, this.midVector2.y, this.endVector.x, this.endVector.y);
+    // fill(200);
+    // noStroke();
+    // for (point of this.pointList){
+    //   ellipse(point.x, point.y, 2, 2);
+    // }
   }
   update(chosenNodes) {
     if (chosenNodes.includes(this.endName) || chosenNodes.includes(this.startName)) {
@@ -155,8 +160,8 @@ class ComplexLink {
     this.pointList = [];
     this.visible = true;
     this.active = true;
-    for (var i = 0; i < 80; i++) {
-      let t = i / 80;
+    for (var i = 0; i < 180; i++) {
+      let t = i / 180;
       let x = bezierPoint(this.startAnchor.x, this.midAnchor1.x, this.midAnchor2.x, this.endAnchor.x, t);
       let y = bezierPoint(this.startAnchor.y, this.midAnchor1.y, this.midAnchor2.y, this.endAnchor.y, t);
       let point = createVector(x, y);
@@ -181,6 +186,11 @@ class ComplexLink {
       textSize(9);
       text(this.testText, this.midAnchor1.x, vizHeight, 200, 400);
     }
+    // fill(200);
+    // noStroke();
+    // for (point of this.pointList){
+    //   ellipse(point.x, point.y, 2, 2);
+    // }
   }
   update(currentFilter) {
     if (this.companies.includes(currentFilter[0]) && this.dataTypeSubCat.includes(currentFilter[1]) && this.purposeSubCat.includes(currentFilter[2])) {
