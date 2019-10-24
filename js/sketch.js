@@ -47,6 +47,7 @@ var nodes = [];
 var links = [];
 var complexLinks = [];
 var currentFilter = ['all', 'all', 'all', ['none', 'none']];
+var collectionFilter = 'all';
 var myFont;
 var myTitleFont;
 var hiddenLinkStroke = 0.03;
@@ -74,15 +75,15 @@ function setup() {
   buildLinks();
   buildComplexLinks();
   dataTypeSelector = select('#dataTypeSelector');
-  dataTypeSelector.input(updateLines);
+  dataTypeSelector.input(updateFilters);
   purposeSelector = select('#purposeSelector');
-  purposeSelector.input(updateLines);
+  purposeSelector.input(updateFilters);
   collectionMethodSelector = select('#collectionMethod');
   collectionMethodSelector.input(selectByCollectionMethod);
   companyComparison1 = select('#companyComparison1');
   companyComparison2 = select('#companyComparison2');
-  companyComparison1.input(updateLines);
-  companyComparison2.input(updateLines);
+  companyComparison1.input(updateFilters);
+  companyComparison2.input(updateFilters);
   resetButton = select('#resetButton');
   resetButton.mousePressed(resetFilters);
 }
@@ -214,7 +215,7 @@ function draw() {
 // Companies buttons
 allCompaniesButton.onclick = function () {
   comparisonButtons('reset');
-  updateLines('all');
+  updateFilters('all');
   updateButtons(allCompanies);
   resetButtons(amazonButton);
   resetButtons(appleButton);
@@ -224,7 +225,7 @@ allCompaniesButton.onclick = function () {
 amazonButton.onclick = function () {
   console.log('Amazon pressed...');
   comparisonButtons('reset');
-  updateLines('AMAZON');
+  updateFilters('AMAZON');
   updateButtons(amazonButton);
   resetButtons(allCompaniesButton);
   resetButtons(appleButton);
@@ -234,7 +235,7 @@ amazonButton.onclick = function () {
 appleButton.onclick = function () {
   console.log('Apple pressed...');
   comparisonButtons('reset');
-  updateLines('APPLE');
+  updateFilters('APPLE');
   updateButtons(appleButton);
   resetButtons(amazonButton);
   resetButtons(allCompaniesButton);
@@ -244,7 +245,7 @@ appleButton.onclick = function () {
 facebookButton.onclick = function () {
   console.log('Facebook pressed...');
   comparisonButtons('reset');
-  updateLines('FACEBOOK');
+  updateFilters('FACEBOOK');
   updateButtons(facebookButton);
   resetButtons(amazonButton);
   resetButtons(appleButton);
@@ -254,7 +255,7 @@ facebookButton.onclick = function () {
 googleButton.onclick = function () {
   console.log('Google pressed...');
   comparisonButtons('reset');
-  updateLines('GOOGLE');
+  updateFilters('GOOGLE');
   updateButtons(googleButton);
   resetButtons(amazonButton);
   resetButtons(appleButton);
@@ -263,8 +264,7 @@ googleButton.onclick = function () {
 }
 
 // This function updates lines and nodes based on the filters
-function updateLines(inputType) {
-  let activeNodes = [];
+function updateFilters(inputType) {
   // Assign the input type to the right place in the filter array
   if (typeof (inputType) == 'string') {
     currentFilter[0] = inputType;
@@ -294,34 +294,79 @@ function updateLines(inputType) {
     clearButtons();
   }
   console.log(currentFilter);
-  // Deactivate the complex links that don't meet the filter conditions
-  for (complexLink of complexLinks) {
+  updateLines();
+}
+
+function updateLines(){
+  console.log(currentFilter);
+  console.log(collectionFilter);
+  let activeNodes = [];
+  let activeNodes2 = [];
+  for (complexLink of complexLinks){
     complexLink.update(currentFilter);
-    // Run through the active complex links and create a list of active nodes
-    if (complexLink.active) {
-      if (activeNodes.includes(complexLink.purpose[1])) { }
-      else { activeNodes.push(complexLink.purpose[1]); }
-      if (activeNodes.includes(complexLink.dataType[1])) { }
-      else { activeNodes.push(complexLink.dataType[1]); }
+    if (complexLink.active){
+      activeNodes.push(complexLink.dataType[1]);
     }
   }
-  // Deactivate simple links based on the list of active nodes
-  for (link of links) {
-    link.update(activeNodes);
-  }
-  // Update the list of active nodes based on the visible simple links
-  for (link of links) {
-    if (link.active) {
-      if (activeNodes.includes(link.startName)) { }
-      else { activeNodes.push(link.startName); }
-      if (activeNodes.includes(link.endName)) { }
-      else { activeNodes.push(link.endName); }
+  for (link of links){
+    if ((link.how == collectionFilter || collectionFilter == 'all') && activeNodes.includes(link.endName)){
+      activeNodes2.push(link.endName);
+      activeNodes2.push(link.startName);
+      link.active = true;
+      link.visible = true;
+    }
+    else {
+      link.active = false;
+      link.visible = false;
     }
   }
-  // Update nodes' visibility based on the list of active nodes
-  for (node of nodes) {
-    node.update(activeNodes);
+  for (complexLink of complexLinks) {
+    if (complexLink.active && activeNodes2.includes(complexLink.dataType[1])) {
+      activeNodes2.push(complexLink.purpose[1]);
+      complexLink.active = true;
+      complexLink.visible = true;
+    }
+    else {
+      complexLink.active = false;
+    }
   }
+  for (node of nodes){
+    if (activeNodes2.includes(node.name)){
+      node.active = true;
+      node.visible = true;
+    }
+    else {
+      node.active = false;
+    }
+  }
+  // Deactivate the complex links that don't meet the filter conditions
+  // for (complexLink of complexLinks) {
+  //   complexLink.update(currentFilter);
+  //   // Run through the active complex links and create a list of active nodes
+  //   if (complexLink.active) {
+  //     if (activeNodes.includes(complexLink.purpose[1])) { }
+  //     else { activeNodes.push(complexLink.purpose[1]); }
+  //     if (activeNodes.includes(complexLink.dataType[1])) { }
+  //     else { activeNodes.push(complexLink.dataType[1]); }
+  //   }
+  // }
+  // // Deactivate simple links based on the list of active nodes
+  // for (link of links) {
+  //   link.update(activeNodes);
+  // }
+  // // Update the list of active nodes based on the visible simple links
+  // for (link of links) {
+  //   if (link.active) {
+  //     if (activeNodes.includes(link.startName)) { }
+  //     else { activeNodes.push(link.startName); }
+  //     if (activeNodes.includes(link.endName)) { }
+  //     else { activeNodes.push(link.endName); }
+  //   }
+  // }
+  // // Update nodes' visibility based on the list of active nodes
+  // for (node of nodes) {
+  //   node.update(activeNodes);
+  // }
   redraw();
 }
 
@@ -470,6 +515,7 @@ function mouseClicked() {
           link.visible = true;
         }
       }
+      // selectByCollectionMethod(document.getElementById("collectionMethod").value);
     }
     redraw();
   }
@@ -540,48 +586,52 @@ function selectBasedOnLink(clickedLink) {
 }
 
 function selectByCollectionMethod(input) {
-  let collectionMethod = input.target.value;
-  console.log(collectionMethod);
-  let visibleNodes = [];
-  for (link of links) {
-    if (collectionMethod == 'all') {
-      link.visible = true;
-      visibleNodes.push(link.startName);
-      visibleNodes.push(link.endName);
-    }
-    else {
-      if (link.how == collectionMethod) {
-        link.visible = true;
-        visibleNodes.push(link.startName);
-        visibleNodes.push(link.endName);
-      }
-      else {
-        link.visible = false;
-      }
-    }
+  // updateLines();
+  // let collectionMethod = '';
+  if (typeof(input) == 'string'){
+    collectionFilter = input;
   }
-  for (complexLink of complexLinks) {
-    if (complexLink.active) {
-      if (visibleNodes.includes(complexLink.dataType[1])) {
-        complexLink.visible = true;
-        visibleNodes.push(complexLink.purpose[1]);
-      }
-      else {
-        complexLink.visible = false;
-      }
-    }
+  else {
+    collectionFilter = input.target.value;
   }
-  for (node of nodes) {
-    if (node.active) {
-      if (visibleNodes.includes(node.name)) {
-        node.visible = true;
-      }
-      else {
-        node.visible = false;
-      }
-    }
-  }
-  redraw();
+  console.log(collectionFilter);
+  updateLines();
+  // let visibleNodes = [];
+  // for (link of links) {
+  //   if (collectionMethod == 'all' && link.active) {
+  //     link.visible = true;
+  //     visibleNodes.push(link.startName);
+  //     visibleNodes.push(link.endName);
+  //   }
+  //   else {
+  //     if (link.how == collectionMethod && link.active) {
+  //       link.visible = true;
+  //       visibleNodes.push(link.startName);
+  //       visibleNodes.push(link.endName);
+  //     }
+  //     else {
+  //       link.active = false;
+  //     }
+  //   }
+  // }
+  // for (complexLink of complexLinks) {
+  //   if (visibleNodes.includes(complexLink.dataType[1]) && complexLink.active) {
+  //     complexLink.visible = true;
+  //     visibleNodes.push(complexLink.purpose[1]);
+  //   }
+  //   else {
+  //     complexLink.active = false;
+  //   }
+  // }
+  // for (node of nodes) {
+  //   if (visibleNodes.includes(node.name) && node.active) {
+  //     node.visible = true;
+  //   }
+  //   else {
+  //     node.active = false;
+  //   }
+  // }
+  // redraw();
 }
 
 function selectBasedOnNode(clickedNode) {
@@ -731,7 +781,7 @@ buttonCase1.onclick = function () {
   resetFilters();
   console.log('Apple pressed...');
   comparisonButtons('reset');
-  updateLines('APPLE');
+  updateFilters('APPLE');
   updateButtons(appleButton);
   resetButtons(amazonButton);
   resetButtons(allCompaniesButton);
@@ -743,7 +793,7 @@ buttonCase2.onclick = function () {
   resetFilters();
   console.log('Facebook pressed...');
   comparisonButtons('reset');
-  updateLines('FACEBOOK');
+  updateFilters('FACEBOOK');
   updateButtons(facebookButton);
   resetButtons(amazonButton);
   resetButtons(allCompaniesButton);
@@ -755,7 +805,7 @@ buttonCase3.onclick = function () {
   resetFilters();
   console.log('Facebook pressed...');
   comparisonButtons('reset');
-  updateLines('FACEBOOK');
+  updateFilters('FACEBOOK');
   updateButtons(facebookButton);
   resetButtons(amazonButton);
   resetButtons(allCompaniesButton);
@@ -1080,7 +1130,7 @@ nextCase4_1Modal.onclick = function () {
   case4_2Modal.className = case4_2Modal.className.replace('dn', 'db');
   console.log('Amazon pressed...');
   comparisonButtons('reset');
-  updateLines('AMAZON');
+  updateFilters('AMAZON');
   updateButtons(amazonButton);
   resetButtons(facebookButton);
   resetButtons(allCompaniesButton);
