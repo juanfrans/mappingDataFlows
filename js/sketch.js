@@ -35,7 +35,7 @@ var resetButton;
 
 // Set global variables
 var marginTop = 100;
-var marginBottom = 50;
+var marginBottom = 88;
 var marginLeft = 140;
 var marginRight = 160;
 var vizWidth = divWidth - marginLeft - marginRight;
