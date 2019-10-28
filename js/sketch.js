@@ -151,7 +151,7 @@ function buildComplexLinks() {
     let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'DATATYPESUBCATEGORY')];
     let purposeSubCat = ['all', complexLinksTable.getString(i, 'PURPOSESUBCATEGORY')];
     let companies = complexLinksTable.getString(i, 'COMPANIES').split(',');
-    let privacySettings = complexLinksTable.getString(i, 'USER_CONTROL_FACEBOOK');
+    let privacySettings = complexLinksTable.getString(i, 'UserControlFacebook');
     if (privacySettings == ''){
       privacySettings = 'No';
     }
@@ -1212,7 +1212,7 @@ previousCase3_3Modal.onclick = function (){
 nextCase3_3Modal.onclick = function () {
   case3_3Modal.className = case3_3Modal.className.replace('db', 'dn');
   case3_4Modal.className = case3_4Modal.className.replace('dn', 'db');
-  let visibleNodes = ['CURRENT LOCATION', 'IP ADDRESS', 'LOCATION HISTORY', 'NETWORK INFORMATION', 'ADVERTISING', 'SEARCHES (TERMS, RESULTS, HISTORY)'];
+  let visibleNodes = ['CURRENT LOCATION', 'IP ADDRESS', 'LOCATION HISTORY', 'NETWORK INFORMATION', 'ADVERTISING'];
   for (complexLink of complexLinks) {
     if (visibleNodes.includes(complexLink.purpose[1]) && visibleNodes.includes(complexLink.dataType[1]) && complexLink.active) {
       complexLink.visible = true;
@@ -1318,7 +1318,7 @@ nextCase3_4Modal.onclick = function () {
 previousCase3_5Modal.onclick = function (){
   case3_4Modal.className = case3_4Modal.className.replace('dn', 'db');
   case3_5Modal.className = case3_5Modal.className.replace('db', 'dn');
-  let visibleNodes = ['CURRENT LOCATION', 'IP ADDRESS', 'LOCATION HISTORY', 'NETWORK INFORMATION', 'ADVERTISING', 'SEARCHES (TERMS, RESULTS, HISTORY)'];
+  let visibleNodes = ['CURRENT LOCATION', 'IP ADDRESS', 'LOCATION HISTORY', 'NETWORK INFORMATION', 'ADVERTISING'];
   for (complexLink of complexLinks) {
     if (visibleNodes.includes(complexLink.purpose[1]) && visibleNodes.includes(complexLink.dataType[1]) && complexLink.active) {
       complexLink.visible = true;
