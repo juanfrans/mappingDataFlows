@@ -151,7 +151,7 @@ function buildComplexLinks() {
     let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'DATATYPESUBCATEGORY')];
     let purposeSubCat = ['all', complexLinksTable.getString(i, 'PURPOSESUBCATEGORY')];
     let companies = complexLinksTable.getString(i, 'COMPANIES').split(',');
-    let privacySettings = complexLinksTable.getString(i, 'UserControlFacebook');
+    let privacySettings = complexLinksTable.getString(i, 'USERCONTROLFACEBOOK');
     if (privacySettings == ''){
       privacySettings = 'No';
     }
@@ -377,6 +377,7 @@ function resetFilters() {
   companyComparison1.value('none');
   companyComparison2.value('none');
   currentFilter = ['all', 'all', 'all', ['none', 'none']];
+  collectionFilter = 'all';
   collectionMethodSelector.value('all');
   for (complexLink of complexLinks) {
     complexLink.update(currentFilter);
