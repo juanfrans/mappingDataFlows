@@ -1,0 +1,186 @@
+<html>
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150272732-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-150272732-1');
+  </script>
+  <meta charset=utf-8>
+  <title>Mapping Data Flows</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700|Roboto+Mono:300,400,700"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/master.css">
+  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js"></script>
+  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.js"></script>
+</head>
+
+<body class="white pa3">
+  <div class="pl4 mw6 robotoCondensed mt3" name="supportedBy">
+    <!-- <p class="mb2 mt1">Supported by:</p> -->
+    <a href="https://sipa.columbia.edu/ideas-lab/techpolicy"><img class="w-40 v-mid fl"
+      src="../img/TechPolicyInitiativeWhite.png" alt="Tech Policy Initiative Logo"></a>
+    <!-- <a href="https://brown.columbia.edu/"><img class="dib w-25 v-mid pl3" src="img/BrownInstituteLogo.png"
+      alt="Brown Institute Logo"></a> -->
+  </div>
+  <p class="f3 robotoMono mw7 center tc mt3" name="mainTitle">MAPPING DATA FLOWS - GOOGLE'S ARCHIVE</p>
+  <p class="f5 robotoCondensed mw7 center">Understanding how the largest technology companies collect, use, and share user 
+    information across the internet. We’ve transformed the “Big Four” terms of service and data policies -- the thousands of 
+    lines of code that govern their use of your data -- into a database powering an interactive visualization, an initial 
+    version of which we invite you to explore and critique.
+  </p>
+  <p class="f5 robotoCondensed mw7 center">Return to the <a href="../" class="underline white">"Big Four" visualization</a>.</p>
+  <div class="ph2 pt4 robotoMono" name="filter div">
+    <div class="f7 cf" name="filter row">
+      <div class="dib fr pa1 pl3 tr">
+        <button type="button" class="gold ba b--white-50 br2 ph3 pv1 link bg-transparent hover-bg-white-20"
+          id="resetButton">RESET FILTERS</button>
+      </div>
+      <div class="dib fr pa1 pl3 tr">
+        <label class="" for="collectionMethod">COLLECTION METHOD</label>
+        <select class="white ba b--white-50 br2 pa1 tr" id="collectionMethod">
+          <option value="all" selected="selected">All Methods</option>
+          <option value="USER PROVIDED">User Provided</option>
+          <option value="HARVESTED">Harvested</option>
+          <option value="FROM THIRD PARTIES">From Third Parties</option>
+        </select>
+      </div>
+      <div class="dib fr pa1 pl3 tr">
+        <label class="" for="purpose">COLLECTION PURPOSE</label>
+        <select class="white ba b--white-50 br2 pa1 tr" id="purposeSelector">
+          <option value="all">All purposes</option>
+          <option value="ADVERTISING">Advertising</option>
+          <option value="ANALYTICS">Analytics</option>
+          <!-- <option value="PROVIDE BUSINESS SERVICES">Business services</option> -->
+          <!-- <option value="LOCATION-BASED SERVICES">Location-based services</option> -->
+          <option value="OPERATIONS">Operations</option>
+          <option value="RESEARCH AND DEVELOPMENT">Research and Development</option>
+          <option value="SAFETY AND SECURITY">Safety and Security</option>
+          <option value="THIRD PARTY">Third Parties</option>
+          <option value="ANY PURPOSE">Any Purpose</option>
+        </select>
+      </div>
+      <div class="dib fr pa1 pl3 tr">
+        <label class="" for="dataTypes">TYPES OF DATA</label>
+        <select class="white ba b--white-50 br2 pa1 tr" name="dataTypes" id="dataTypeSelector">
+          <option value="all">All types</option>
+          <option value="NON-PERSONAL DATA">Non-personal information</option>
+          <option value="PERSONAL DATA">Personal information</option>
+          <option value="BEHAVIOR ON DEVICE">Behavior on device</option>
+          <option value="DEVICE INFO">Device information</option>
+          <option value="DEVICE SIGNALS">Device signals</option>
+          <option value="LOCATION FROM DEVICE">Location from device</option>
+          <option value="PRODUCT USE">Product use</option>
+        </select>
+      </div>
+    </div>
+    <div class="f7 cf" name="filter row">
+      <div class="dib fr pa1 pl3 pt2 tr">
+        <label class="white pl3 pr0 pv1" for="policyYear">FILTER POLICIES BY YEAR:</label>
+        <label class="white ph1 pv1" for="policyYear">2010</label>
+        <input type="range" id="policyYear" name="policyYear" min="2010" max="2019" step="9" class="input-reset bg-gold slider">
+        <label class="white ph1 pv1" for="policyYear">2019</label>
+      </div>
+    </div>
+  </div>
+
+  <div id="mobile_modal" class="modal dn fixed left-0 top-0 w-100 h-100 robotoMono f6">
+    <div class="mobile-modal-content ph2 pv1 ba b--white-50 br2 w-60">
+      <span class="close_mobile_modal fr robotoMono pointer no-underline">X</span>
+      <p class="tc ph1">Welcome to Mapping Data Flows.<br><br>This visualization was designed for a desktop browser.
+      For a better experience, please return when not on a mobile or tablet device.</p>
+    </div>
+  </div>
+
+
+  <div id="visualization">
+  </div>
+  <div class="mw7 ph5 f6 robotoCondensed center" name="sources">
+    <p class="mb3">The data behind this visualization was created base on the following terms of service and privacy policies:</p>
+    <p class="mv1"><a href="https://www.apple.com/legal/privacy/en-ww/" class="underline white" target="_blank">Apple Privacy Policy</a>, last accessed 
+      on October 3, 2019.</p>
+    <p class="mv1"><a href="https://www.facebook.com/policy.php" class="underline white" target="_blank">Facebook Data Policy</a>, last accessed
+      on October 3, 2019.</p>
+    <p class="mv1"><a href="https://www.facebook.com/help/122175507864081?ref=dp" class="underline white" target="_blank">Facebook Facial Recognition</a>,
+      last accessed on October 3, 2019.</p>
+    <p class="mv1"><a href="https://developers.facebook.com/products/account-creation" class="underline white" target="_blank">Facebook Login and 
+      Account Kit</a>, last accessed on October 3, 2019.</p>
+    <p class="mv1"><a href="https://www.facebook.com/payments_terms/privacy" class="underline white" target="_blank">Facebook Payments Inc.
+      Privacy Policy</a>, last accessed on October 3, 2019.</p>
+    <p class="mv1"><a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=468496#GUID-1B2BDAD4-7ACF-4D7A-8608-CBA6EA897FD3__SECTION_277A1D99140544EE9259ACA749AE3C3D"
+      class="underline white" target="_blank">Amazon Privacy Notice</a>, last accessed on October 3, 2019.</p>
+    <p class="mv1"><a href="https://policies.google.com/?hl=en-US" class="underline white" target="_blank">Google Privacy & Terms</a>, last accessed on
+      October 3, 2019.</p>
+    <p class="mv1"><a href="https://safety.google/privacy/ads-and-data/" class="underline white" target="_blank">Google Ads and Data Policy</a>, last
+      accessed on October 3, 2019.</p>
+    <p class="mv1"><a href="https://support.google.com/accounts/answer/3118687?p=privpol_lochistory&hl=en&visit_id=637066981248139864-1442952335&rd=1" class="underline white" target="_blank">Google Manage Your Location History</a>,
+      last accessed on October 3, 2019.</p>
+    <p class="mv1"><a
+        href="https://payments.google.com/payments/apis-secure/u/0/get_legal_document?ldo=0&ldt=privacynotice&ldl=en"
+        class="underline white" target="_blank">Google Payments Privacy Notice</a>, last accessed on October 3, 2019.</p>
+    <p class="mv1"><a
+        href="https://one.google.com/terms-of-service" class="underline white" target="_blank">Google One Terms of Service</a>,
+        last accessed on October 3, 2019.</p> 
+    <p class="mt3">However, note that there are many more terms of service and privacy policy documents for each of these companies. Due to time constraints 
+      we chose to focus only on the main documents for each one of them.</p>
+  </div>
+  <div class="mw7 mt4 ph5 f6 robotoCondensed center" name="downloadData">
+    <p class="mb3">This visualization is generated using three csv files:</p>
+    <p class="mv1"><a href="data/Nodes.csv" download class="underline white">Nodes.csv</a>, which generates the data source, 
+        data type, and purpose nodes.</p>
+    <p class="mv1"><a href="data/Generates.csv" download class="underline white">Generates.csv</a>, which links the data source and the 
+        data type nodes.</p>
+    <p class="mv1"><a href="data/CollectsUsesShares.csv" download class="underline white">CollectsUsesShares.csv</a>, which links the data type 
+        and the purpose nodes.</p>
+    <p class="mv1">For more information on these files, please refer to our <a href="data/DataDictionary.md" download class="underline white">data dictionary</a>.</p>
+    <p class="mt3">This data is is licensed under a <a class="underline white" rel="license"
+      href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons
+      Attribution-ShareAlike 4.0 International License</a>. Feel free to download and re-use it.</p>
+  </div>
+  <div class="mw7 mt4 ph5 f6 robotoCondensed center" name="whitePaper">
+    <p class="mb3">To learn more about our process, methods, and findings, <a href="assets/MappingDataFlows_WhitePaper_v1.pdf" class="underline white" target="_blank">download our Mapping Data Flows white paper</a>.</p>
+  </div>
+  <div class="f6 mt4 ph5 robotoCondensed center mw7" name="contact">
+    <p class="mv2">For feedback, comments or suggestions, please contact us at <a class="underline white"
+        href="mailto:mappingdataflows@browninstitute.org">mappingdataflows@browninstitute.org</a>.</p>
+  </div>
+  <div class="mw7 mt4 ph5 f6 robotoCondensed center" name="teamMembers">
+    <p class="mb3">Team members:</p>
+    <p class="mv2"><strong>JOHN BATTELLE</strong> - SIPA Senior Research Scholar, Adjunct Professor, Co-Founder & CEO of Recount Media</p>
+    <p class="mv2"><strong>JUAN FRANCISCO SALDARRIAGA</strong> - Senior Data & Design Researcher, Brown Institute for Media Innovation</p>
+    <p class="mv2"><strong>ZOE MARTIN</strong> - SIPA Masters of Public Administration</p>
+    <p class="mv2"><strong>MATTHEW ALBASI</strong> - Masters of Science in Data Journalism</p>
+    <p class="mv2"><strong>NATASHA BHUTA</strong> - SIPA Masters of Public Administration</p>
+    <p class="mv2"><strong>VERONICA PENNEY</strong> - Masters of Science in Data Journalism</p>
+  </div>
+  <div class="f6 mt4 ph5 robotoCondensed center mw7" name="supportedBy">
+    <p class="mb3">Mapping Data Flows is also supported by:
+    </p>
+    <div class="center mw7" name="logos">      
+      <a href="https://brown.columbia.edu/" target="_blank"><img class="dib w-30 v-mid" src="../img/BrownInstituteLogo.png" alt="Brown Institute Logo"></a>
+      <a href="https://www.omidyar.com/" target="_blank"><img class="dib w-30 v-mid pl3"
+          src="../img/OmidyarLogo.png" alt="Omidyar Logo"></a>
+    </div>
+  </div>
+  <div class="f6 mt4 ph5 robotoCondensed center mw7" name="googleAnalyticsDisclaimer">
+    <p class="mv2">We use <a class="underline white" href="https://marketingplatform.google.com/about/analytics/" target="_blank">Google
+      Analytics</a>. We promise not to use the data for anything other than seeing how many of you come and what you do on the site. We
+      won’t sell the data, although we may at some point visualize it. We can’t promise what Google’s doing with it, tho.</p>
+  </div>
+  <div class="f6 mt4 ph5 robotoCondensed center mw7" name="license">
+    <p class="mv2">Built with <a class="underline white" href="https://p5js.org/" target="_blank">p5.js</a> and <a class="underline white" target="_blank" href="http://tachyons.io/">Tachyons</a>.</p>
+    <p class="dib mv2">This work is licensed under a <a class="underline white" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons 
+      Attribution-ShareAlike 4.0 International License</a>.</p>
+    <a class="dib mv2" rel="license" target="_blank" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License"
+        style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+  </div>
+  <script type='text/javascript' src="js/sketch.js"></script>
+  <script type='text/javascript' src="js/classes.js"></script>
+</body>
+</html>
