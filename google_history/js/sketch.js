@@ -22,6 +22,9 @@ var dataTypeSelector;
 var purposeSelector;
 var collectionMethodSelector;
 var resetButton;
+var button2001 = document.getElementById('2001');
+var button2010 = document.getElementById('2010');
+var button2019 = document.getElementById('2019');
 var policyYearSlider = document.getElementById('policyYear');
 
 // Set global variables
@@ -46,13 +49,14 @@ var hiddenNodeOpacity = 0.08;
 var canvasClicked = false;
 var comparisonActive = false;
 var policyYear = 2019;
+var firstDraw = true;
 
 // Load the datasets
 function preload() {
   console.log('Loading data...');
-  nodesTable = loadTable('data/Nodes.csv', 'csv', 'header');
-  linksTable = loadTable('data/Generates.csv', 'csv', 'header');
-  complexLinksTable = loadTable('data/CollectsUsesShares.csv', 'csv', 'header');
+  nodesTable = loadTable('data/nodes.csv', 'csv', 'header');
+  linksTable = loadTable('data/generates.csv', 'csv', 'header');
+  complexLinksTable = loadTable('data/collectsUsesShares.csv', 'csv', 'header');
   myFont = loadFont('../fonts/Inconsolata-Regular.ttf');
   myTitleFont = loadFont('../fonts/Inconsolata-Bold.ttf');
 }
@@ -138,7 +142,18 @@ function buildComplexLinks() {
     let endName = ['all', complexLinksTable.getString(i, 'PURPOSE')];
     let dataTypeSubCat = ['all', complexLinksTable.getString(i, 'DATATYPESUBCATEGORY')];
     let purposeSubCat = ['all', complexLinksTable.getString(i, 'PURPOSESUBCATEGORY')];
-    let years = complexLinksTable.getString(i, 'YEARS').split(',');
+    let year2001, year2010, year2019;
+    if (complexLinksTable.getString(i, 'GOOGLE2001') == 'GOOGLE'){
+      year2001 = '2001';
+    } else {}
+    if (complexLinksTable.getString(i, 'GOOGLE2010') == 'GOOGLE'){
+      year2010 = '2010';
+    } else{}
+    if (complexLinksTable.getString(i, 'GOOGLE2019') == 'GOOGLE'){
+      year2019 = '2019';
+    } else{}
+    let years = [year2001, year2010, year2019].filter(Boolean).join(',');
+    // let years = complexLinksTable.getString(i, 'YEARS').split(',');
     let startAnchor = createVector();
     let midAnchor1 = createVector();
     let midAnchor2 = createVector();
@@ -166,6 +181,10 @@ function buildComplexLinks() {
 // Draw everything
 function draw() {
   clear();
+  if (firstDraw){
+    updateLines();
+    firstDraw = false;
+  }
   textFont(myFont);
   drawTitles();
   textFont(myTitleFont);
@@ -182,12 +201,32 @@ function draw() {
   }
 }
 
-// Policy Year Slider
-policyYearSlider.onchange = function () {
-  thisYear = this.value;
-  console.log('Filtering for ' + thisYear);
-  updateFilters(thisYear);
+// Select by year function
+button2001.onclick = function(){
+  updateFilters('2001');
+  updateButtons(button2001);
+  resetButtons(button2010);
+  resetButtons(button2019);
 }
+button2010.onclick = function(){
+  updateFilters('2010');
+  updateButtons(button2010);
+  resetButtons(button2001);
+  resetButtons(button2019);
+}
+button2019.onclick = function(){
+  updateFilters('2019');
+  updateButtons(button2019);
+  resetButtons(button2001);
+  resetButtons(button2010);
+}
+
+// // Policy Year Slider
+// policyYearSlider.onchange = function () {
+//   thisYear = this.value;
+//   console.log('Filtering for ' + thisYear);
+//   updateFilters(thisYear);
+// }
 
 // This function updates lines and nodes based on the filters
 function updateFilters(inputType) {
@@ -256,7 +295,7 @@ function resetFilters() {
   currentFilter = ['2019', 'all', 'all'];
   collectionFilter = 'all';
   collectionMethodSelector.value('all');
-  policyYearSlider.value = '2019';
+  // policyYearSlider.value = '2019';
   for (complexLink of complexLinks) {
     complexLink.update(currentFilter);
     complexLink.active = true;
@@ -271,7 +310,26 @@ function resetFilters() {
     node.active = true;
     node.visible = true;
   }
+  updateButtons(button2019);
+  resetButtons(button2001);
+  resetButtons(button2010);
+  updateLines();
   redraw();
+}
+
+function updateButtons(button) {
+  button.className = button.className.replace('bg-transparent', 'bg-gold');
+  button.className = button.className.replace('white', 'dark-gray');
+  button.className = button.className.replace('b--white-50', 'b--navy');
+  button.className = button.className.replace(' hover-bg-white-20', '');
+}
+
+function resetButtons(button) {
+  button.className = button.className.replace('bg-gold', 'bg-transparent');
+  button.className = button.className.replace('dark-gray', 'white');
+  button.className = button.className.replace('b--navy', 'b--white-50');
+  if (button.className.includes('hover-bg-white-20')) { }
+  else { button.className = button.className.concat(' hover-bg-white-20'); }
 }
 
 function drawTitles() {

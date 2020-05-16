@@ -81,12 +81,18 @@
       </div>
     </div>
     <div class="f7 cf" name="filter row">
-      <div class="dib fr pa1 pl3 pt2 tr">
+      <div class="f7 pa1 tr cf" name="filter row">
+        <label class="" for="allCompanies">FILTER POLICY BY YEAR</label>
+        <button type="button" class="white ba b--white-50 br2 ph3 pv1 link bg-transparent hover-bg-white-20" id="2001">2001</button>
+        <button type="button" class="white ba b--white-50 br2 ph3 pv1 link bg-transparent hover-bg-white-20"id="2010">2010</button>
+        <button type="button" class="dark-gray ba b--navy br2 ph3 pv1 link bg-gold"id="2019">2019</button>
+      </div>
+      <!-- <div class="dib fr pa1 pl3 pt2 tr">
         <label class="white pl3 pr0 pv1" for="policyYear">FILTER POLICIES BY YEAR:</label>
         <label class="white ph1 pv1" for="policyYear">2010</label>
         <input type="range" id="policyYear" name="policyYear" min="2010" max="2019" step="9" class="input-reset bg-gold slider">
         <label class="white ph1 pv1" for="policyYear">2019</label>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -132,11 +138,11 @@
   </div>
   <div class="mw7 mt4 ph5 f6 robotoCondensed center" name="downloadData">
     <p class="mb3">This visualization is generated using three csv files:</p>
-    <p class="mv1"><a href="data/Nodes.csv" download class="underline white">Nodes.csv</a>, which generates the data source, 
+    <p class="mv1"><a href="data/nodes.csv" download class="underline white">nodes.csv</a>, which generates the data source, 
         data type, and purpose nodes.</p>
-    <p class="mv1"><a href="data/Generates.csv" download class="underline white">Generates.csv</a>, which links the data source and the 
+    <p class="mv1"><a href="data/generates.csv" download class="underline white">generates.csv</a>, which links the data source and the 
         data type nodes.</p>
-    <p class="mv1"><a href="data/CollectsUsesShares.csv" download class="underline white">CollectsUsesShares.csv</a>, which links the data type 
+    <p class="mv1"><a href="data/collectsUsesShares.csv" download class="underline white">collectsUsesShares.csv</a>, which links the data type 
         and the purpose nodes.</p>
     <p class="mv1">For more information on these files, please refer to our <a href="data/DataDictionary.md" download class="underline white">data dictionary</a>.</p>
     <p class="mt3">This data is is licensed under a <a class="underline white" rel="license"
