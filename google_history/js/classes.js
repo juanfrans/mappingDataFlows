@@ -20,10 +20,9 @@ class Node {
     this.showIncludes = false;
   }
   display() {
-    if (this.active && this.visible){
+    if (this.active && this.visible) {
       this.opacity = 1;
-    }
-    else{
+    } else {
       this.opacity = hiddenNodeOpacity;
       this.showIncludes = false;
     }
@@ -41,48 +40,70 @@ class Node {
     if (this.textAlign == RIGHT) {
       this.textPositionX = -15;
       this.textPositionY = 0;
-    }
-    else if (this.textAlign == CENTER) {
+    } else if (this.textAlign == CENTER) {
       this.textPositionX = 0;
       this.textPositionY = 13;
       // fill(38, 100, 100, this.opacity / 2);
       // rect(this.x - (this.name.length * 4.8) / 2, this.y - 4 + this.textPositionY, this.name.length * 4.8, 10);
-    }
-    else {
+    } else {
       this.textPositionX = 15;
       this.textPositionY = 0;
     }
-    text(this.name.toUpperCase(), this.x + this.textPositionX, this.y + this.textPositionY);
-    if (this.showIncludes && this.includes != ''){
+    text(
+      this.name.toUpperCase(),
+      this.x + this.textPositionX,
+      this.y + this.textPositionY
+    );
+    if (this.showIncludes && this.includes != "") {
       let includesWidth;
       let includesHeight;
-      if (textWidth('INCLUDES: ' + this.includes.toUpperCase()) < 250){
-        includesWidth = textWidth('INCLUDES: ' + this.includes.toUpperCase()) + 10;
+      if (textWidth("INCLUDES: " + this.includes.toUpperCase()) < 250) {
+        includesWidth =
+          textWidth("INCLUDES: " + this.includes.toUpperCase()) + 10;
         includesHeight = 15;
-      }
-      else {
+      } else {
         includesWidth = 250;
-        includesHeight = 14 * ceil(textWidth('INCLUDES: ' + this.includes.toUpperCase()) / 250);
+        includesHeight =
+          14 *
+          ceil(textWidth("INCLUDES: " + this.includes.toUpperCase()) / 250);
       }
       fill(308, 92, 24, 0.5);
-      rect(this.x + this.textPositionX - includesWidth / 2, this.y + this.textPositionY + 8, includesWidth, includesHeight);
+      rect(
+        this.x + this.textPositionX - includesWidth / 2,
+        this.y + this.textPositionY + 8,
+        includesWidth,
+        includesHeight
+      );
       fill(0, 0, 100);
       textAlign(CENTER, TOP);
-      text('INCLUDES: ' + this.includes.toUpperCase(), this.x + this.textPositionX - 125, this.y + this.textPositionY + 10, 252, 100);
+      text(
+        "INCLUDES: " + this.includes.toUpperCase(),
+        this.x + this.textPositionX - 125,
+        this.y + this.textPositionY + 10,
+        252,
+        100
+      );
     }
   }
   update(chosenNodes) {
     if (chosenNodes.includes(node.name)) {
       this.active = true;
-    }
-    else {
+    } else {
       this.active = false;
     }
   }
 }
 
 class Link {
-  constructor(startName, endName, how, startVector, endVector, midVector1, midVector2) {
+  constructor(
+    startName,
+    endName,
+    how,
+    startVector,
+    endVector,
+    midVector1,
+    midVector2
+  ) {
     this.startName = startName;
     this.endName = endName;
     this.how = how;
@@ -96,28 +117,47 @@ class Link {
     this.pointList = [];
     for (var i = 0; i < 200; i++) {
       let t = i / 200;
-      let x = bezierPoint(this.startVector.x, this.midVector1.x, this.midVector2.x, this.endVector.x, t);
-      let y = bezierPoint(this.startVector.y, this.midVector1.y, this.midVector2.y, this.endVector.y, t);
+      let x = bezierPoint(
+        this.startVector.x,
+        this.midVector1.x,
+        this.midVector2.x,
+        this.endVector.x,
+        t
+      );
+      let y = bezierPoint(
+        this.startVector.y,
+        this.midVector1.y,
+        this.midVector2.y,
+        this.endVector.y,
+        t
+      );
       let point = createVector(x, y);
       this.pointList.push(point);
     }
   }
   display() {
-    if (this.active && this.visible){
-      if (comparisonActive){
+    if (this.active && this.visible) {
+      if (comparisonActive) {
         this.strokeAlpha = 0.3;
-      }
-      else {
+      } else {
         this.strokeAlpha = 0.8;
       }
-    }
-    else {
+    } else {
       this.strokeAlpha = hiddenLinkStroke;
     }
     noFill();
     stroke(0, 0, 100, this.strokeAlpha);
     strokeWeight(0.8);
-    bezier(this.startVector.x, this.startVector.y, this.midVector1.x, this.midVector1.y, this.midVector2.x, this.midVector2.y, this.endVector.x, this.endVector.y);
+    bezier(
+      this.startVector.x,
+      this.startVector.y,
+      this.midVector1.x,
+      this.midVector1.y,
+      this.midVector2.x,
+      this.midVector2.y,
+      this.endVector.x,
+      this.endVector.y
+    );
     // fill(200);
     // noStroke();
     // for (point of this.pointList){
@@ -125,17 +165,29 @@ class Link {
     // }
   }
   update(chosenNodes) {
-    if (chosenNodes.includes(this.endName) || chosenNodes.includes(this.startName)) {
+    if (
+      chosenNodes.includes(this.endName) ||
+      chosenNodes.includes(this.startName)
+    ) {
       this.active = true;
-    }
-    else {
+    } else {
       this.active = false;
     }
   }
 }
 
 class ComplexLink {
-  constructor(dataType, dataTypeSubCat, purpose, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, years) {
+  constructor(
+    dataType,
+    dataTypeSubCat,
+    purpose,
+    purposeSubCat,
+    startAnchor,
+    midAnchor1,
+    midAnchor2,
+    endAnchor,
+    years
+  ) {
     this.dataType = dataType;
     this.dataTypeSubCat = dataTypeSubCat;
     this.purpose = purpose;
@@ -156,23 +208,43 @@ class ComplexLink {
     this.active = true;
     for (var i = 0; i < 180; i++) {
       let t = i / 180;
-      let x = bezierPoint(this.startAnchor.x, this.midAnchor1.x, this.midAnchor2.x, this.endAnchor.x, t);
-      let y = bezierPoint(this.startAnchor.y, this.midAnchor1.y, this.midAnchor2.y, this.endAnchor.y, t);
+      let x = bezierPoint(
+        this.startAnchor.x,
+        this.midAnchor1.x,
+        this.midAnchor2.x,
+        this.endAnchor.x,
+        t
+      );
+      let y = bezierPoint(
+        this.startAnchor.y,
+        this.midAnchor1.y,
+        this.midAnchor2.y,
+        this.endAnchor.y,
+        t
+      );
       let point = createVector(x, y);
       this.pointList.push(point);
     }
   }
   display() {
-    if (this.visible && this.active){
+    if (this.visible && this.active) {
       this.strokeAlpha = 0.8;
-    }
-    else {
+    } else {
       this.strokeAlpha = hiddenLinkStroke;
     }
     noFill();
     stroke(this.h, this.s, this.b, this.strokeAlpha);
     strokeWeight(this.strokeWeight);
-    bezier(this.startAnchor.x, this.startAnchor.y, this.midAnchor1.x, this.midAnchor1.y, this.midAnchor2.x, this.midAnchor2.y, this.endAnchor.x, this.endAnchor.y);
+    bezier(
+      this.startAnchor.x,
+      this.startAnchor.y,
+      this.midAnchor1.x,
+      this.midAnchor1.y,
+      this.midAnchor2.x,
+      this.midAnchor2.y,
+      this.endAnchor.x,
+      this.endAnchor.y
+    );
     if (this.displayText) {
       noStroke();
       fill(0, 0, 100, 1);
@@ -182,13 +254,79 @@ class ComplexLink {
     }
   }
   update(currentFilter) {
-    if (this.years.includes(currentFilter[0]) && this.dataTypeSubCat.includes(currentFilter[1]) && this.purposeSubCat.includes(currentFilter[2])) {        this.h = 0;
+    if (
+      currentFilter[0] == "allYears" &&
+      this.dataTypeSubCat.includes(currentFilter[1]) &&
+      this.purposeSubCat.includes(currentFilter[2])
+    ) {
+      if (
+        this.years.includes("2001")
+      ) {
+        this.h = 0;
+        this.s = 0;
+        this.b = 100;
+        this.strokeWeight = 0.8;
+        this.active = true;
+      }
+      if (
+        (this.years.includes("2010")) && !(this.years.includes("2001"))
+      ) {
+        this.h = 51;
+        this.s = 100;
+        this.b = 100;
+        this.strokeWeight = 0.8;
+        this.active = true;
+      }
+      if (
+        (this.years.includes("2019")) && !(this.years.includes("2010")) && !(this.years.includes("2001"))
+      ) {
+        this.h = 23;
+        this.s = 100;
+        this.b = 100;
+        this.strokeWeight = 0.8;
+        this.active = true;
+      }
+    }
+    // ) {
+    //   if (
+    //     this.years.includes("2001")
+    //   ) {
+    //     this.h = 43;
+    //     this.s = 100;
+    //     this.b = 100;
+    //     this.strokeWeight = 0.8;
+    //     this.active = true;
+    //   }
+    //   if (
+    //     (this.years.includes("2010")) && !(this.years.includes("2001"))
+    //   ) {
+    //     this.h = 209;
+    //     this.s = 41;
+    //     this.b = 100;
+    //     this.strokeWeight = 0.8;
+    //     this.active = true;
+    //   }
+    //   if (
+    //     (this.years.includes("2019")) && !(this.years.includes("2010")) && !(this.years.includes("2001"))
+    //   ) {
+    //     this.h = 3;
+    //     this.s = 79;
+    //     this.b = 100;
+    //     this.strokeWeight = 0.8;
+    //     this.active = true;
+    //   }
+    // }
+    else if (
+      this.years.includes(currentFilter[0]) &&
+      this.dataTypeSubCat.includes(currentFilter[1]) &&
+      this.purposeSubCat.includes(currentFilter[2])
+    ) {
+      this.h = 0;
       this.s = 0;
       this.b = 100;
       this.strokeWeight = 0.8;
       this.active = true;
-    }
-    else {
+    } else {
       this.h = 0;
       this.s = 0;
       this.b = 100;
