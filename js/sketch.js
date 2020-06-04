@@ -167,6 +167,7 @@ function buildComplexLinks() {
     let allText = '';
     if (textAmazon != '') { allText += 'Amazon: ' + textAmazon + '\n\n'; }
     if (textApple != '') { allText += 'Apple: ' + textApple + '\n\n'; }
+    
     if (textFacebook != '') { allText += 'Facebook: ' + textFacebook + '\n\n'; }
     if (textGoogle != '') { allText += 'Google: ' + textGoogle + '\n\n'; }
     let startAnchor = createVector();
