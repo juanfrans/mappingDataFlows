@@ -2,6 +2,7 @@
 // Brown Institute for Media Innovation
 // Columbia University
 // 2019
+// TODO: Remove leading and trailing whitespace from text from TOS
 
 document.addEventListener('click', function (event) {
   if (event.target.parentElement.id == 'visualization') {
@@ -54,6 +55,11 @@ var hiddenLinkStroke = 0.03;
 var hiddenNodeOpacity = 0.08;
 var canvasClicked = false;
 var comparisonActive = false;
+var displayText = false;
+var linkForText;
+var textCoords;
+var textBoxHeight = 300;
+var textBoxWidth = 250;
 
 // Load the datasets
 function preload() {
@@ -86,6 +92,7 @@ function setup() {
   companyComparison2.input(updateFilters);
   resetButton = select('#resetButton');
   resetButton.mousePressed(resetFilters);
+  textCoords = createVector();
 }
 
 // Build nodes
@@ -156,18 +163,17 @@ function buildComplexLinks() {
       privacySettings = 'No';
     }
     companies.push('all');
-    // let textAmazon = complexLinksTable.getString(i, 'TextAmazon');
-    // let textApple = complexLinksTable.getString(i, 'TextApple');
-    // let textFacebook = complexLinksTable.getString(i, 'TextFacebook');
-    // let textGoogle = complexLinksTable.getString(i, 'TextGoogle');
-    let textAmazon = '';
-    let textApple = '';
-    let textFacebook = '';
-    let textGoogle = '';
+    let textAmazon = complexLinksTable.getString(i, 'AMAZONCONCRETETEXT');
+    let textApple = complexLinksTable.getString(i, "APPLECONCRETETEXT");
+    let textFacebook = complexLinksTable.getString(i, "FACEBOOKCONCRETETEXT");
+    let textGoogle = complexLinksTable.getString(i, "GOOGLECONCRETETEXT");
+    // let textAmazon = '';
+    // let textApple = '';
+    // let textFacebook = '';
+    // let textGoogle = '';
     let allText = '';
     if (textAmazon != '') { allText += 'Amazon: ' + textAmazon + '\n\n'; }
     if (textApple != '') { allText += 'Apple: ' + textApple + '\n\n'; }
-    
     if (textFacebook != '') { allText += 'Facebook: ' + textFacebook + '\n\n'; }
     if (textGoogle != '') { allText += 'Google: ' + textGoogle + '\n\n'; }
     let startAnchor = createVector();
@@ -190,7 +196,7 @@ function buildComplexLinks() {
     midAnchor1.y = startAnchor.y;
     midAnchor2.x = startAnchor.x + ((endAnchor.x - startAnchor.x) / 8) * 5;
     midAnchor2.y = endAnchor.y;
-    complexLinks.push(new ComplexLink(startName, dataTypeSubCat, endName, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, amazon, apple, facebook, google, companies, allText, privacySettings));
+    complexLinks.push(new ComplexLink(startName, dataTypeSubCat, endName, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, amazon, apple, facebook, google, companies, textAmazon, textApple, textFacebook, textGoogle, allText, privacySettings));
   }
 }
 
@@ -211,10 +217,72 @@ function draw() {
       node.display();
     }
   }
+  if (displayText == true) {
+    renderText();
+    
+  }
+}
+
+function renderText(){
+  console.log("Display text...");
+  let textToDisplay = '';
+  let textHeight;
+  // fill(0, 0, 100, 0.1);
+  // rectMode(CENTER);
+  // rect(linkForText.midAnchor1.x, linkForText.midAnchor1.y, 300, 400);
+  textSize(12);
+  textAlign(LEFT, TOP);
+  if (currentFilter[0] == "AMAZON") {
+    textToDisplay =
+      '"' + linkForText.textAmazon + `" (Amazon's Terms of Service)`;
+  } else if (currentFilter[0] == "APPLE") {
+    textToDisplay =
+      '"' + linkForText.textApple + `" (Apple's Terms of Service)`;
+  } else if (currentFilter[0] == "FACEBOOK") {
+    textToDisplay =
+      '"' + linkForText.textFacebook + `" (Facebook's Terms of Service)`;
+  } else {
+    textToDisplay =
+      '"' + linkForText.textGoogle + `" (Google's Terms of Service)`;
+  }
+  if (textToDisplay.length > 35) {
+    textHeight = (textWidth(textToDisplay) / textBoxWidth) * 24;
+    if (textHeight > 250){
+      console.log('Reducing text height...');
+      textHeight = textHeight * 0.8;
+    }
+    else if (textHeight > 125){
+      textHeight = textHeight * 0.9;
+      console.log('Reducing a little text height...');
+    }
+    if (textCoords.x > marginLeft + vizWidth * 0.75) {
+      textCoords.x = textCoords.x - textBoxWidth + 10;
+    } else {
+      textCoords.x = textCoords.x + 10;
+    }
+    if (textCoords.y > (vizHeight) - textHeight){
+      textCoords.y = textCoords.y - textHeight;
+    }
+    fill(0, 0, 100, 0.1);
+    stroke(38, 100, 100);
+    strokeWeight(1);
+    rect(textCoords.x - 10, textCoords.y, textBoxWidth + 10, textHeight, 5);
+    noStroke();
+    fill(0, 0, 100, 1);
+    text(
+      textToDisplay,
+      textCoords.x,
+      textCoords.y + 10,
+      textBoxWidth,
+      textBoxHeight
+    );
+  } else {
+  }
 }
 
 // Companies buttons
 allCompaniesButton.onclick = function () {
+  displayText = false;
   comparisonButtons('reset');
   updateFilters('all');
   updateButtons(allCompanies);
@@ -225,6 +293,7 @@ allCompaniesButton.onclick = function () {
 }
 amazonButton.onclick = function () {
   console.log('Amazon pressed...');
+  displayText = false;
   comparisonButtons('reset');
   updateFilters('AMAZON');
   updateButtons(amazonButton);
@@ -235,6 +304,7 @@ amazonButton.onclick = function () {
 }
 appleButton.onclick = function () {
   console.log('Apple pressed...');
+  displayText = false;
   comparisonButtons('reset');
   updateFilters('APPLE');
   updateButtons(appleButton);
@@ -245,6 +315,7 @@ appleButton.onclick = function () {
 }
 facebookButton.onclick = function () {
   console.log('Facebook pressed...');
+  displayText = false;
   comparisonButtons('reset');
   updateFilters('FACEBOOK');
   updateButtons(facebookButton);
@@ -255,6 +326,7 @@ facebookButton.onclick = function () {
 }
 googleButton.onclick = function () {
   console.log('Google pressed...');
+  displayText = false;
   comparisonButtons('reset');
   updateFilters('GOOGLE');
   updateButtons(googleButton);
@@ -340,39 +412,12 @@ function updateLines(){
       node.active = false;
     }
   }
-  // Deactivate the complex links that don't meet the filter conditions
-  // for (complexLink of complexLinks) {
-  //   complexLink.update(currentFilter);
-  //   // Run through the active complex links and create a list of active nodes
-  //   if (complexLink.active) {
-  //     if (activeNodes.includes(complexLink.purpose[1])) { }
-  //     else { activeNodes.push(complexLink.purpose[1]); }
-  //     if (activeNodes.includes(complexLink.dataType[1])) { }
-  //     else { activeNodes.push(complexLink.dataType[1]); }
-  //   }
-  // }
-  // // Deactivate simple links based on the list of active nodes
-  // for (link of links) {
-  //   link.update(activeNodes);
-  // }
-  // // Update the list of active nodes based on the visible simple links
-  // for (link of links) {
-  //   if (link.active) {
-  //     if (activeNodes.includes(link.startName)) { }
-  //     else { activeNodes.push(link.startName); }
-  //     if (activeNodes.includes(link.endName)) { }
-  //     else { activeNodes.push(link.endName); }
-  //   }
-  // }
-  // // Update nodes' visibility based on the list of active nodes
-  // for (node of nodes) {
-  //   node.update(activeNodes);
-  // }
   redraw();
 }
 
 // This function resets everthing ==> all active and all visible
 function resetFilters() {
+  displayText = false;
   dataTypeSelector.value('all');
   purposeSelector.value('all');
   companyComparison1.value('none');
@@ -455,11 +500,12 @@ function mouseClicked() {
     let matchComplexLink = false;
     let matchNode = false;
     let matchLink = false;
+    displayText = false;
     // Was a node clicked?
     for (node of nodes) {
       if (node.active) {
         if (dist(mouseX, mouseY, node.x, node.y) < 6) {
-          console.log('matchNode');
+          console.log('Node clicked...');
           matchNode = true;
           selectBasedOnNode(node);
           break;
@@ -474,8 +520,16 @@ function mouseClicked() {
         if (complexLink.active) {
           for (thisPoint of complexLink.pointList) {
             if (dist(mouseX, mouseY, thisPoint.x, thisPoint.y) < 3) {
+              console.log("Complex link clicked...");
               matchComplexLink = true;
-              console.log('matchComplexLink');
+              if (currentFilter[0] != 'all'){
+                linkForText = complexLink;
+                displayText = true;
+                textCoords.set(mouseX, mouseY);
+              }
+              else {
+                displayText = false;
+              }
               selectBasedOnComplexLink(complexLink);
               break;
             }
@@ -492,7 +546,7 @@ function mouseClicked() {
           for (thisPoint of link.pointList) {
             if (dist(mouseX, mouseY, thisPoint.x, thisPoint.y) < 3) {
               matchLink = true;
-              console.log('matchLink');
+              console.log('Simple link clicked...');
               selectBasedOnLink(link);
               break;
             }
@@ -517,7 +571,6 @@ function mouseClicked() {
           link.visible = true;
         }
       }
-      // selectByCollectionMethod(document.getElementById("collectionMethod").value);
     }
     redraw();
   }
@@ -598,42 +651,6 @@ function selectByCollectionMethod(input) {
   }
   console.log(collectionFilter);
   updateLines();
-  // let visibleNodes = [];
-  // for (link of links) {
-  //   if (collectionMethod == 'all' && link.active) {
-  //     link.visible = true;
-  //     visibleNodes.push(link.startName);
-  //     visibleNodes.push(link.endName);
-  //   }
-  //   else {
-  //     if (link.how == collectionMethod && link.active) {
-  //       link.visible = true;
-  //       visibleNodes.push(link.startName);
-  //       visibleNodes.push(link.endName);
-  //     }
-  //     else {
-  //       link.active = false;
-  //     }
-  //   }
-  // }
-  // for (complexLink of complexLinks) {
-  //   if (visibleNodes.includes(complexLink.dataType[1]) && complexLink.active) {
-  //     complexLink.visible = true;
-  //     visibleNodes.push(complexLink.purpose[1]);
-  //   }
-  //   else {
-  //     complexLink.active = false;
-  //   }
-  // }
-  // for (node of nodes) {
-  //   if (visibleNodes.includes(node.name) && node.active) {
-  //     node.visible = true;
-  //   }
-  //   else {
-  //     node.active = false;
-  //   }
-  // }
-  // redraw();
 }
 
 function selectBasedOnNode(clickedNode) {

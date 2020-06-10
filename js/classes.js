@@ -135,7 +135,27 @@ class Link {
 }
 
 class ComplexLink {
-  constructor(dataType, dataTypeSubCat, purpose, purposeSubCat, startAnchor, midAnchor1, midAnchor2, endAnchor, amazon, apple, facebook, google, companies, testText, privacySettings) {
+  constructor(
+    dataType,
+    dataTypeSubCat,
+    purpose,
+    purposeSubCat,
+    startAnchor,
+    midAnchor1,
+    midAnchor2,
+    endAnchor,
+    amazon,
+    apple,
+    facebook,
+    google,
+    companies,
+    textAmazon,
+    textApple,
+    textFacebook,
+    textGoogle,
+    allText,
+    privacySettings
+  ) {
     this.dataType = dataType;
     this.dataTypeSubCat = dataTypeSubCat;
     this.purpose = purpose;
@@ -155,30 +175,54 @@ class ComplexLink {
     this.companies = companies;
     this.privacySettings = privacySettings;
     this.strokeWeight = 0.8;
-    this.testText = testText;
+    this.textAmazon = textAmazon;
+    this.textApple = textApple;
+    this.textFacebook = textFacebook;
+    this.textGoogle = textGoogle;
+    this.allText = allText;
     this.displayText = false;
     this.pointList = [];
     this.visible = true;
     this.active = true;
     for (var i = 0; i < 180; i++) {
       let t = i / 180;
-      let x = bezierPoint(this.startAnchor.x, this.midAnchor1.x, this.midAnchor2.x, this.endAnchor.x, t);
-      let y = bezierPoint(this.startAnchor.y, this.midAnchor1.y, this.midAnchor2.y, this.endAnchor.y, t);
+      let x = bezierPoint(
+        this.startAnchor.x,
+        this.midAnchor1.x,
+        this.midAnchor2.x,
+        this.endAnchor.x,
+        t
+      );
+      let y = bezierPoint(
+        this.startAnchor.y,
+        this.midAnchor1.y,
+        this.midAnchor2.y,
+        this.endAnchor.y,
+        t
+      );
       let point = createVector(x, y);
       this.pointList.push(point);
     }
   }
   display() {
-    if (this.visible && this.active){
+    if (this.visible && this.active) {
       this.strokeAlpha = 0.8;
-    }
-    else {
+    } else {
       this.strokeAlpha = hiddenLinkStroke;
     }
     noFill();
     stroke(this.h, this.s, this.b, this.strokeAlpha);
     strokeWeight(this.strokeWeight);
-    bezier(this.startAnchor.x, this.startAnchor.y, this.midAnchor1.x, this.midAnchor1.y, this.midAnchor2.x, this.midAnchor2.y, this.endAnchor.x, this.endAnchor.y);
+    bezier(
+      this.startAnchor.x,
+      this.startAnchor.y,
+      this.midAnchor1.x,
+      this.midAnchor1.y,
+      this.midAnchor2.x,
+      this.midAnchor2.y,
+      this.endAnchor.x,
+      this.endAnchor.y
+    );
     if (this.displayText) {
       noStroke();
       fill(0, 0, 100, 1);
@@ -193,45 +237,53 @@ class ComplexLink {
     // }
   }
   update(currentFilter) {
-    if (this.companies.includes(currentFilter[0]) && this.dataTypeSubCat.includes(currentFilter[1]) && this.purposeSubCat.includes(currentFilter[2])) {
-      if (currentFilter[3][0] != 'none') {
-        if (this.companies.includes(currentFilter[3][0]) && !(this.companies.includes(currentFilter[3][1]))) {
+    if (
+      this.companies.includes(currentFilter[0]) &&
+      this.dataTypeSubCat.includes(currentFilter[1]) &&
+      this.purposeSubCat.includes(currentFilter[2])
+    ) {
+      if (currentFilter[3][0] != "none") {
+        if (
+          this.companies.includes(currentFilter[3][0]) &&
+          !this.companies.includes(currentFilter[3][1])
+        ) {
           this.h = 209;
           this.s = 41;
           this.b = 100;
           this.strokeWeight = 1.5;
           this.active = true;
-        }
-        else if (this.companies.includes(currentFilter[3][1]) && !(this.companies.includes(currentFilter[3][0]))) {
+        } else if (
+          this.companies.includes(currentFilter[3][1]) &&
+          !this.companies.includes(currentFilter[3][0])
+        ) {
           this.h = 23;
           this.s = 100;
           this.b = 100;
           this.strokeWeight = 1.5;
           this.active = true;
-        }
-        else if (this.companies.includes(currentFilter[3][0]) && this.companies.includes(currentFilter[3][1])) {
+        } else if (
+          this.companies.includes(currentFilter[3][0]) &&
+          this.companies.includes(currentFilter[3][1])
+        ) {
           this.h = 0;
           this.s = 0;
           this.b = 100;
           this.strokeWeight = 0.3;
           this.active = true;
-        }
-        else {
+        } else {
           this.h = 0;
           this.s = 0;
           this.b = 100;
           this.active = false;
         }
-      }
-      else {
+      } else {
         this.h = 0;
         this.s = 0;
         this.b = 100;
         this.strokeWeight = 0.8;
         this.active = true;
       }
-    }
-    else {
+    } else {
       this.h = 0;
       this.s = 0;
       this.b = 100;
